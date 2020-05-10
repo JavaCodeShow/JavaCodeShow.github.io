@@ -1,9 +1,9 @@
 ---
-
-layout: post
+author: 江峰
 title: "kafka入门基本使用命令"
 date: 2020-05-07 10:55
 comments: true
+categories: Kafka
 tags: 
 	- kafka
 ---
@@ -24,7 +24,7 @@ tags:
 4. broker.id 申明当前kafka服务器在集群中的唯一ID，需配置为integer,并且集群中的每一个kafka服务器的id都应是唯一的，我们这里采用默认配置即可
 5. listeners 申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址。如果是在远程服务器上运行则必须配置，例如：listeners=PLAINTEXT:// 192.168.180.128:9092。并确保服务器的9092端口能够访问，如果想外部电脑上的程序也能访问此kafka，就必须指定ip地址，不然java中会报key为null的错误。zookeeper.connect 申明kafka所连接的zookeeper的地址 ，需配置为zookeeper的地址，由于本次使用的是kafka高版本中自带zookeeper，使用默认配置即可zookeeper.connect=localhost:2181
 
-```
+```bash
 修改server.properties
 本机使用：
         listeners=PLAINTEXT://localhost:9092
@@ -39,7 +39,7 @@ tags:
 ### 2.1 启动zookeeper
 cd进入kafka解压目录，输入
 
-```
+``` bash
 bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
 
@@ -47,13 +47,13 @@ bin/zookeeper-server-start.sh config/zookeeper.properties
 
 cd进入kafka解压目录，输入
 
-```
+```bash
 bin/kafka-server-start.sh config/server.properties
 ```
 
 **kafka后台运行**
 
-```
+```bash
 bin/kafka-server-start.sh config/server.properties &
 ```
 
@@ -61,7 +61,7 @@ bin/kafka-server-start.sh config/server.properties &
 
 创建一个名为test的topic　
 
-```
+```bash
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test　
 ```
 
@@ -77,7 +77,7 @@ bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 在kafka解压目录打开终端，输入
 
-```
+```bash
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
 ```
 
@@ -85,17 +85,12 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --f
 
 在kafka解压目录打开一个新的终端，输入
 
-```
+```bash
 bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
 ```
 
 ### 2.7 删除topic
 
-```
+```bash
 bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic accreditNotify
 ```
-
-
-
-
-
