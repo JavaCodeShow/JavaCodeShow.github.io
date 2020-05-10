@@ -7,15 +7,15 @@ archives: 归档
 about: 关于
 contact: Contact
 friends: 友情链接
-startRead: Start
-recommendedPosts: Recommended Posts
+startRead: 开始阅读
+recommendedPosts: 文章推荐
 publishDate: 发布日期
 updateDate: 修改时间
-readCount: 文章字数
-wordCount: Word Count
-readTimes: 阅读次数
-Minutes: Min
-readMore: Read more
+readCount: 阅读次数
+wordCount: 文章字数
+readTimes: 阅读时长
+Minutes: 分
+readMore: 阅读更多
 toc: 目录
 curr: 正在阅读
 prev: 上一篇
@@ -31,7 +31,7 @@ postCharts: Post Charts
 postPublishChart: Post Publish Chart
 categoriesChart: Categories Chart
 top10TagsChart: TOP10 Tags Chart
-postsNumberName: Number of posts
+postsNumberName: 文章总数
 maximum: Maximum
 minimum: Minimum
 average: Average
