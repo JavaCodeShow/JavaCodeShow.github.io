@@ -4,15 +4,10 @@ title: "kafka入门基本使用命令"
 date: 2020-05-07 10:55
 comments: true
 categories: Kafka
+summary: 学习了kafka相关的知识，一直没有进行总结。在这里将一些简单的命令进行记录下来。
 tags: 
 	- kafka
 ---
-
-
-
-学习了kafka相关的知识，一直没有进行总结。在这里将一些简单的命令进行记录下来。
-
-​    <!-- more -->
 
 ## 一 修改配置文件
 
