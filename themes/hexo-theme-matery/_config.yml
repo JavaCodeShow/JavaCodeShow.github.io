@@ -4,13 +4,13 @@ menu:
   首页:
     url: /
     icon: fas fa-home
-  标签:
+  文章标签:
     url: /tags
     icon: fas fa-tags
-  分类:
+  文章分类:
     url: /categories
     icon: fas fa-bookmark
-  归档:
+  文章归档:
     url: /archives
     icon: fas fa-archive
   关于:

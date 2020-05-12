@@ -1,9 +1,9 @@
 posts: 文章
-category: 分类
-categories: 分类
-tag: 标签
-tags: 标签
-archives: 归档
+category: 文章分类
+categories: 文章分类
+tag: 文章标签
+tags: 文章标签
+archives: 文章归档
 about: 关于
 contact: Contact
 friends: 友情链接
