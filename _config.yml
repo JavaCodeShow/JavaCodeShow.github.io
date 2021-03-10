@@ -108,7 +108,7 @@ theme: hexo-theme-matery
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/1546844168/jiangfeng.github.io
+  repository: https://1546844168:jiangfeng917@github.com/1546844168/jiangfeng.github.io
   branch: master
 
 # 使用 hexo-generator-search 的 Hexo 插件来做内容搜索
