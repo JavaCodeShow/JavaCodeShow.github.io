@@ -11,44 +11,79 @@ tags:
 
 # docker常用命令
 
-## 搜索镜像
+1. 搜索镜像
 
-docker search xxx
+   ```
+   docker search xxx
+   ```
 
-## 下载镜像
+2. 下载镜像
 
-docker pull xxx
+   ```
+   docker pull xxx
+   ```
 
-## 查看镜像 
+3. 查看镜像 
 
-1. 查看所有镜像：docker images
+   查看所有镜像
 
-2. 查看指定镜像：docker images | grep redis
+   ```
+   docker images
+   ```
 
-## 删除镜像
+    查看指定镜像
 
-docker rmi  镜像name/镜像id(会提示先停止使用中的容器) 
+   ```
+   docker images | grep 容器名字
+   ```
 
-## 查看所有容器
+4. 删除镜像
 
- docker ps -a
+   ```
+   docker rmi  镜像name/镜像id(会提示先停止使用中的容器) 
+   ```
 
-## 查看容器运行日志
+5. 查看所有容器
 
- docker logs 容器名称/容器id
+   ```
+    docker ps -a
+   ```
 
-## 停止容器运行
+6. 查看容器运行日志
 
- docker stop 容器name/容器id
+   ```
+    docker logs 容器名称/容器id
+   ```
 
-## 终止容器后运行
+7. 停止容器运行
 
- docker start 容器name/容器id
+   ```
+   docker stop 容器name/容器id
+   ```
 
-## 容器重启
+8. 终止容器后运行
 
- docker restart 容器name/容器id
+   ```
+   docker start 容器name/容器id
+   ```
 
-## 删除容器
+9. 容器重启
 
- docker rm 容器name/容器id
+   ```
+    docker restart 容器name/容器id
+   ```
+
+10. 删除容器
+
+    ```
+     docker rm 容器name/容器id
+    ```
+
+    
+
+    
+
+
+
+ 
+
