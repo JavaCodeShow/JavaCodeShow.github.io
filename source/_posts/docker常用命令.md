@@ -79,6 +79,13 @@ tags:
      docker rm 容器name/容器id
     ```
 
+11. docker里面安装vim
+
+    ```
+    1. apt-get update
+    2. apt-get install vim
+    ```
+
     
 
     
