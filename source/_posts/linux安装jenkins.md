@@ -4,6 +4,8 @@ typora-root-url: ..\assets\img
 
 # linux安装jenkins
 
+## 一、安装jdk和maven
+
 首先在安装jenkins之前。需要先安装jdk 和 maven。至于 jdk 和 maven 和安装教程，这里就不说了。
 
 **查看jdk安装成功**：java -version
@@ -34,13 +36,13 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
 [root@iZuf6j6c7vo33inl2830e3Z ~]# 
 ```
 
-
-
 在进行下面的操作之前，请确保这两个安装完毕。
 
 
 
-1. 下载jenkins的rpm包
+## 二、在linux服务器里面安装jenkins
+
+1. ### 下载jenkins的rpm包
 
    这是目前最新 jenkins LTS版本，在[清华大学镜像站](https://mirrors.tuna.tsinghua.edu.cn/jenkins/redhat-stable/)  这个里面下载最新版的jenkins。
 
@@ -56,13 +58,13 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
    [root@iZuf6j6c7vo33inl2830e3Z jenkins]# 
    ```
 
-2. 安装
+2. ### 安装
 
    ```
    sudo yum install jenkins-2.222.3-1.1.noarch.rpm
    ```
 
-3. 修改端口
+3. ### 修改端口
 
    jenkins 默认8080端口，建议修改一下。以免和tomcat的默认端口号冲突。
 
@@ -74,7 +76,7 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
 
    
 
-4. 修改默认镜像源
+4. ### 修改默认镜像源
 
    ```
    vim /var/lib/jenkins/hudson.model.UpdateCenter.xml 
@@ -92,7 +94,7 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
    </sites>
    ```
 
-5. 启动jenkins
+5. ### 启动jenkins
 
    ```
    启动jenkins：service jenkins start
@@ -153,7 +155,7 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
 
    
 
-6. 查看jenkins启动成功
+6. ### 查看jenkins启动成功
 
    ```
    ps -ef | grep jenkins
@@ -161,24 +163,230 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
 
    
 
-7. 访问jenkins
+7. ### 访问jenkins
 
    http://公网ip地址:端口号
 
    我本人的是：http://139.224.103.236:8091
 
+## 三、jenkins初始化配置
+
+![Snipaste_2021-03-29_21-49-44](/jenkins/Snipaste_2021-03-29_21-49-44.png)
+
+输入下面的命令，即可获取密码
+
+```undefined
+cat /root/.jenkins/secrets/initialAdminPassword  
+```
+
+
+
+安装插件，直接安装默认提供的插件即可。
+
+![](/jenkins/6907580-d2ae24d404f8d137.png)
+
+
+
+创建管理员账号
+
+![6907580-ce4cf9c7eb5b435f](/jenkins/6907580-ce4cf9c7eb5b435f.png)
+
+
+
+## 四、jenkins配置
+
+1. #### 插件安装
+
+**安装Publish over SSH插件并配置**
+
+> 开发人员将工作区的代码提交到代码库（svn或者git），代码库再调用钩子程序通知Jenkins（我已经更新了代码，你也要重新部署一版了），钩子程序是我们自己编写，这个钩子程序很容易后续会提到怎么编写钩子程序
+> Jenkins收到代码库的提醒之后立马去代码库里获取最新的源码，再通过调用maven插件将源码打包成jar，再通过Publish over SSH插件将jar包传到一台或者多台服务器上，再调用服务器的脚本启动jar包，这就是Jenkins工作的整体流程。
+>
+
+系统管理==》插件管理
+
+搜搜Publish over SSH下载安装成功后后重新登陆jenkins
+
+
+
+
+
+![Snipaste_2021-03-29_21-56-23](/jenkins/Snipaste_2021-03-29_21-56-23.png)
+
+
+
+![Snipaste_2021-03-29_21-58-30](/jenkins/Snipaste_2021-03-29_21-58-30.png)
+
+2. #### 系统配置
+
+系统配置里面有一些实用的功能可以进行配置。需要的话可以自行配置。
+
+拉到最后面找到Publish over SSH，点击新增
+
+![20200524113201698](/jenkins/20200524113201698.png)![20200524113301937](/jenkins/20200524113301937.png)
+
+
+
+​	name：随便填
+​	Hostname：服务器IP（这个就是要把打包好的jar包发送并运行的目标主机）
+​	Username：root
+​	Remote Directory：要发送到的远程主机的目录，这里我们填 / 根目录就行，因为后面这个路径我们还要配置
+
+​	填好之后在点击高级配置密码和端口
+
+![Snipaste_2021-03-29_23-38-06](/jenkins/Snipaste_2021-03-29_23-38-06.png)
+
+
+
+
+
+![Snipaste_2021-03-29_23-39-26](/jenkins/Snipaste_2021-03-29_23-39-26.png)
+
+​	测试一下，能连接上即可。
+
+1. #### 全局工具配置
+
+   在这里配置jdk，git，maven的位置
+
+   **maven配置**
+
+![Snipaste_2021-03-29_22-03-22](/jenkins/Snipaste_2021-03-29_22-03-22.png)
+
+​		**JDK安装**
+
+
+
+![Snipaste_2021-03-29_22-04-56](/jenkins/Snipaste_2021-03-29_22-04-56.png)
+
+​	**git安装**
+
+
+
+![Snipaste_2021-03-29_22-05-59](/jenkins/Snipaste_2021-03-29_22-05-59.png)
+
+
+
+​	**maven安装**
+
+
+
+![Snipaste_2021-03-29_22-06-54](/jenkins/Snipaste_2021-03-29_22-06-54.png)
+
+
+
+## 五、节点配置
+
+在Jenkins中依次点击：系统管理 -> 节点管理 -> 新建节点
+
+
+
+![20191019135659465](/jenkins/20191019135659465.png)
+
+保存后，点击启动代理配置，查看日志是否成功
+
+1. 接下来可以新建一个任务执行了。
+
+
+
+
+
+![Snipaste_2021-03-30_00-03-14](/jenkins/Snipaste_2021-03-30_00-03-14.png)
+
+1. 
+
+2. 
+
+3. 
+
+4. 
+
+5. 
+
+6. git  ssh配置
+
    
 
-8. 选择“Install suggested plugins”安装默认的插件，（勾选左边的）下面Jenkins就会自己去下载相关的插件进行安装
+7. shell脚本配置
 
-9. 设置一下默认管理员的用户名和密码。这里就进入到jenkins的网页了。
+8. Waiting for Jenkins to finish collecting data 这一步怎么删掉  。不然编译完之后一直等待一段时间
 
-10. 系统配置
+   
 
-10. 全局工具配置
-    
-在这里配置jdk,git，maven的位置
-    
-12. 接下来可以新建一个任务执行了。
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#!/bin/sh
+
+echo "开始执行shell脚本"
+
+# 在jenkins环境中一定要加这句话，否则这个脚本进程最后会被杀死
+export BUILD_ID=dontKillMe
+
+# 指定最后编译好的jar的存放位置
+JAR_PATH=/usr/java/spring-application-jar/distribute-id-ms
+
+# 如果路径不存在，就创建路径
+[ ! -e $JAR_PATH ] && mkdir -p $JAR_PATH
+
+# 指定jenkins中存放编译好的jar的位置
+JENKINS_JAR_PATH=/var/lib/jenkins/workspace/distribute-id-ms/target
+
+# 如果路径不存在，就创建路径
+[ ! -e $JENKINS_JAR_PATH ] && mkdir -p $JENKINS_JAR_PATH
+
+# 指定jenkins中存放编译好的jar的名称(这个jar的名字和pom文件配置有关)
+JENKINS_JAR_NAME=distribute-id-ms-1.0.jar
+
+# 获取该项目的进程号，用于重新部署项目前杀死进程
+pid=`ps -ef|grep distribute-id-ms-1.0.jar | grep -v grep|awk '{print $2}'`
+
+if [ -n "$pid" ]
+then
+echo 'The pid: server' $pid ' will be killed....'
+kill -9 $pid
+echo 'The pid: server' $pid ' will be start'
+
+
+# 进入Jenkins中编译好的jar的位置
+cd ${JENKINS_JAR_PATH}
+
+# 将Jenkins中编译好的jar复制到最终存放项目jar的位置
+cp $JENKINS_JAR_PATH/$JENKINS_JAR_NAME $JAR_PATH
+
+# 进入到存放项目jar的位置
+cd ${JAR_PATH}
+
+# 后台启动项目，并且将控制台日志输出到nohup.out中
+
+nohup java -jar ${JENKINS_JAR_NAME} >/dev/null &
+
+echo "shell脚本执行完毕"
