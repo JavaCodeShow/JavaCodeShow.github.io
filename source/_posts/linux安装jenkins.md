@@ -1,9 +1,18 @@
 ---
+​---
+author: 江峰
+title: "linux安装jenkins部署SpringBoot应用"
+date: 2020-05-012 22:15
+comments: true
+categories: jenkins
+summary: linux安装jenkins部署SpringBoot应用完整教程。
+tags: 
+	- jenkins
 
-typora-root-url: linux安装jenkins
+​---
 ---
 
-# linux安装jenkins
+# linux安装jenkins部署SpringBoot应用
 
 ## 一、安装jdk和maven
 
