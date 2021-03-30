@@ -1,5 +1,4 @@
 ---
-​---
 author: 江峰
 title: "linux安装jenkins部署SpringBoot应用"
 date: 2021-03-30 16:51
@@ -8,8 +7,6 @@ categories: jenkins
 summary: linux安装jenkins部署SpringBoot应用完整教程。
 tags: 
 	- jenkins
-
-​---
 ---
 
 # linux安装jenkins部署SpringBoot应用
