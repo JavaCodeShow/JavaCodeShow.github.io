@@ -44,7 +44,7 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
 
 1. ### 下载jenkins的rpm包
 
-   这是目前最新 jenkins LTS版本，在[清华大学镜像站](https://mirrors.tuna.tsinghua.edu.cn/jenkins/redhat-stable/)  这个里面下载最新版的jenkins。
+   这是目前最新 jenkins LTS版本，在[清华大学镜像站](https://mirrors.tuna.tsinghua.edu.cnredhat-stable/)  这个里面下载最新版的jenkins。
 
    mkdir /usr/java/jenkins
 
@@ -79,17 +79,17 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
 4. ### 修改默认镜像源
 
    ```
-   vim /var/lib/jenkins/hudson.model.UpdateCenter.xml 
+   vim /var/libhudson.model.UpdateCenter.xml 
    ```
 
-   将 url 修改为 清华大学官方镜像：https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+   将 url 修改为 清华大学官方镜像：https://mirrors.tuna.tsinghua.edu.cnupdates/update-center.json
 
    ```
    <?xml version='1.1' encoding='UTF-8'?>
    <sites>
      <site>
        <id>default</id>
-       <url>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</url>
+       <url>https://mirrors.tuna.tsinghua.edu.cnupdates/update-center.json</url>
      </site>
    </sites>
    ```
@@ -171,7 +171,7 @@ OS name: "linux", version: "3.10.0-1160.11.1.el7.x86_64", arch: "amd64", family:
 
 ## 三、jenkins初始化配置
 
-![Snipaste_2021-03-29_21-49-44](/jenkins/Snipaste_2021-03-29_21-49-44.png)
+![Snipaste_2021-03-29_21-49-44](Snipaste_2021-03-29_21-49-44.png)
 
 输入下面的命令，即可获取密码
 
@@ -183,13 +183,13 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 安装插件，直接安装默认提供的插件即可。
 
-![](/jenkins/6907580-d2ae24d404f8d137.png)
+![](6907580-d2ae24d404f8d137.png)
 
 
 
 创建管理员账号
 
-![6907580-ce4cf9c7eb5b435f](/jenkins/6907580-ce4cf9c7eb5b435f.png)
+![6907580-ce4cf9c7eb5b435f](6907580-ce4cf9c7eb5b435f.png)
 
 
 
@@ -211,11 +211,11 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![Snipaste_2021-03-29_21-56-23](/jenkins/Snipaste_2021-03-29_21-56-23.png)
+![Snipaste_2021-03-29_21-56-23](Snipaste_2021-03-29_21-56-23.png)
 
 
 
-![Snipaste_2021-03-29_21-58-30](/jenkins/Snipaste_2021-03-29_21-58-30.png)
+![Snipaste_2021-03-29_21-58-30](Snipaste_2021-03-29_21-58-30.png)
 
 2. #### 系统配置
 
@@ -223,7 +223,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 拉到最后面找到Publish over SSH，点击新增
 
-![20200524113201698](/jenkins/20200524113201698.png)![20200524113301937](/jenkins/20200524113301937.png)
+![20200524113201698](20200524113201698.png)![20200524113301937](20200524113301937.png)
 
 
 
@@ -234,13 +234,13 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 ​	填好之后在点击高级配置密码和端口
 
-![Snipaste_2021-03-29_23-38-06](/jenkins/Snipaste_2021-03-29_23-38-06.png)
+![Snipaste_2021-03-29_23-38-06](Snipaste_2021-03-29_23-38-06.png)
 
 
 
 
 
-![Snipaste_2021-03-29_23-39-26](/jenkins/Snipaste_2021-03-29_23-39-26.png)
+![Snipaste_2021-03-29_23-39-26](Snipaste_2021-03-29_23-39-26.png)
 
 ​	测试一下，能连接上即可。
 
@@ -250,19 +250,19 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
    **maven配置**
 
-![Snipaste_2021-03-29_22-03-22](/jenkins/Snipaste_2021-03-29_22-03-22.png)
+![Snipaste_2021-03-29_22-03-22](Snipaste_2021-03-29_22-03-22.png)
 
 ​		**JDK安装**
 
 
 
-![Snipaste_2021-03-29_22-04-56](/jenkins/Snipaste_2021-03-29_22-04-56.png)
+![Snipaste_2021-03-29_22-04-56](Snipaste_2021-03-29_22-04-56.png)
 
 ​	**git安装**
 
 
 
-![Snipaste_2021-03-29_22-05-59](/jenkins/Snipaste_2021-03-29_22-05-59.png)
+![Snipaste_2021-03-29_22-05-59](Snipaste_2021-03-29_22-05-59.png)
 
 
 
@@ -270,7 +270,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![Snipaste_2021-03-29_22-06-54](/jenkins/Snipaste_2021-03-29_22-06-54.png)
+![Snipaste_2021-03-29_22-06-54](Snipaste_2021-03-29_22-06-54.png)
 
 
 
@@ -280,7 +280,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![20191019135659465](/jenkins/20191019135659465.png)
+![20191019135659465](20191019135659465.png)
 
 保存后，点击启动代理配置，查看日志是否成功
 
@@ -290,7 +290,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![Snipaste_2021-03-30_00-03-14](/jenkins/Snipaste_2021-03-30_00-03-14.png)
+![Snipaste_2021-03-30_00-03-14](Snipaste_2021-03-30_00-03-14.png)
 
 1. 
 

@@ -16,9 +16,9 @@ menu:
   关于:
     url: /about
     icon: fas fa-user-circle
-  友情链接:
-    url: /friends
-    icon: fas fa-address-book
+#  友情链接:
+#    url: /friends
+#    icon: fas fa-address-book
   # 二级菜单写法如下
   #Medias:
   #  icon: fas fa-list
