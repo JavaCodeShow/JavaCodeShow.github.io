@@ -1,7 +1,7 @@
 ---
 author: 江峰
 title: "git命令整理"
-date: 2020-05-012 22:15
+date: 2020-05-11 22:15
 comments: true
 categories: git
 summary: 对git命令进行整理，方便后续使用。

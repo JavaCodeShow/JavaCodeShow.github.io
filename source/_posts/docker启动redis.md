@@ -1,7 +1,7 @@
 ---
 author: 江峰
 title: "docker启动redis"
-date: 2020-05-012 22:15
+date: 2020-05-12 22:15
 comments: true
 categories: docker
 summary: 通过docker启动redis。

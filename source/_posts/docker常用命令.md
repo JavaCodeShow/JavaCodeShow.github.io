@@ -1,7 +1,7 @@
 ---
 author: 江峰
 title: "docker常用命令"
-date: 2020-05-012 22:15
+date: 2020-05-12 22:15
 comments: true
 categories: docker
 summary: 对docker的常用命令进行整理，方便后续使用。
