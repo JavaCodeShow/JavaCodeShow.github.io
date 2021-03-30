@@ -1,4 +1,5 @@
 ---
+
 typora-root-url: linux安装jenkins
 ---
 
@@ -237,9 +238,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![Snipaste_2021-03-29_21-56-23](Snipaste_2021-03-29_21-56-23.png)
-
-![Snipaste_2021-03-29_21-56-23](Snipaste_2021-03-29_21-56-23.png)
+![Snipaste_2021-03-30_14-06-03](/Snipaste_2021-03-30_14-06-03.png)
 
 ​		
 
@@ -320,24 +319,130 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 ## 五、构建maven项目
 
-1. 接下来可以新建一个任务执行了。
+接下来可以新建一个任务执行了
+
+![](Snipaste_2021-03-30_14-09-30.png)
+
+
+
+![](Snipaste_2021-03-30_14-11-34.png)
 
 
 
 
+
+![](Snipaste_2021-03-30_14-13-18.png)
+
+
+
+![](Snipaste_2021-03-30_14-17-03.png)
+
+
+
+配置项目构建完成后进行的操作。这里可以配置通过ssh连接远程其他服务器执行，或者本机直接执行等。
+
+![](Snipaste_2021-03-30_15-43-54.png)
+
+
+
+本机运行shell命令
+
+![](Snipaste_2021-03-30_14-19-12.png)
+
+
+
+远程服务器上运行shell命令。这个服务器就是在前面通过publish and ssh配置的服务器。
 
 ![Snipaste_2021-03-30_00-03-14](Snipaste_2021-03-30_00-03-14.png)
 
-1. 
+术语解释：
 
-   
+>**Source files**：Source files的目录是基于当前项目的目录(可以从jenkins的安装目录下找到)：例如当前项目名称为distribute-id-ms，则对于root用户，Source files中的目录是相对于/usr/lib/jenkins/workspace/distribute-id-ms目录下的，因此，如果我们要发送distribute-id-ms下的target目录下的distribute-id-ms-1.0.jar包，所以这里需要填写：target/distribute-id-ms-1.0.jar
+>
+>**Remove prefix**：表示需要移除的目录，比如这里填写target，则表示发布时，只把distribute-id-ms-1.0.jar发布到远程linux，而不包含target目录结构
+>
+>**Remote directory**：表示需要把编译好的war包发布到远程linux的哪个目录下
+>
+>**Exec command**：需要执行的shell命令，shell命令在远程linux服务器上执行.
+>
 
-7. shell脚本配置
-
-8. Waiting for Jenkins to finish collecting data 这一步怎么删掉  。不然编译完之后一直等待一段时间
-
-   
 
 
+shell脚本配置如下：
 
-同级目录：start.sh
+```
+#!/bin/sh
+ 
+echo "开始执行shell脚本"
+ 
+# 在jenkins环境中一定要加这句话，否则这个脚本进程最后会被杀死
+export BUILD_ID=dontKillMe
+ 
+# 指定最后编译好的jar的存放位置
+JAR_PATH=/usr/java/spring-application-jar
+
+# 如果路径不存在，就创建路径
+[ ! -e $JAR_PATH ] && mkdir -p $JAR_PATH 
+
+# 指定jenkins中存放编译好的jar的位置
+JENKINS_JAR_PATH=/usr/lib/jenkins/workspace/distribute-id-ms/target
+ 
+# 如果路径不存在，就创建路径
+[ ! -e $JENKINS_JAR_PATH ] && mkdir -p $JENKINS_JAR_PATH
+ 
+# 指定jenkins中存放编译好的jar的名称(这个jar的名字和pom文件配置有关)
+JENKINS_JAR_NAME=distribute-id-ms-1.0.jar
+ 
+# 获取该项目的进程号，用于重新部署项目前杀死进程
+pid=`ps -ef|grep distribute-id-ms-1.0.jar | grep -v grep|awk '{print $2}'`
+
+echo "  =====关闭Java应用======"
+
+for i in $pid
+do
+  echo "Kill the $1 process [ $i ]"
+  kill -9 $i
+done
+
+echo "  =====启动Java应用======"
+
+# 进入Jenkins中编译好的jar的位置
+cd ${JENKINS_JAR_PATH}
+ 
+# 将Jenkins中编译好的jar复制到最终存放项目jar的位置
+cp $JENKINS_JAR_PATH/$JENKINS_JAR_NAME $JAR_PATH
+ 
+# 进入到存放项目jar的位置
+cd ${JAR_PATH}
+ 
+# 后台启动项目，并且将控制台日志输出到nohup.out中
+ 
+nohup java -jar ${JENKINS_JAR_NAME} >/dev/null &
+ 
+echo "shell脚本执行完毕"
+
+
+```
+
+
+
+**注意事项：上面的目录是我自身配置的目录。实际目录根据自身情况检查一下。以免出现不必要的错误。这个可以在服务器上面创建一个脚本执行检查一下。**
+
+
+
+最后，保存一下。构建项目即可。根据构建日志分析项目构建情况。
+
+![](Snipaste_2021-03-30_16-28-53.png)
+
+至此：使用Jenkins运行SpringBoot项目到此结束。
+
+## 六、总结
+
+通过实际部署Jenkins，并构建SpringBoot + maven项目，大大加深了对jenkins的熟悉。看到最后的build success
+
+，内心还是有点小激动的。实际部署操作一遍，并且写这篇博客共花了两天的时间。期间，也参考了其他人的博客，非常感谢！
+
+写这边博客的初衷，也是网上很难找到一篇从头到尾完整的使用Jenkins构建maven项目发布的教程。
+
+希望这边博客，能对各位有所帮助！！！
+
