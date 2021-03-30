@@ -244,7 +244,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![Snipaste_2021-03-30_14-06-03](/Snipaste_2021-03-30_14-06-03.png)
+![](Snipaste_2021-03-30_14-06-03.png)
 
 ​		
 
@@ -256,11 +256,11 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![20200524113201698](20200524113201698.png)
+![](20200524113201698.png)
 
 
 
-![20200524113301937](20200524113301937.png)
+![](20200524113301937.png)
 
 
 
@@ -271,13 +271,13 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 ​	填好之后在点击高级配置密码和端口
 
-![Snipaste_2021-03-29_23-38-06](Snipaste_2021-03-29_23-38-06.png)
+![](Snipaste_2021-03-29_23-38-06.png)
 
 
 
 
 
-![Snipaste_2021-03-29_23-39-26](Snipaste_2021-03-29_23-39-26.png)
+![](Snipaste_2021-03-29_23-39-26.png)
 
 ​	测试一下，能连接上即可。
 
@@ -287,19 +287,19 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 **maven配置**
 
-![Snipaste_2021-03-29_22-03-22](Snipaste_2021-03-29_22-03-22.png)
+![](Snipaste_2021-03-29_22-03-22.png)
 
 ​		**JDK安装**
 
 
 
-![Snipaste_2021-03-29_22-04-56](Snipaste_2021-03-29_22-04-56.png)
+![](Snipaste_2021-03-29_22-04-56.png)
 
 ​	**git安装**
 
 
 
-![Snipaste_2021-03-29_22-05-59](Snipaste_2021-03-29_22-05-59.png)
+![](Snipaste_2021-03-29_22-05-59.png)
 
 
 
@@ -307,7 +307,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![Snipaste_2021-03-29_22-06-54](Snipaste_2021-03-29_22-06-54.png)
+![](Snipaste_2021-03-29_22-06-54.png)
 
 
 
@@ -317,7 +317,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![20191019135659465](20191019135659465.png)
+![](20191019135659465.png)
 
 保存后，点击启动代理配置，查看日志是否成功
 
@@ -359,7 +359,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 远程服务器上运行shell命令。这个服务器就是在前面通过publish and ssh配置的服务器。
 
-![Snipaste_2021-03-30_00-03-14](Snipaste_2021-03-30_00-03-14.png)
+![](Snipaste_2021-03-30_00-03-14.png)
 
 术语解释：
 
