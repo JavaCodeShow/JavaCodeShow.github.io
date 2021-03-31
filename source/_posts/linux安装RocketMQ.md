@@ -390,7 +390,37 @@ single-master    broker-a      0        192.168.1.3:10911     V4_6_0    …
 
 
 
-## 四、遇到的问题
+## 四、RocketMQ控制台安装
+
+下载代码并编译打包
+
+```
+git clone https://github.com/apache/rocketmq-externals
+cd rocketmq-console
+mvn clean package -Dmaven.test.skip=true
+```
+
+注意：打包前在```rocketmq-console```中配置```namesrv```集群地址：
+
+```sh
+rocketmq.config.namesrvAddr=139.224.103.236:9876
+```
+
+最好将server.port也修改一下。默认是8080。
+
+上传到linux服务器任意一个目录。
+
+启动rocketmq-console：
+
+```sh
+nohup java -jar rocketmq-console-ng-2.0.0.jar >/dev/null &
+```
+
+启动成功后，我们就可以通过浏览器访问`http://公网ip:port
+
+
+
+## 五、遇到的问题
 
 1. 启动broker失败
 
