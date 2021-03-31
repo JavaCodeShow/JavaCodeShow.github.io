@@ -29,10 +29,6 @@ tags:
 
     lsof -i:8080
 
-​	   如果该端口号没有在使用，则不会显示任何信息
-
-![image-20210326174602266](C:\Users\EDZ\AppData\Roaming\Typora\typora-user-images\image-20210326174602266.png)
-
 2. ### 对外部开放端口号
 
    **查询指定端口是否已经开放**
@@ -64,8 +60,6 @@ tags:
 ## 五、内存
 
 ​	free -h
-
-![image-20210326190655051](C:\Users\EDZ\AppData\Roaming\Typora\typora-user-images\image-20210326190655051.png)
 
 
 
