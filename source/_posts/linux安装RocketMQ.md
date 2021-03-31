@@ -22,7 +22,7 @@ Java(TM) SE Runtime Environment (build 1.8.0_131-b11)
 Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
 ```
 
-
+本人用的是阿里云服务器。JDK版本是1.8，maven版本是3.6.3
 
 ## 一、下载RocketMQ
 
@@ -355,11 +355,16 @@ nohup sh bin/mqbroker -c conf/broker.conf >/dev/null &
 
 注意：broker启动时不会读取broker.conf中的配置，尽管也可以启动，但是如果需要使得配置文件生效，必须通过-c参数进行指定。
 
-验证启动成功：
+验证启动成功
 
 ```
-jps -l
+[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# jps -l
+1354 org.apache.rocketmq.namesrv.NamesrvStartup
+1739 org.apache.rocketmq.broker.BrokerStartup
+[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# 
 ```
+
+
 
 ### 3.3.4 查看日志
 
@@ -387,7 +392,7 @@ single-master    broker-a      0        192.168.1.3:10911     V4_6_0    …
 
 
 
-问题：
+## 四、 遇到的问题
 
 1. 启动broker失败
 

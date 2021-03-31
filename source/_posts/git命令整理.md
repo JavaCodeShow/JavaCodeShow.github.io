@@ -11,28 +11,33 @@ tags:
 
 # git命令整理
 
-## 一、拉取当前分支的远程代码
+## 拉取当前分支的远程代码
 
 git pull ：将当前分支远程上的更新拉取下来
 
 
 
-## 二、获取本地所有分支远程代码的更新
+## 获取本地所有分支远程代码的更新
 
 git fetch：将远程上的更新拉取下来。不包括当前分支的更新。（仅仅是远程分支的更新）
 
 
 
-## 三、创建分支：
+## 修改本地指向远程仓库的地址
 
-1. git checkout branchName：单纯的创建了一个新的分支，并未与远程分支建立关系。
-2. git checkout -b branchName origin/branchName：在本地创建一个分支，并且这个分支与远程分支相关联。
+1. 查看本地远程仓库地址
 
+   ```
+   git remote -v
+   ```
 
+   
 
-## 四、本地分支与远程分支关联
+2. 修改仓库地址
 
-git branch  --set-upstream-to=origin/远程分支  本地分支
+   ```
+   git remote set-url origin https://hub.fastgit.org/1546844168/jiangfeng.github.io.git
+   ```
 
-例如：git branch --set-upstream-to=origin/feature-2.22.2-release  feature-2.22.2-release 
-；把本地dev分支和远程dev分支相关联。
+   
+
