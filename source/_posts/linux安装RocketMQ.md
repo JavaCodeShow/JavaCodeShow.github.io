@@ -202,7 +202,7 @@ rocketmq
 
 
 
-## 3.2 环境变量配置
+### 3.2 环境变量配置
 
 ```
 vim /etc/profile
@@ -225,7 +225,7 @@ source /etc/profile
 
 
 
-## 3.3 防火墙配置
+### 3.3 防火墙配置
 
 宿主机需要远程访问虚拟机的rocketmq服务和web服务，需要开放相关的端口号，简单粗暴的方式是直接关闭防火墙
 
@@ -259,9 +259,9 @@ firewall-cmd --reload
 
 
 
-## 3.3 单Master模式
+### 3.3 单Master模式
 
-### 3.3.1 创建消息存储路径
+#### 3.3.1 创建消息存储路径
 
 ```
 mkdir /data/rocketmq/single-master/broker-a/store
@@ -274,7 +274,7 @@ mkdir /data/rocketmq/single-master/broker-a/store/abort
 
 
 
-### 3.3.2  修改broker配置文件
+#### 3.3.2  修改broker配置文件
 
 ```
 vi /usr/java/rocketmq/conf/broker.conf
@@ -347,7 +347,7 @@ pullMessageThreadPoolNums=18
 
 
 
-### 3.3.3 启动
+#### 3.3.3 启动
 
 ```
 nohup sh bin/mqbroker -c conf/broker.conf >/dev/null &
@@ -364,9 +364,7 @@ nohup sh bin/mqbroker -c conf/broker.conf >/dev/null &
 [root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# 
 ```
 
-
-
-### 3.3.4 查看日志
+#### 3.3.4 查看日志
 
 如果启动失败，可以通过以下命令查看错误的具体信息：
 
@@ -374,7 +372,7 @@ nohup sh bin/mqbroker -c conf/broker.conf >/dev/null &
 tail -500f ~/logs/rocketmqlogs/broker.log
 ```
 
-### 3.3.5 查看集群列表信息
+#### 3.3.5 查看集群列表信息
 
 ```bash
 $ sh bin/mqadmin clusterList -n 139.224.103.236:9876
@@ -392,7 +390,7 @@ single-master    broker-a      0        192.168.1.3:10911     V4_6_0    …
 
 
 
-## 四、 遇到的问题
+## 四、遇到的问题
 
 1. 启动broker失败
 
