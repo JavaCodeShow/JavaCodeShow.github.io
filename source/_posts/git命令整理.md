@@ -36,7 +36,7 @@ git fetch：将远程上的更新拉取下来。不包括当前分支的更新�
 2. 修改仓库地址
 
    ```
-   git remote set-url origin https://hub.fastgit.org/1546844168/jiangfeng.github.io.git
+   git remote set-url origin https://github.91chifun.workers.dev//https://github.com/JavaCodeShow/JavaCodeShow.github.io.git
    ```
 
    

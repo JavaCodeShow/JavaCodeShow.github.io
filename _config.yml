@@ -13,8 +13,8 @@ keywords: "后端,开发者,程序猿,程序媛,极客,编程,代码,开源,IT�
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://1546844168.github.io/jiangfeng.github.io/
-root: /jiangfeng.github.io/
+url: https://JavaCodeShow.github.io/
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -108,7 +108,7 @@ theme: hexo-theme-matery
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://hub.fastgit.org/1546844168/jiangfeng.github.io.git
+  repository: https://github.com/JavaCodeShow/JavaCodeShow.github.io.git
   branch: master
 
 # 使用 hexo-generator-search 的 Hexo 插件来做内容搜索
