@@ -1,7 +1,7 @@
 ---
 author: 江峰
 title: "RocketMQ生产消息，消费消息的几种案例"
-date: 2021-01-01 16:51
+date: 2021-04-01 16:51
 comments: true
 categories: RocketMQ
 summary: 本文对RocketMQ发送消息的几种案例进行了简单的介绍和示例。用来参考和回顾再好不过了。
