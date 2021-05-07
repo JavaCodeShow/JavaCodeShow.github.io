@@ -65,7 +65,7 @@ RocketMQ里面有消费者组的概念。
 ### 2.1 集群模式
 
 ```java
-consumer.setMessageModel(MessageModel.BROADCASTING);
+consumer.setMessageModel(MessageModel.CLUSTERING);
 ```
 
 在此模式下，当多个消费者在同一个消费者组时，这些消费者里面只会有一个消费者能够消费消息。
