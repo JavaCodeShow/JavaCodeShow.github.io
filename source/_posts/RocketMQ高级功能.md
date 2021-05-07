@@ -87,7 +87,7 @@ Master角色的Broker支持读和写，Slave角色的Broker仅支持读，也就
 
 Producer端，每个实例在发消息的时候，默认会轮询所有的message queue发送，以达到让消息平均落在不同的queue上。而由于queue可以散落在不同的broker，所以消息就发送到不同的broker下，如下图：
 
-![](E:/java/RocketMQ/文档/img/producer负载均衡.png)
+![](https://img-blog.csdnimg.cn/20210507160454111.png)
 
 图中箭头线条上的标号代表顺序，发布方会把第一条消息发送至 Queue 0，然后第二条消息发送至 Queue 1，以此类推。
 
