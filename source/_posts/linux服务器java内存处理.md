@@ -1,12 +1,13 @@
 ---
 author: 江峰
 title: "java应用服务器内存处理"
-date: 2020-05-11 22:15
+date: 2022-06-10 22:15
 comments: true
 categories: linux
-summary: 处理服务器内存问题。
+summary: 服务器1核2G，内存太小了，只能省吃俭用了。
 tags: 
-	- 处理服务器内存问题
+	- linux
+	- java
 ---
 
 # java服务器内存处理
