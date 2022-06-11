@@ -68,15 +68,17 @@ lsof -p PID | grep cwd
 ## 指定JVM内存运行java包
 
 ```
-nohup java -jar -Xms64M -Xmx64M -XX:PermSize=64M -XX:MaxPermSize=64M microservicecloud-eureka-server-7001-1.0-SNAPSHOT.jar  >/dev/null &
+nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn32m  microservicecloud-eureka-server-7001-1.0-SNAPSHOT.jar  >/dev/null &
 
 ```
 
 >  Xms : 堆内存初始大小
 >
->  Xmx : 堆内存最大值 PermSize : 
+>  Xmx : 堆内存最大值
 >
-> 永久内存初始大小 MaxPermSize ：
+>  Xmn：年轻代大小
 >
->  永久内存最大值 
+>  MetaspaceSize: 元空间大小
+>
+>  MaxMetaspaceSize ：最大元空间大小
 
