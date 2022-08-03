@@ -20,6 +20,8 @@ node的版本号一定要正确，不然可能会出现版本不适配等一系�
 
 node下载：https://nodejs.org/download/release/v12.18.3/
 
+下载文件为：node-v12.18.3-x64.msi 
+
 ```
 git version
 node -v
@@ -40,10 +42,22 @@ npm cache clean --force
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 ```
 
+## 重新生成node_modules
+
+```
+rm -rf node_modules && npm install --force
+```
+
 ## 安装hexo
 
 ```
 npm install -g hexo-cli
+```
+
+## 部署插件
+
+```
+npm install hexo-deployer-git --save
 ```
 
 ## 使用以及部署
