@@ -4,20 +4,18 @@ title: "docker启动ElasticSearch"
 date: 2022-08-03 22:15
 comments: true
 categories: docker
-summary: 通过docker启动ElasticSearch。
+summary: 通过docker启动ElasticSearch
 tags: 
 	- docker
 
 ---
-
-https://blog.csdn.net/qq_36079077/article/details/112858403
 
 # docker启动ElasticSearch
 
 1. 查询ElasticSearch镜像
 
    ```
-   docker search elasticsearch:7.6.0 
+   docker search elasticsearch:7.6.0
    ```
 
 2. 从docker hub拉取最新镜像
@@ -32,72 +30,98 @@ https://blog.csdn.net/qq_36079077/article/details/112858403
    docker images  | grep elasticsearch
    ```
 
-4. 创建实例
-   ```
-   mkdir -p /mydata/elasticsearch/config # 在mydata文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置
-mkdir -p /mydata/elasticsearch/data #在mydata文件夹下创建es的data文件夹
-echo "http.host:0.0.0.0" >> /mydata/elasticsearch/config/elasticsearch.yml # [http.host:0.0.0.0]允许任何远程机器访问es，并将其写入es的配置文件中
-chmod -R 777 /mydata/elasticsearch/ # 保证权限问题
+4. 配置文件
+
+   在mydata（系统根目录即可）文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置
 
    ```
+   mkdir -p /mydata/elasticsearch/config
+   ```
+
+   在mydata文件夹下创建es的data文件夹
+
+   ```
+   mkdir -p /mydata/elasticsearch/data
+   ```
+
+   [http.host:0.0.0.0]允许任何远程机器访问es，并将其写入es的配置文件中
+
+   ```
+   echo "http.host: 0.0.0.0" >> /mydata/elasticsearch/config/elasticsearch.yml
+   ```
+
+   查看配置文件
+
+   ```
+   cat /mydata/elasticsearch/config/elasticsearch.yml
+   ```
+
+   
+
+   保证权限问题
+
+   ```
+   chmod -R 777 /mydata/elasticsearch
+   ```
+
+   
+
 5. 使用docker运行ElasticSearch
 
    ```
-   docker run -p 3306:3306 --name ElasticSearch-3306 -e ElasticSearch_ROOT_PASSWORD=123456 -d ElasticSearch
+   docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+   -e "discovery.type=single-node" \
+   -e ES_JAVA_OPTS="-Xms64m -Xmx128m" \
+   -v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+   -v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
+   -v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+   -d elasticsearch:7.6.0
    ```
 
    命令解释说明：
 
-   -p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。
-
-   --name ElasticSearch-3306  指定该容器名称，查看和进行操作都比较方便。
-
-   -e ElasticSearch_ROOT_PASSWORD=123456：docker的ElasticSearch默认的root密码是随机的，这是改一下默认的root用户密码
-
-   -d ElasticSearch：在后台运行ElasticSearch镜像产生的容器
-
-   
-
-5. 查看是否运行成功
-
-   ```
-   docker ps | grep ElasticSearch
-   ```
+   docker run --name elasticsearch 创建一个es容器并起一个名字；
+   -p 9200:9200 将linux的9200端口映射到docker容器的9200端口，用来给es发送http请求
+   -p 9300:9300 9300是es在分布式集群状态下节点之间的通信端口  \ 换行符
+   -e 指定一个参数，当前es以单节点模式运行
+   *注意，ES_JAVA_OPTS非常重要，指定开发时es运行时的最小和最大内存占用为64M和128M，否则就会占用全部可用内存
+   -v 挂载命令，将虚拟机中的路径和docker中的路径进行关联
+   -d 后台启动服务
 
    
 
-6. 通过navicat连接ElasticSearch出现2059的问题
+6. 查看是否运行成功
 
-   **原因**：8.0之后ElasticSearch更改了密码的加密规则，只要在命令窗口把加密方法改回去即可。
+   ```
+   docker ps | grep elasticsearch
+   ```
 
-   **解决办法**：
+7. 查看启动日志
 
-   1. 进入到docker容器里面的ElasticSearch
+   ```
+   docker logs elasticsearch
+   ```
 
-      ```
-      docker exec -it ElasticSearch-3306 bash
-      ```
+8. 浏览器访问ES
 
-   2. 进去之后不用切换目录。直接输入下面的命令登录ElasticSearch
+   在浏览器地址栏访问http://ip:9200/，可以看到 es 启动成功后返回类似下面的数据：
 
-      ```
-      ElasticSearch -uroot -p123456
-      ```
-
-   3. 然后运行以下SQL
-
-      ```
-      alter user 'root'@'%' identified by '123456' password expire never;
-      alter user 'root'@'%' identified with ElasticSearch_native_password by '123456';
-      flush privileges;
-      ```
-
-   4. 重新启动docker里面的ElasticSearch容器
-
-      ```
-      docker restart ElasticSearch-3306
-      ```
-
-      
-
-7. 通过navicat客户端重新连接即可
+   ```
+   {
+     "name": "3717e262d33f",
+     "cluster_name": "elasticsearch",
+     "cluster_uuid": "njGUk4ruRDSQHT4xZTzB3A",
+     "version": {
+       "number": "7.6.0",
+       "build_flavor": "default",
+       "build_type": "docker",
+       "build_hash": "7f634e9f44834fbc12724506cc1da681b0c3b1e3",
+       "build_date": "2020-02-06T00:09:00.449973Z",
+       "build_snapshot": false,
+       "lucene_version": "8.4.0",
+       "minimum_wire_compatibility_version": "6.8.0",
+       "minimum_index_compatibility_version": "6.0.0-beta1"
+     },
+     "tagline": "You Know, for Search"
+   }
+   ```
