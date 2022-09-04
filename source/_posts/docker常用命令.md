@@ -121,7 +121,21 @@ tags:
     nginx
     ```
 
+15. 复制文件
 
+    把容器指定位置的东西复制出来
+
+    ```
+     docker cp 5eff66eec7e1:/etc/nginx/nginx.conf  /data/conf/nginx.conf
+    ```
+
+    把外面的内容复制到容器里面
+
+    ```
+    docker cp  /data/conf/nginx.conf  5eff66eec7e1:/etc/nginx/nginx.conf
+    ```
+
+    
 
 ## 打包为新的镜像
 
