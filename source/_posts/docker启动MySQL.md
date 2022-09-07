@@ -20,10 +20,10 @@ tags:
    docker search mysql
    ```
 
-2. 从docker hub拉取最新镜像
+2. 从docker hub拉取镜像
 
    ```
-   docker pull mysql
+   docker pull mysql:8.0.28
    ```
 
 3. 查看mysql镜像
@@ -32,10 +32,34 @@ tags:
    docker images  | grep mysql
    ```
 
-4. 使用docker运行mysql
+4. 复制文件
 
    ```
-   docker run -p 3306:3306 --name mysql-3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql
+   #创建目录
+   mkdir -p /usr/java/docker/mysql/conf && mkdir -p /usr/java/docker/mysql/data && mkdir -p /usr/java/docker/mysql/logs
+   
+   #启动容器，为了复制文件
+   docker run -p 3306:3306 --name mysql -d -e MYSQL_ROOT_PASSWORD=“123456” mysql:8.0.28
+   
+   #复制文件
+   docker cp mysql:/etc/mysql/my.cnf /usr/java/docker/mysql/conf
+   
+   #删除容器
+   docker rm -f mysql
+   ```
+
+5. 使用docker运行mysql
+
+   ```
+   docker run -p 3306:3306 --name mysql \
+   -v /usr/java/docker/mysql/logs:/var/log/mysql \
+   -v /usr/java/docker/mysql/data:/var/lib/mysql \
+   -v /usr/java/docker/mysql/conf:/etc/mysql/conf.d \
+   -e MYSQL_ROOT_PASSWORD=123456 \
+   --restart=always \
+   --privileged=true \
+   -d \
+   mysql
    ```
 
    命令解释说明：
@@ -50,7 +74,7 @@ tags:
 
    
 
-5. 查看是否运行成功
+6. 查看是否运行成功
 
    ```
    docker ps | grep mysql
@@ -58,7 +82,7 @@ tags:
 
    
 
-6. 通过navicat连接mysql出现2059的问题
+7. 通过navicat连接mysql出现2059的问题
 
    **原因**：8.0之后mysql更改了密码的加密规则，只要在命令窗口把加密方法改回去即可。
 
@@ -67,7 +91,7 @@ tags:
    1. 进入到docker容器里面的mysql
 
       ```
-      docker exec -it mysql-3306 bash
+      docker exec -it mysql bash
       ```
 
    2. 进去之后不用切换目录。直接输入下面的命令登录MySQL
@@ -87,9 +111,9 @@ tags:
    4. 重新启动docker里面的mysql容器
 
       ```
-      docker restart mysql-3306
+      docker restart mysql
       ```
 
       
 
-7. 通过navicat客户端重新连接即可
+8. 通过navicat客户端重新连接即可
