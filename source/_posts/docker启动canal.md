@@ -12,6 +12,33 @@ tags:
 
 # docker启动Canal
 
+
+
+1. 先安装mysql:
+
+   ```
+   show variables like 'log_bin';
+   
+   show binary logs;
+   
+   
+   show master status;
+   ```
+
+2. ```
+   CREATE USER canal IDENTIFIED BY 'canal';    
+   GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'canal'@'%';  
+   -- GRANT ALL PRIVILEGES ON *.* TO 'canal'@'%' ;  
+   FLUSH PRIVILEGES; 
+   
+   show grants for 'canal' 
+   
+   ```
+
+3. 
+
+
+
 1. 查询Canal镜像
 
    ```
@@ -60,11 +87,8 @@ tags:
 7. 修改完成后，将之前的canal容器关闭，重新起一个新的容器
 
    ```
-   #关闭容器
-   docker stop canal
-    
-   #移除容器
-   docker rm canal
+   #强制移除容器
+   docker rm -f canal
     
    #启动新的 这里-v是将外部的文件挂载到容器内部 这样就不用每次启动都要配置参数了
    docker run --name canal -p 11111:11111 -d \
@@ -73,7 +97,7 @@ tags:
    -v /usr/java/docker/canal/logs/:/home/admin/canal-server/logs/ \
    canal/canal-server
    ```
-
+   
 8. 查看是否运行成功
 
    ```
