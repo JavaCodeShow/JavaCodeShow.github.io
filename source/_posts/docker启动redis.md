@@ -81,17 +81,19 @@ tags:
 
    命令解释说明：
 
-   -p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。
-
-   --name redis指定该容器名称，查看和进行操作都比较方便。
-
-   -v 挂载目录，规则与端口映射相同。
-
-   为什么需要挂载目录：个人认为docker是个沙箱隔离级别的容器，这个是它的特点及安全机制，不能随便访问外部（主机）资源目录，所以需要这个挂载目录机制。
-
-   -d redis 表示后台启动redis
-
-   redis-server /etc/redis/redis.conf  以配置文件启动redis，加载容器内的conf文件，最终找到的是挂载的目录/usr/local/docker/redis/redis.conf
+   >-p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。
+   >
+   >--name redis指定该容器名称，查看和进行操作都比较方便。
+   >
+   >-v 挂载目录，规则与端口映射相同。
+   >
+   >为什么需要挂载目录：个人认为docker是个沙箱隔离级别的容器，这个是它的特点及安全机制，不能随便访问外部（主机）资源目录，所以需要这个挂载目录机制。
+   >
+   >-d redis 表示后台启动redis
+   >
+   >redis-server /etc/redis/redis.conf  以配置文件启动redis，加载容器内的conf文件，最终找到的是挂载的目录/usr/local/docker/redis/redis.conf
+   >
+   >–appendonly yes：redis启动后数据持久化
 
 8. 查看是否运行成功
 
