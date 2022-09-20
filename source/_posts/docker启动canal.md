@@ -14,17 +14,16 @@ tags:
 
 
 
-1. 先安装mysql:
+1. 先安装mysql，见：https://007code.cn/2020/05/22/docker-qi-dong-mysql/
 
    ```
    show variables like 'log_bin';
    
    show binary logs;
    
-   
    show master status;
    ```
-
+   
 2. ```
    CREATE USER canal IDENTIFIED BY 'canal';    
    GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'canal'@'%';  
