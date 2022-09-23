@@ -17,11 +17,11 @@ tags:
 ## 引入mavne依赖
 
 ```
-        <dependency>
-            <groupId>com.alicp.jetcache</groupId>
-            <artifactId>jetcache-starter-redis</artifactId>
-            <version>2.6.4</version>
-        </dependency>
+<dependency>
+	<groupId>com.alicp.jetcache</groupId>
+	<artifactId>jetcache-starter-redis</artifactId>
+	<version>2.6.4</version>
+</dependency>
 ```
 
 ## 添加配置文件
