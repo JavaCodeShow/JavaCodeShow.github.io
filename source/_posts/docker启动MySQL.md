@@ -66,7 +66,7 @@ tags:
 
    -p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。
 
-   --name mysql-3306  指定该容器名称，查看和进行操作都比较方便。
+   --name mysql  指定该容器名称，查看和进行操作都比较方便。
 
    -e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码
 
