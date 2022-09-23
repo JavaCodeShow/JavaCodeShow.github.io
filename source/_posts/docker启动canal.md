@@ -12,6 +12,8 @@ tags:
 
 # docker启动Canal
 
+备注：该文章暂时还有点问题，请勿阅读。
+
 ## 一、安装MySQL：
 
 参考文章：https://007code.cn/2020/05/22/docker-qi-dong-mysql/
@@ -33,10 +35,10 @@ tags:
    server_id=1
    ```
 
-3. 查看biglog是否生效
+3. 查看binlog是否生效
 
    ```
-   #是否开启biglog
+   #是否开启binlog
    show variables like 'log_bin';
    
    #查看biglog文件
