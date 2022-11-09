@@ -59,7 +59,7 @@ tags:
    --restart=always \
    --privileged=true \
    -d \
-   mysql
+   mysql:8.0.28
    ```
 
    命令解释说明：
@@ -70,7 +70,7 @@ tags:
 
    -e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码
 
-   -d mysql：在后台运行mysql镜像产生的容器
+   -d mysql:8.0.28   在后台运行mysql镜像产生的容器
 
    
 
