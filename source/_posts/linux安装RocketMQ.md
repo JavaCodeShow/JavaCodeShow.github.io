@@ -390,7 +390,7 @@ pullMessageThreadPoolNums=18
 [root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# 
 ```
 
-#### 3.3.4 查看集群列表信息
+#### 3.3.4 查看集群列表信息（集群中使用）
 
 ```bash
 $ sh bin/mqadmin clusterList -n 1.15.226.249:9876
@@ -434,7 +434,7 @@ rocketmq.config.namesrvAddr=1.15.226.249:9876
 nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn32m rocketmq-console-ng-1.0.0.jar >/dev/null &
 ```
 
-启动成功后，我们就可以通过浏览器访问`http://公网ip:port
+启动成功后，我们就可以通过浏览器访问：http://公网ip:port
 
 
 
