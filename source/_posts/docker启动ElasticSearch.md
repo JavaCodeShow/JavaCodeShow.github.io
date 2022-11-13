@@ -15,7 +15,7 @@ tags:
 1. 查询ElasticSearch镜像
 
    ```
-   docker search elasticsearch:7.6.0
+   docker search elasticsearch
    ```
 
 2. 从docker hub拉取最新镜像
@@ -27,7 +27,7 @@ tags:
 3. 查看ElasticSearch镜像
 
    ```
-   docker images  | grep elasticsearch
+   docker images | grep elasticsearch
    ```
 
 4. 配置文件
@@ -35,31 +35,31 @@ tags:
    在mydata（系统根目录即可）文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置
 
    ```
-   mkdir -p /mydata/elasticsearch/config
+   mkdir -p /usr/java/docker/elasticsearch/config
    ```
 
    在mydata文件夹下创建es的data文件夹
 
    ```
-   mkdir -p /mydata/elasticsearch/data
+   mkdir -p /usr/java/docker/elasticsearch/data
    ```
 
    [http.host:0.0.0.0]允许任何远程机器访问es，并将其写入es的配置文件中
 
    ```
-   echo "http.host: 0.0.0.0" >> /mydata/elasticsearch/config/elasticsearch.yml
+   echo "http.host: 0.0.0.0" >> /usr/java/docker/elasticsearch/config/elasticsearch.yml
    ```
 
    查看配置文件
 
    ```
-   cat /mydata/elasticsearch/config/elasticsearch.yml
+   cat /usr/java/docker/elasticsearch/config/elasticsearch.yml
    ```
 
    保证权限问题
 
    ```
-   chmod -R 777 /mydata/elasticsearch
+   chmod -R 777 /usr/java/docker/elasticsearch
    ```
 
    
@@ -70,9 +70,9 @@ tags:
    docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
    -e "discovery.type=single-node" \
    -e ES_JAVA_OPTS="-Xms64m -Xmx128m" \
-   -v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
-   -v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
-   -v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+   -v /usr/java/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+   -v /usr/java/docker/elasticsearch/data:/usr/share/elasticsearch/data \
+   -v /usr/java/docker/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
    -d elasticsearch:7.6.0
    ```
 
