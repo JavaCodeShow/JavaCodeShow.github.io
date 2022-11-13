@@ -32,13 +32,13 @@ tags:
 
 4. 配置文件
 
-   在mydata（系统根目录即可）文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置
+   在/usr/java/docker文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置
 
    ```
    mkdir -p /usr/java/docker/elasticsearch/config
    ```
 
-   在mydata文件夹下创建es的data文件夹
+   在/usr/java/docker文件夹下创建es的data文件夹
 
    ```
    mkdir -p /usr/java/docker/elasticsearch/data
