@@ -428,10 +428,10 @@ rocketmq.config.namesrvAddr=1.15.226.249:9876
 
 上传到linux服务器任意一个目录。
 
-启动rocketmq-console：
+启动rocketmq-console：注意jar包的名称需要改为自己的jar包名称
 
 ```sh
-nohup java -jar rocketmq-console-ng-2.0.0.jar >/dev/null &
+nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn32m rocketmq-console-ng-1.0.0.jar >/dev/null &
 ```
 
 启动成功后，我们就可以通过浏览器访问`http://公网ip:port
