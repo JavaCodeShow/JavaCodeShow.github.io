@@ -26,7 +26,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
 
 ## 一、下载RocketMQ
 
-该地址列出了RocketMQ所有发布的版本：https://github.com/apache/rocketmq/releases
+该地址列出了RocketMQ所有发布的版本：https://archive.apache.org/dist/rocketmq/
 
 这里将RocketMQ安装到Linux文件系统的/usr/java/rocketmq目录
 
@@ -34,16 +34,10 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
 cd /usr/java/rocketmq
 ```
 
-从国内镜像下载：
-
-```bash
-$ wget https://mirrors.tuna.tsinghua.edu.cn/apache/rocketmq/4.8.0/rocketmq-all-4.8.0-bin-release.zip
-```
-
 下载之后进行解压缩：
 
 ```bash
-$ unzip rocketmq-all-4.8.0-bin-release.zip
+unzip rocketmq-all-4.8.0-bin-release.zip
 ```
 
 这边将目录名字修改一下,解压完毕也就不需要了，删除zip包
@@ -52,8 +46,6 @@ $ unzip rocketmq-all-4.8.0-bin-release.zip
 rm -rf rocketmq-all-4.8.0-bin-release.zip
 mv rocketmq-all-4.8.0-bin-release rocketmq
 ```
-
-
 
 解压目录说明
 
@@ -88,7 +80,7 @@ rocketmq
 
 ### 2.2 启动Broker
 
-* 启动NameServer
+* 启动broker
 
   ```
   nohup sh bin/mqbroker -n localhost:9876 >/dev/null &
@@ -131,21 +123,19 @@ rocketmq
 
 ### 2.4 测试RocketMQ
 
-* 发送消息
+* 发送消息：使用安装包的Demo发送消息
 
   ```
-  使用安装包的Demo发送消息
   sh bin/tools.sh org.apache.rocketmq.example.quickstart.Producer
   ```
-
+  
 * 接收消息
 
   ```
-  接收消息
   sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer
   ```
-
   
+
 
 ### 2.5 关闭RocketMQ
 
@@ -263,13 +253,16 @@ firewall-cmd --reload
 
 #### 3.3.1 创建消息存储路径
 
+系统根目录执行一下命令
+
 ```
-mkdir /data/rocketmq/single-master/broker-a/store
-mkdir /data/rocketmq/single-master/broker-a/store/commitlog
-mkdir /data/rocketmq/single-master/broker-a/store/consumequeue
-mkdir /data/rocketmq/single-master/broker-a/store/index
-mkdir /data/rocketmq/single-master/broker-a/store/checkpoint
-mkdir /data/rocketmq/single-master/broker-a/store/abort
+cd /
+mkdir -p /data/rocketmq/single-master/broker-a/store
+mkdir -p /data/rocketmq/single-master/broker-a/store/commitlog
+mkdir -p /data/rocketmq/single-master/broker-a/store/consumequeue
+mkdir -p /data/rocketmq/single-master/broker-a/store/index
+mkdir -p /data/rocketmq/single-master/broker-a/store/checkpoint
+mkdir -p /data/rocketmq/single-master/broker-a/store/abort
 ```
 
 
@@ -288,9 +281,9 @@ brokerName=broker-a
 #0 表示 Master，>0 表示 Slave
 brokerId=0
 #nameServer地址，分号分割
-namesrvAddr=139.224.103.236:9876
+namesrvAddr=1.15.226.249:9876
 # 你的公网IP
-brokerIP1=139.224.103.236
+brokerIP1=1.15.226.249
 #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
 defaultTopicQueueNums=4
 #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
@@ -312,17 +305,17 @@ mapedFileSizeConsumeQueue=300000
 #检测物理文件磁盘空间
 diskMaxUsedSpaceRatio=88
 #存储路径
-#storePathRootDir=/data/rocketmq/single-master/broker-a/store
+storePathRootDir=/data/rocketmq/single-master/broker-a/store
 #commitLog 存储路径
-#storePathCommitLog=/data/rocketmq/single-master/broker-a/store/commitlog
+storePathCommitLog=/data/rocketmq/single-master/broker-a/store/commitlog
 #消费队列存储路径存储路径
-#storePathConsumeQueue=/data/rocketmq/single-master/broker-a/store/consumequeue
+storePathConsumeQueue=/data/rocketmq/single-master/broker-a/store/consumequeue
 #消息索引存储路径
-#storePathIndex=/data/rocketmq/single-master/broker-a/store/index
+storePathIndex=/data/rocketmq/single-master/broker-a/store/index
 #checkpoint 文件存储路径
-#storeCheckpoint=/data/rocketmq/single-master/broker-a/store/checkpoint
+storeCheckpoint=/data/rocketmq/single-master/broker-a/store/checkpoint
 #abort 文件存储路径
-#abortFile=/data/rocketmq/single-master/broker-a/store/abort
+abortFile=/data/rocketmq/single-master/broker-a/store/abort
 #限制的消息大小
 maxMessageSize=65536
 #flushCommitLogLeastPages=4
@@ -349,9 +342,42 @@ pullMessageThreadPoolNums=18
 
 #### 3.3.3 启动
 
-```
-nohup sh bin/mqbroker -c conf/broker.conf >/dev/null &
-```
+* 启动NameServer
+
+  ```
+  nohup sh bin/mqnamesrv >/dev/null &
+  ```
+
+* 查看NameServer启动日志
+
+  ```
+  tail -500f ~/logs/rocketmqlogs/namesrv.log
+  ```
+
+* 启动broker
+
+  ```
+  nohup sh bin/mqbroker -c conf/broker.conf >/dev/null &
+  ```
+
+* 查看Broker启动日志
+
+  ```
+  tail -500f ~/logs/rocketmqlogs/broker.log 
+  ```
+
+* 关闭NameServer
+
+  ```
+  sh bin/mqshutdown namesrv
+  ```
+
+* 关闭Broker
+
+  ```
+  sh bin/mqshutdown broker
+  ```
+
 
 注意：broker启动时不会读取broker.conf中的配置，尽管也可以启动，但是如果需要使得配置文件生效，必须通过-c参数进行指定。
 
@@ -364,18 +390,10 @@ nohup sh bin/mqbroker -c conf/broker.conf >/dev/null &
 [root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# 
 ```
 
-#### 3.3.4 查看日志
-
-如果启动失败，可以通过以下命令查看错误的具体信息：
+#### 3.3.4 查看集群列表信息
 
 ```bash
-tail -500f ~/logs/rocketmqlogs/broker.log
-```
-
-#### 3.3.5 查看集群列表信息
-
-```bash
-$ sh bin/mqadmin clusterList -n 139.224.103.236:9876
+$ sh bin/mqadmin clusterList -n 1.15.226.249:9876
 #Cluster Name    #Broker Name   #BID        #Addr           #Version   #...(略)
 single-master    broker-a      0        192.168.1.3:10911     V4_6_0    …
 ```
@@ -403,7 +421,7 @@ mvn clean package -Dmaven.test.skip=true
 注意：打包前在```rocketmq-console```中配置```namesrv```集群地址：
 
 ```sh
-rocketmq.config.namesrvAddr=139.224.103.236:9876
+rocketmq.config.namesrvAddr=1.15.226.249:9876
 ```
 
 最好将server.port也修改一下。默认是8080。
@@ -445,9 +463,9 @@ nohup java -jar rocketmq-console-ng-2.0.0.jar >/dev/null &
 
    ```
    # 你的公网IP
-   namesrvAddr=139.224.103.236:9876
+   namesrvAddr=1.15.226.249:9876
    # 你的公网IP，不指定就是127.0.0.1。而127.0.0.1在外网环境中无法访问。
-   brokerIP1=139.224.103.236
+   brokerIP1=1.15.226.249
    ```
 
    rocketmq控制台也是如此。需要指定namesrvAddr的外网ip。
