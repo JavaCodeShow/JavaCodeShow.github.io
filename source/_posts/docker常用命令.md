@@ -54,7 +54,10 @@ tags:
 6. 查看容器运行日志
 
    ```
-    docker logs 容器名称/容器id
+   docker logs 容器名称/容器id
+    
+   #实时查看运行的日志
+   docker logs 容器名称/容器id -f
    ```
 
 7. 停止容器运行
@@ -78,13 +81,13 @@ tags:
 10. 删除容器
 
     1. 删除没有运行的容器
-    
+
        ```
        docker rm 容器name/容器id
        ```
-    
+
     2. 强制删除正在运行的容器
-    
+
        ```
        docker rm -f 容器name/容器id
        ```
@@ -96,7 +99,7 @@ tags:
     2. apt-get install vim
     ```
 
-12.  docker修改容器开机自启
+12. docker修改容器开机自启
 
     ```
     docker update 容器id/名字 --restart=always
@@ -135,7 +138,17 @@ tags:
     docker cp  /data/conf/nginx.conf  5eff66eec7e1:/etc/nginx/nginx.conf
     ```
 
-    
+16. 限制容器内存
+
+    ```
+    docker run -m 512m --name=nginx 省略xxx
+    ```
+
+17. 查看容器占用内存、CPU等基本信息
+
+    ```
+    docker stats
+    ```
 
 ## 打包为新的镜像
 

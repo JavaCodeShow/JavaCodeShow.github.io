@@ -40,7 +40,7 @@ echo 3 > /proc/sys/vm/drop_caches
 ## 查看java内存占用
 
 ```
-top -o %MEM -b -n 1 | grep java | awk '{print "PID: "$1" \t 虚拟内存: "$5 / 1024"M \t 物理内存: "$6 / 1024"M \t 共享内存: "$7 / 1024"M \t CPU使用率: "$9"% \t 内存使用率: "$10"%"}'
+top -o %MEM -b -n 1 | grep java | awk '{print "PID: "$1" \t 虚拟内存: "$5 / 1024"M \t 物理内存(实际占用内存): "$6 / 1024"M \t 共享内存: "$7 / 1024"M \t CPU使用率: "$9"% \t 内存使用率: "$10"%"}'
 ```
 
 显示如下：
