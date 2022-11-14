@@ -107,7 +107,7 @@ rocketmq
 * 参考设置：
 
   ``` 
-  JAVA_OPT="${JAVA_OPT} -server -Xms256m -Xmx256m -Xmn128m -XX:MetaspaceSize=128m  -XX:MaxMetaspaceSize=320m"
+  JAVA_OPT="${JAVA_OPT} -server -Xms128m -Xmx128m -Xmn64m -XX:MetaspaceSize=64m  -XX:MaxMetaspaceSize=128m"
   ```
 
 改完保存重新启动即可。查看启动日志验证是否成功。

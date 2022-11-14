@@ -39,16 +39,16 @@ tags:
 4. 使用docker运行nacos
 
    ```
-   docker run -d -p 8848:8848 --env MODE=standalone  -e JVM_XMS=256m -e JVM_XMX=256m  --name nacos-8848   nacos/nacos-server
+   docker run -d -p 8848:8848 --env MODE=standalone  -e JVM_XMS=128m -e JVM_XMX=128m  --name nacos   nacos/nacos-server
    ```
 
    命令解释说明：
 
    -p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。
 
-   --name nacos-8848  指定该容器名称，查看和进行操作都比较方便。
+   --name nacos 指定该容器名称，查看和进行操作都比较方便。
 
-   -e JVM_XMS=256m -e JVM_XMX=256m  给nacos分配jvm的内存。内存够的话可以不加这一行
+   -e JVM_XMS=64m -e JVM_XMX=64m  给nacos分配jvm的内存。内存够的话可以不加这一行
 
    --env MODE=standalone  单机模式启动
 
@@ -59,7 +59,6 @@ tags:
    ```
 
    
-
 
 
 

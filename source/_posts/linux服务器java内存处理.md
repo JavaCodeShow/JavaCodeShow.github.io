@@ -68,7 +68,7 @@ lsof -p PID | grep cwd
 ## 指定JVM内存运行java包
 
 ```
-nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn32m  microservicecloud-eureka-server-7001-1.0-SNAPSHOT.jar  >/dev/null &
+nohup java -jar -XX:MetaspaceSize=32m -XX:MaxMetaspaceSize=64m -Xms64m -Xmx64m -Xmn32m  microservicecloud-eureka-server-7001-1.0-SNAPSHOT.jar  >/dev/null &
 
 ```
 
