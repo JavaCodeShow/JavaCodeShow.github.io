@@ -48,7 +48,7 @@ tags:
 
    --name nacos 指定该容器名称，查看和进行操作都比较方便。
 
-   -e JVM_XMS=64m -e JVM_XMX=64m  给nacos分配jvm的内存。内存够的话可以不加这一行
+   -e JVM_XMS=128m -e JVM_XMX=128m  给nacos分配jvm的内存。内存够的话可以不加这一行
 
    --env MODE=standalone  单机模式启动
 
