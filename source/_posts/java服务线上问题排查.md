@@ -3,15 +3,17 @@ author: 江峰
 title: "java服务线上问题排查"
 date: 2022-11-15 22:15
 comments: true
-categories: 问题排查
+categories: 线上问题排查
 summary: 对处理java服务线上问题的常用排查技巧进行整理，方便后续处理线上问题。
 tags: 
-	- 问题排查
+	- 线上问题排查
 ---
 
 # java服务线上问题排查
 
-## 一、查看服务占用内存
+## 1、内存
+
+### 1.1、 查看服务占用内存
 
 1. 可以通过prometheus查看，此处不做过多说明。
 
@@ -54,12 +56,12 @@ tags:
    PID: 10799       虚拟内存: 2110.75M      物理内存: 194.641M      共享内存: 13.418M       CPU使用率: 0.0%         内存使用率: 10.6%
    PID: 28249       虚拟内存: 2508.25M      物理内存: 194.316M      共享内存: 6.32031M      CPU使用率: 0.0%         内存使用率: 10.6%
    PID: 25613       虚拟内存: 2331.65M      物理内存: 169.684M      共享内存: 5.15625M      CPU使用率: 0.0%         内存使用率: 9.2%
-   [root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# 
+   [root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# 	
    ```
 
-## 二、服务OOM如何排查
+### 1.2、服务OOM如何排查
 
-### 	1. 获取dump文件
+#### 1.2.1、获取dump文件
 
 1. 主动导出dump文件
 
@@ -78,25 +80,29 @@ tags:
       jmap -dump:format=b,file=/usr/local/dump/heapdump.hprof 14709
       ```
 
-2. 发生OOM时导出dump文件
+#### 1.2.2、OOM时导出dump文件
 
-   1. 我们可以添加 **-XX:+HeapDumpOnOutOfMemoryError** 参数开启“**当堆内存空间溢出时输出堆的内存快照**”功能，而 **-XX:HeapDumpPath** 参数则指定生成的堆转储存放位置。
+1. 我们可以添加 **-XX:+HeapDumpOnOutOfMemoryError** 参数开启“**当堆内存空间溢出时输出堆的内存快照**”功能，而 **-XX:HeapDumpPath** 参数则指定生成的堆转储存放位置，可以不填路径，只填文件名，说明是当前目录。
 
-      ```
-      -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/local/dump/
-      ```
+   ```
+   #指定dump文件存放位置
+   -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/local/dump/
+   
+   #在当前服务的的根目录下面存放dump文件
+   -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=testDump.hprof
+   ```
 
-1. 分析dump文件
+#### 1.2.3、分析dump文件
 
-   1. 如果是 **Windows** 系统我们也可以直接使用JDK自带的 **jvisualvm** 工具（在 **JDK** 的 **bin** 目录下：jvisualvm.exe）
+1. 如果是 **Windows** 系统我们也可以直接使用JDK自带的 **jvisualvm** 工具（在 **JDK** 的 **bin** 目录下：jvisualvm.exe）
 
-      ![](https://cdn.nlark.com/yuque/0/2022/png/32668413/1668525503344-cff5c1d2-6e45-47a8-be43-586ca9cde4f0.png)
+   目录位置：%JAVA_HOME%\bin,如果不确定JAVA_HOME的位置，可以在cmd命令行中输入：echo %JAVA_HOME%  确定位置
 
-   2. 从下面图片里面可以UserDTO这个对象占用了74.9%的内存，实例数是1000万个，点击进去进行查看。
+   ![](https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center)
 
-      
+2. 从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，点击进去进行查看。
 
-​			![](https://cdn.nlark.com/yuque/0/2022/png/32668413/1668526684395-9ac083c1-5c78-4e37-a36c-6f2e8e7b1b92.png)
+   ![](https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center)
 
 3. 如果出现内存不足，可以将%JAVA_HOME%\lib\visualvm\etc目录里面的visualvm.conf的堆内存修改一下。
 
@@ -104,20 +110,21 @@ tags:
    -Xms1024m -J-Xmx4096m
    ```
 
+
 4. 分析对象
 
-   从下面图片可以看到左边是这个UserDTO对象的所有实例，点击一个实例后可以看到这个对象里面的字段以及这个对象是在一个List里面，是一个list里面的元素。
+   从下面图片可以看到左边是这个UserDTO对象的所有实例，以及对象里面的字段，在这个图里面也可以看到这个对象有8720756个，查看对象的引用看到这个对象是在一个List里面，我们点击这个list继续往下看。
 
-   ![](https://cdn.nlark.com/yuque/0/2022/png/32668413/1668526318516-c04d6b69-7964-4caf-8824-dc1043ba8a0e.png)
+![](https://img-blog.csdnimg.cn/9992d046bf414e4aa18ddbdb83a59c94.png#pic_center)
 
-   
+5. 点开这个list会发现，这个list的大小是8720756万个，所以这个list中有8720756万个UsetDTO对象，那么OOM的原因也就水落石出了。从引用中可以看到这个list对象是在HelloService这个类里面，那么接下来结合代码不难发现是哪一处的代码出现问题，然后去改就ok了。
 
-​		点开这个list会发现，这个list的大小是1000万个，所以这个list中有1000万个UsetDTO对象，那么OOM的原因也就水落石出了。而从引用中可以看到这个list对象是在HelloController这个类里面，那么接下来结合代码去改就ok了。
-
-![](https://cdn.nlark.com/yuque/0/2022/png/32668413/1668526550174-f2019dc3-88c2-4d52-97b1-b0ebb6a6693e.png)
+![](https://img-blog.csdnimg.cn/7b86abe6a783434b82c233b9b9645df1.png#pic_center)
 
 
 
+## 2、CPU
 
+### 2.1、查看系统CPU
 
-## CPU
+待补充
