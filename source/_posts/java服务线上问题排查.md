@@ -126,4 +126,44 @@ tags:
 
 ### 2.1、查看系统CPU
 
-待补充
+linux服务器里面输入top命令，显示如下：
+
+```
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND   
+20571 root      20   0 2756184 296280  15236 S  80.4  7.8   0:36.48 java
+  386 root      20   0   39108   5956   5628 S   6.2  0.2   0:33.12 systemd-journal 
+11133 root      20   0  162104   2292   1616 R   6.2  0.1   0:00.14 top
+    1 root      20   0   51916   3640   2156 S   0.0  0.1   0:51.89 systemd
+    2 root      20   0       0      0      0 S   0.0  0.0   0:00.17 kthreadd
+    4 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H         
+```
+
+可以看到PID为20571的这个进程占用了80.4%的CPU。那么接下来就是分析这个java服务的cpu为什么这么高了。
+
+### 2.2、分析服务CPU过高
+
+1. 安装arthas，选择PID对应的服务。
+
+2. 通过thread -n 3 就能找到消耗cpu最高的三个线程的执行情况。这里只贴出了消耗cpu最高的的线程。
+
+   ```
+   [arthas@3492]$ thread -n 3
+   thread -n 3
+   "main" Id=1 cpuUsage=89.35% deltaTime=187ms time=155281ms RUNNABLE
+       at java.io.FileOutputStream.writeBytes(Native Method)
+       at java.io.FileOutputStream.write(FileOutputStream.java:326)
+       at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+       at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+       at java.io.PrintStream.write(PrintStream.java:482)
+       at sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:221)
+       at sun.nio.cs.StreamEncoder.implFlushBuffer(StreamEncoder.java:291)
+       at sun.nio.cs.StreamEncoder.flushBuffer(StreamEncoder.java:104)
+       at java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:185)
+       at java.io.PrintStream.write(PrintStream.java:527)
+       at java.io.PrintStream.print(PrintStream.java:669)
+       at java.io.PrintStream.println(PrintStream.java:806)
+       at com.jf.HelloService.hello(HelloService.java:7)
+   
+   ```
+
+3. 从线程堆栈信息看到HelloService中hello方法导致的，代码位置是第7行。知道了代码的位置，接下来去分析就不难了。至此cpu的过高的原因也就水落石出了。 
