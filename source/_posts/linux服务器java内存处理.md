@@ -67,8 +67,10 @@ lsof -p PID | grep cwd
 
 ## 指定JVM内存运行java包
 
+
+
 ```
-nohup java -jar -XX:MetaspaceSize=32m -XX:MaxMetaspaceSize=64m -Xms64m -Xmx64m -Xmn32m  microservicecloud-eureka-server-7001-1.0-SNAPSHOT.jar  >/dev/null &
+nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn64m  -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/ microservicecloud-eureka-server-7001-1.0-SNAPSHOT.jar  >/dev/null &
 
 ```
 
@@ -81,4 +83,12 @@ nohup java -jar -XX:MetaspaceSize=32m -XX:MaxMetaspaceSize=64m -Xms64m -Xmx64m -
 >  MetaspaceSize: 元空间大小
 >
 >  MaxMetaspaceSize ：最大元空间大小
+
+## OOM时保存dump文件
+
+```
+-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/
+```
+
+
 

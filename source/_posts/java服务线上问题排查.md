@@ -77,7 +77,7 @@ tags:
       格式：jmap -dump:format=b,file=文件名 [pid]
 
       ```
-      jmap -dump:format=b,file=/usr/local/dump/heapdump.hprof 14709
+      jmap -dump:format=b,file=/usr/java/dump/heapdump.hprof 14709
       ```
 
 #### 1.2.2、OOM时导出dump文件
@@ -86,7 +86,7 @@ tags:
 
    ```
    #指定dump文件存放位置
-   -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/local/dump/
+   -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/
    
    #在当前服务的的根目录下面存放dump文件
    -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=testDump.hprof
