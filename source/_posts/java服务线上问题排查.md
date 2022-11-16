@@ -77,7 +77,7 @@ tags:
       格式：jmap -dump:format=b,file=文件名 [pid]
 
       ```
-      jmap -dump:format=b,file=/usr/java/dump/heapdump.hprof 14709
+      jmap -dump:format=b,file=/usr/java/dump/heapdump.hprof 32756
       ```
 
 #### 1.2.2、OOM时导出dump文件
