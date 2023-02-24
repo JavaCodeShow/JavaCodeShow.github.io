@@ -46,25 +46,29 @@ tags:
 
 5. 修改redis.conf配置文件
 
-   ```
-   1.bind 127.0.0.1 修改为 bind 0.0.0.0
-   127.0.0.1  	表示只允许本地访问,无法远程连接
-   0.0.0.0     表示任何ip都可以访问
-   
-   2.protected-mode yes 改为 protected-mode no
-   yes			  保护模式，只允许本地链接
-   no			  保护模式关闭
-   
-   3.daemonize yes 改为 daemonize no
-   yes： 代表开启守护进程模式。此时是单进程多线程的模式，redis将在后台运行。
-   no： 当前界面将进入redis的命令行界面，exit强制退出或者关闭连接工具都会导致redis进程退出
-   
-   4.appendonly no 改为 appendonly yes
-   yes			  打开持久化
-   no			  关闭持久化
-   
-   5.tcp-keepalive 300 #防止出现远程主机强迫关闭了一个现有的连接的错误 默认是300
-   ```
+   1. bind：默认情况bind=127.0.0.1，只能接受本机的访问请求，不写的情况下，无限制接受任何ip地址的访问，为了能够让除本机的其余服务器也能远程访问，将 bind 127.0.0.1 -::1注释掉
+
+      ```
+      #bind 127.0.0.1
+      ```
+
+   2. protected-mode：为了能够让除本机的其余服务器也能远程访问，将 protected-mode yes 修改为 protected-mode no
+
+      ```
+      protected-mode no
+      ```
+
+   3. daemonize：是否为后台进程，设置为yes，守护进程，后台启动
+
+      ```
+      daemonize yes
+      ```
+
+   4. appendonly：是否开启aof持久化，设置为yes
+
+      ```
+      appendonly yes
+      ```
 
 6. 修改配置权限：
 
@@ -108,6 +112,8 @@ tags:
 9. 问题记录：
 
    解决WARNING overcommit_memory is set to 0 Background save may fail under low memory condition：https://blog.csdn.net/ET1131429439/article/details/126660323
+   
+   redis客户端链接失败：https://blog.csdn.net/m0_67394006/article/details/126495657
 
 
 
