@@ -70,14 +70,7 @@ tags:
       appendonly yes
       ```
 
-6. 修改配置权限：
-
-   ```
-   cd /usr/java/docker/redis
-   chmod 777 redis.conf
-   ```
-
-7. 使用docker运行redis
+6. 使用docker运行redis
 
    ```
    docker run -p 6379:6379 --name redis \
@@ -103,13 +96,13 @@ tags:
    >
    >–appendonly yes：redis启动后数据持久化
 
-8. 查看是否运行成功
+7. 查看是否运行成功
 
    ```
    docker ps | grep redis
    ```
 
-9. 问题记录：
+8. 问题记录：
 
    解决WARNING overcommit_memory is set to 0 Background save may fail under low memory condition：https://blog.csdn.net/ET1131429439/article/details/126660323
    
