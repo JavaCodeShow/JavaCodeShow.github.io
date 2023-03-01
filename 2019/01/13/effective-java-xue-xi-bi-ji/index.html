@@ -1,0 +1,1200 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Effective Java学习笔记, 后端,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,高并发,微服务,分布式">
+    <meta name="description" content="追求技术，不断提升。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>Effective Java学习笔记 | 江峰的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="江峰的博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">江峰的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">江峰的博客</div>
+        <div class="logo-desc">
+            
+            追求技术，不断提升。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JavaCodeShow" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JavaCodeShow" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Effective Java学习笔记</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    .toc-fixed .toc-link::before{
+        position: fixed!important;/*当toc的位置改为fixed时，.toc-link::before也要改为fixed*/
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        /*background-color: #42b983;*/
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/java%E5%9F%BA%E7%A1%80/">
+                                <span class="chip bg-color">java基础</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">读书笔记</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/java%E5%9F%BA%E7%A1%80/" class="post-category">
+                                java基础
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-01-13
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    12 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="第一章：引言"><a href="#第一章：引言" class="headerlink" title="第一章：引言"></a>第一章：引言</h2><h2 id="第二章：创建和销毁对象"><a href="#第二章：创建和销毁对象" class="headerlink" title="第二章：创建和销毁对象"></a>第二章：创建和销毁对象</h2><ol>
+<li><p>产生对象时，切忌第一反应就是提供公有构造器,考虑使用静态工厂方法。</p>
+</li>
+<li><p>重叠构造器模式，就是当属性比较多时，提供多个构造器，构造器参数依次增加。但是可读性比较差</p>
+</li>
+<li><p>构建器模式：四个参数以上时，建议使用构建器模式</p>
+</li>
+<li><p>比如一些工具类，我们并不想将这些类进行实例化，所以可以将这个类的无参构造器设置为private的，让外界访问不到，但是可以通过反射的方式进行强行访问。</p>
+</li>
+<li><p>避免创建不必要的对象：如 String str = new String(“hello”);会创建两个对象，直接使用String str = “hello”;就好了。 </p>
+</li>
+<li><p>java支持自动装箱，拆箱。使用时要慎重，避免不必要的自动装箱拆箱。如int与Integer之间的使用就要注意，避免频繁的进行转换。</p>
+</li>
+<li><p>消除过期的对象引用：java对于没用的对象会进行垃圾回收，但并不是说就不用考虑内存的事情了。</p>
+</li>
+<li><p>如果是由类自己来管理内存，那么就应该小心了。一旦元素被释放掉，那么就应该讲元素的引用置为null;用完了之后不在用的对象一律置为null。</p>
+</li>
+<li><p>避免使用终结方法finalizer来进行垃圾回收，因为java语言规范不仅不会保证终结方法会被及时的执行，而是不保证会被执行。<br>System.gc()和System.runFinalization()虽然增加了终结方法执行的机会，但是也不会保证一定会执行;  </p>
+</li>
+</ol>
+<h2 id="第三章：对于所有对象都通用的方法"><a href="#第三章：对于所有对象都通用的方法" class="headerlink" title="第三章：对于所有对象都通用的方法"></a>第三章：对于所有对象都通用的方法</h2><p>equals(),hashCode(),comparable()方法。</p>
+<ol>
+<li><p>equals()方法要满足一致性，自反性，传递性</p>
+</li>
+<li><p>hashCode()：覆盖equals就要覆盖hashCode()方法。<br>equals方法相等hashCode方法的值需要相等。hashCode相等equals方法不一定相等。</p>
+</li>
+<li><p>所有的子类都应该覆盖toString()方法。</p>
+</li>
+<li><p>Cloneable接口是没有方法的。所有实现了Cloneable的方法都应该覆盖Object的clone方法。此方法会首先调用super.clone()，然后修正任何需要修正的域。<br>不可变的类是不支持拷贝的。clone这里有点不大懂,一般情况下也不会用clone。缺点太多。</p>
+</li>
+<li><p>Comparable接口：如果一个类，实现了Comparable接口，说明这个类实例具有内在的排序性质。</p>
+</li>
+</ol>
+<h2 id="第四章：类和接口"><a href="#第四章：类和接口" class="headerlink" title="第四章：类和接口"></a>第四章：类和接口</h2><ol>
+<li><p>第一规则：尽可能的使每个类或成员不被外界访问。实例域不能是公有的。公有类永远都不应该暴露可变的域。<br>final修饰的可变对象的引用：虽然引用本省不能被修改，但是它所引用的对象却可以被修改。<br>设计： 公有类不应该含有公有域，除了静态公有域，但是静态公有域也应该确保修饰的引用是不可变对象。</p>
+</li>
+<li><p>final修饰的类，这个类是不能被拓展（继承）的。为了防止粗心或者恶意的子类假装对象的状态已经改变，从而破坏类的不可变行为。<br>final修饰的变量不会默认初始化。</p>
+</li>
+<li><p>如何使类变成不可变的类：</p>
+</li>
+</ol>
+<blockquote>
+<ol>
+<li><p>为了确保不可变性，类绝对不允许被子类化，需要用final修饰类。并用private final修饰成员变量</p>
+</li>
+<li><p>将类的所有的构造器都变成私有的，并用静态工厂方法来代替共有的构造器。并用private final修饰成员变量</p>
+</li>
+<li><p>对外不提供setter()，避免修改成员变量。</p>
+</li>
+<li><p>不应该直接让成员变量直接指向一个对象的引用，而是对这个对象进行深拷贝。</p>
+</li>
+</ol>
+</blockquote>
+<ol start="4">
+<li><p>许多不可变的类具有一个或多个非final的域，再第一次访问时，可以将结果缓存在域中，这种情况可以很好的工作，<br>  因为对象是不可变的，它的不可变性如果这些计算如果被再次执行，就会产生相同的结果。延迟初始化，String类就用到了。</p>
+</li>
+<li><p>坚决不要为每个get方法编写一个相应的set方法。除非有很好的理由要让类变成可变的类，否则就应该是不可变的。<br>如果类不能被做成不可变的，仍然应该限制它的可变性。降低对象可一存在的状态数。即使域成为final的。除非有令人信服的理由使域变成非final的。<br>论是clone还是readObject，都不可以调用可覆盖的方法，不管是以直接还是间接的方式。</p>
+</li>
+<li><p>复合优于继承<br>注意： 如果父类的构造函数中调用的方法被子类重写，那么调用的会是子类的方法。所以父类的构造器内最好不要调用子类重写的父类的方法。</p>
+</li>
+<li><p>接口要优于抽象类 —————— 骨架类实现，是为了继承的目的而设计的。</p>
+</li>
+<li><p>接口应该只用于来定义类型，不应该用来导出常量。</p>
+</li>
+<li><p>用函数对象表示策略。<br>函数指针的主要用途就是实现策略模式。为了在java中实现这种策略模式，要申明一个接口来表示该策略，<br>并且为每个策略声明一个实现了该接口的类。当一个具体策略只被使用一次时，通常使用匿名类来声明和实例化这个具体策略类。<br>当一个具体策略是被设计用来重复使用的时候，它的类通常就要被实现为私有的静态成员类，并通过公有的静态final域导出，其类型为该策略接口。</p>
+</li>
+<li><p>嵌套类是指被定义在一个类内部的类。嵌套类存在的目的应该只是为了它的外围类提供服务。<br> <strong>嵌套类有四种：</strong></p>
+<ul>
+<li><p>静态成员类</p>
+</li>
+<li><p>非静态成员类</p>
+</li>
+<li><p>匿名类</p>
+</li>
+<li><p>局部类（局部类是嵌套在方法里面的）</p>
+<p>除了静态成员类，替他三种统称为内部类。<br>静态成员类和非静态成员类的区别：<br>在没有外围类的实例的情况下，要想创建非静态成员类的实例是不可能的。</p>
+</li>
+</ul>
+</li>
+<li><p>如果声明成员类不要求访问外围实例(成员变量和方法)，就要始终把statis修饰符放在它的声明中。如果省略了static修饰符，则每个实例都将额外的指向一个外围对象的引用，保存这个引用需要消耗时间和空间，并且不会被垃圾回收。</p>
+</li>
+<li><p>有时候并不用写一个接口的实现，直接通过匿名内部类的方式来实现可能会更加方便。</p>
+</li>
+</ol>
+<h2 id="第五章：泛型"><a href="#第五章：泛型" class="headerlink" title="第五章：泛型"></a>第五章：泛型</h2><blockquote>
+<p>list<E>：读作“E的列表”。每种泛型定义一组参数化的类型。如List<String>（“读作 字符串列表”）是一个参数化的类型，表示元素类型为String类型的列表。如果使用原生态类型，就失去了泛型在安全性和表属性方面的所有优势。</String></E></p>
+</blockquote>
+<ol>
+<li><p>请不要使用原生态类型：要使用泛型，使用List这样的原生态类型，会失掉类型安全性，但是使用List &lt; Object &gt;这样的参数化类型就不会。<br>List&lt; String &gt;可以传递个类型List的参数，但不能传递给List<Object>的参数。<br>无限制通配符类型? 如list<?>,
+所以：List<Object>是个参数化类型，表示可以包含任何对象类型的一个集合。
+List<?>则是一个通配符类型，表示只能包含某种未知对象类型的一个集合。而List是原生类型，不建议使用。</Object></Object></p>
+</li>
+<li><p>消除非受检警告：要坚持住，要尽可能的消除每一个非受检警告。@SuppressWarnning注解：应该在尽可能小的范围内使用该注解，永远不要在整个类上使用该注解，<br>非受检警告很重要，要尽可能想办法消除，如果实在消除不了，就使用@SuppressWarnning注解，同时把禁止该警告的原因写下来。<br>每当使用SuppressWarnning(“unchecked”)注解时，都要添加一条注释，说明为什么这么做是安全的。</p>
+</li>
+<li><p>列表优于数组:<br>数组和泛型区别:</p>
+<ul>
+<li>数组是协变的，意思是：如果Sub是Super的子类型，那么Sub[]也是Super[]的子类型，泛型是不可协变的。意思是：如果Type1是Type的子类型，<br>但List<Type1>不是List<Type2>的子类型。</Type2></Type1></li>
+<li>数组是具体化的，因此数组会在运行时才知道并检查他们的类型元素约束；<br>而泛型是通过擦除来实现的，泛型只是在编译时强化他们的类型信息，并在运行时擦除他们的类型信息，<br>擦除就是使泛型可以与没有使用泛型的代码任意进行互用。</li>
+</ul>
+</li>
+<li><p>泛型是通过擦除实现的，List<Integer>运行时实例的运行类型只是List,List<String>[]运行时实例的运行类型只是List[],<br>擦除就是使泛型可以与没有使用泛型的代码随意进行互用。</String></Integer></p>
+</li>
+<li><p>泛型没看完，还有三条没看。</p>
+</li>
+</ol>
+<h2 id="第六章：枚举和注解"><a href="#第六章：枚举和注解" class="headerlink" title="第六章：枚举和注解"></a>第六章：枚举和注解</h2><ol>
+<li>枚举和注解没看，等第三版的出了在补上。</li>
+</ol>
+<h2 id="第七章：方法"><a href="#第七章：方法" class="headerlink" title="第七章：方法"></a>第七章：方法</h2><ol>
+<li><p>检验参数的有效性</p>
+<ul>
+<li>在方法执行它的任务之前，考虑参数有哪些限制，把这些限制写到文档中。并在方法的开头处检查他们的参数。养成习惯。</li>
+<li>对于非公有的方法，应该使用断言来检查他们的参数。</li>
+</ul>
+</li>
+<li><p>必要时进行保护性拷贝：保护性拷贝是在检查参数的有效性之前进行的，并且有效性检查是针对拷贝之后的对象。而不是针对原始的对象。<br>注意：保护性拷贝是在检查参数的有效性之前进行的，并且有效性检查是针对拷贝之后的对象，而不是针对原始的对象。</p>
+</li>
+<li><p>对于参数类型，要优先使用接口而不是类。即方法参数用接口。</p>
+</li>
+<li><p>慎用重载方法： 要调用哪个重载方法是在编译时做出决定的。对于重载方法的选择是静态的，而对于被覆盖的方法的选择是动态的。<br>重写是机制，重载是例外。</p>
+</li>
+<li><p>慎用可变参数：可变参数可支持零到多个参数。对可变参数进行重载时要在可变参数的方法内加一个单独的参数以防出现方法一样的情况。</p>
+</li>
+<li><p>返回类型为数组和集合的方法没理由返回null，而不是返回一个零长度的数组或集合。<br>也就是说长度为零时返回零长度的数组或集合，为null时返回null。</p>
+</li>
+<li><p>为所有导出的API元素编写文档注释。注释应该是写这个API文档做了什么，而不是为什么这么做。还有前提条件和后置条件也应该写出来。<br>为了正确的编写API文档，必须在每个被导出的类，接口，构造器，属性，方法声明之前增加一个文档注释。<br>不写注释是一种残忍。</p>
+</li>
+</ol>
+<h2 id="第八章：通用程序设计"><a href="#第八章：通用程序设计" class="headerlink" title="第八章：通用程序设计"></a>第八章：通用程序设计</h2><ol>
+<li><p>将局部变量的作用域最小化：要是局部变量的作用域最小化，最有力的方法就是在第一次使用它的地方声明。几乎所有的局部变量都需要初始化。<br>也可以通过使方法小而集中使局部变量的作用于最小化，也就是说一个方法不宜过于臃肿，将方法拆分。</p>
+</li>
+<li><p>了解和使用类库：当你编写一个常见的方法时，可以查一下类库。或许类库中一种有了。类库中的性能会比自己写的好一些。</p>
+</li>
+<li><p>基本类型优先于包装基本类型。</p>
+</li>
+<li><p>当心字符串连接的性能：使用StringBuilder来代替String。<br>不要使用字符串连接操作符来合并多个字符串，除非性能无关紧要。</p>
+</li>
+<li><p>通过接口引用对象：如果有合适的接口类型存在，那么对于参数，返回值，变量和域来说，就都应该使用接口类型进行声明。</p>
+</li>
+<li><p>谨慎的进行优化：要努力编写好的程序而不是快的程序。</p>
+</li>
+</ol>
+<h2 id="第九章：异常"><a href="#第九章：异常" class="headerlink" title="第九章：异常"></a>第九章：异常</h2><ol>
+<li><p>只针对异常的情况下才使用异常。</p>
+</li>
+<li><p>受检异常是exception类的子类但不能是runtimeexception类的子类。如果是runtimeexception或者error的子类那就是非受检的，这种异常在方法内抛出不需要在签名处throws。<br> 受检的异常：受检异常程序员是可以客官处理的。如文件不存在。<br> 运行时异常：是一种bug。如数组下标越界。<br> 错误：不受程序员控制。一般是系统出错。</p>
+</li>
+<li><p>努力使失败保持原子性，一般而言，失败的方法调用应该使对象保持在被调用之前的状态。</p>
+</li>
+<li><p>不要忽略异常：不要使用空的catch快。至少，catch快也应该包含一条说明，解释为什么可以忽略这个异常。</p>
+</li>
+</ol>
+<h2 id="第十章：并发"><a href="#第十章：并发" class="headerlink" title="第十章：并发"></a>第十章：并发</h2><ol>
+<li>同步访问共享的可变数据：关键字synchronized可以保证在同一时刻，只有一个线程执行同一个方法，或者一个代码块。<ul>
+<li>Long 或 double 不是原子操作。</li>
+<li>为了在线程之间进行可靠的通信，也为了互斥访问，同步是必要的。归咎于java的内存模型。</li>
+<li>简而言之，当多个线程共享可变数据的时候，每个读或者写数据的线程都必须执行同步。</li>
+<li>如果线程之间只需要通信，而不需要互斥，那么可以考虑使用volatile。volatile关键字不执行互斥访问，但它可以保证任何一个线程在读取的该域的时候都可以看到刚刚被写入的值。</li>
+<li>增量操作符（++，–）不是原子的，它执行两部操作：一是读取值，二是写入值。   </li>
+<li>当多个线程共享可变数据的时候，每个读或者写数据的线程都必须进行同步。如果没有同步，就无法保证一个线程所作的修改可以被另一个线程获知。</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li>并发没看完，打算直接看java并发编程的书。</li>
+</ol>
+<h2 id="第十一章：序列化"><a href="#第十一章：序列化" class="headerlink" title="第十一章：序列化"></a>第十一章：序列化</h2><ol>
+<li>没看完，用到的时候再看吧，或者等第三版出了再看。</li>
+</ol>
+<p>​    </p>
+
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/java%E5%9F%BA%E7%A1%80/">
+                                    <span class="chip bg-color">java基础</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">读书笔记</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">您的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/05/07/kafka-ru-men-shi-yong-guan-jian-ming-ling/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="kafka入门基本使用命令">
+                        
+                        <span class="card-title">kafka入门基本使用命令</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            学习了kafka相关的知识，一直没有进行总结。在这里将一些简单的命令进行记录下来。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Kafka/" class="post-category">
+                                    Kafka
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/kafka/">
+                        <span class="chip bg-color">kafka</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/11/10/gao-xing-neng-mysql-du-shu-bi-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="《高性能MySQL》读书笔记">
+                        
+                        <span class="card-title">《高性能MySQL》读书笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            读了《高性能MySQL》一书，收获很多。在这里，将一些重要的知识点记录下来，以便自己回顾知识、或是供他人学习。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-11-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="https://JavaCodeShow.github.io" target="_blank">江峰</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JavaCodeShow" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1546844168@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1546844168" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1546844168" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

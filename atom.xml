@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>江峰的博客</title>
+  <icon>https://www.gravatar.com/avatar/f23a7b78b3fed7e465bc40cde13ba3f7</icon>
+  <subtitle>Stay hungry, Stay foolish</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://javacodeshow.github.io/"/>
+  <updated>2023-03-01T15:15:29.847Z</updated>
+  <id>https://javacodeshow.github.io/</id>
+  
+  <author>
+    <name>江峰</name>
+    <email>jfeng917@163.com</email>
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL45讲</title>
+    <link href="https://javacodeshow.github.io/2023/03/01/mysql45-jiang/"/>
+    <id>https://javacodeshow.github.io/2023/03/01/mysql45-jiang/</id>
+    <published>2023-03-01T15:15:29.847Z</published>
+    <updated>2023-03-01T15:15:29.847Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;MySQL45讲&quot;&gt;&lt;a href=&quot;#MySQL45讲&quot; class=&quot;headerlink&quot; title=&quot;MySQL45讲&quot;&gt;&lt;/a&gt;MySQL45讲&lt;/h1&gt;&lt;h2 id=&quot;09讲普通索引和唯一索引&quot;&gt;&lt;a href=&quot;#09讲普通索引和唯一索引&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>java服务线上问题排查</title>
+    <link href="https://javacodeshow.github.io/2022/11/15/java-fu-wu-xian-shang-wen-ti-pai-cha/"/>
+    <id>https://javacodeshow.github.io/2022/11/15/java-fu-wu-xian-shang-wen-ti-pai-cha/</id>
+    <published>2022-11-15T14:15:00.000Z</published>
+    <updated>2023-03-01T15:15:29.850Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;java服务线上问题排查&quot;&gt;&lt;a href=&quot;#java服务线上问题排查&quot; class=&quot;headerlink&quot; title=&quot;java服务线上问题排查&quot;&gt;&lt;/a&gt;java服务线上问题排查&lt;/h1&gt;&lt;h2 id=&quot;1、内存&quot;&gt;&lt;a href=&quot;#1、内存&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="线上问题排查" scheme="https://JavaCodeShow.github.io/categories/%E7%BA%BF%E4%B8%8A%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/"/>
+    
+    
+      <category term="线上问题排查" scheme="https://JavaCodeShow.github.io/tags/%E7%BA%BF%E4%B8%8A%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker启动Canal</title>
+    <link href="https://javacodeshow.github.io/2022/09/07/docker-qi-dong-canal/"/>
+    <id>https://javacodeshow.github.io/2022/09/07/docker-qi-dong-canal/</id>
+    <published>2022-09-07T14:15:00.000Z</published>
+    <updated>2023-03-01T15:22:16.265Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;docker启动Canal&quot;&gt;&lt;a href=&quot;#docker启动Canal&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="https://JavaCodeShow.github.io/categories/docker/"/>
+    
+    
+      <category term="docker" scheme="https://JavaCodeShow.github.io/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>arthas常用命令记录</title>
+    <link href="https://javacodeshow.github.io/2022/09/05/arthas-chang-yong-ming-ling-ji-lu/"/>
+    <id>https://javacodeshow.github.io/2022/09/05/arthas-chang-yong-ming-ling-ji-lu/</id>
+    <published>2022-09-05T14:15:00.000Z</published>
+    <updated>2023-03-01T15:15:29.848Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;arthas常用命令记录-md&quot;&gt;&lt;a href=&quot;#arthas常用命令记录-md&quot; class=&quot;headerlink&quot; title=&quot;arthas常用命令记录.md&quot;&gt;&lt;/a&gt;arthas常用命令记录.md&lt;/h1&gt;&lt;h2 id=&quot;下载arthas&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="arthas" scheme="https://JavaCodeShow.github.io/categories/arthas/"/>
+    
+    
+      <category term="arthas" scheme="https://JavaCodeShow.github.io/tags/arthas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker启动ElasticSearch</title>
+    <link href="https://javacodeshow.github.io/2022/08/03/docker-qi-dong-elasticsearch/"/>
+    <id>https://javacodeshow.github.io/2022/08/03/docker-qi-dong-elasticsearch/</id>
+    <published>2022-08-03T14:15:00.000Z</published>
+    <updated>2023-03-01T15:15:29.849Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;docker启动ElasticSearch&quot;&gt;&lt;a href=&quot;#docker启动ElasticSearch&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="https://JavaCodeShow.github.io/categories/docker/"/>
+    
+    
+      <category term="docker" scheme="https://JavaCodeShow.github.io/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用hexo写博客</title>
+    <link href="https://javacodeshow.github.io/2022/06/11/shi-yong-hexo-xie-bo-ke/"/>
+    <id>https://javacodeshow.github.io/2022/06/11/shi-yong-hexo-xie-bo-ke/</id>
+    <published>2022-06-11T14:15:00.000Z</published>
+    <updated>2023-03-01T15:15:29.867Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;使用hexo写博客&quot;&gt;&lt;a href=&quot;#使用hexo写博客&quot; class=&quot;headerlink&quot; title=&quot;使用hexo写博客&quot;&gt;&lt;/a&gt;使用hexo写博客&lt;/h1&gt;&lt;h2 id=&quot;环境安装&quot;&gt;&lt;a href=&quot;#环境安装&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="https://JavaCodeShow.github.io/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="https://JavaCodeShow.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java应用服务器内存处理</title>
+    <link href="https://javacodeshow.github.io/2022/06/10/linux-fu-wu-qi-java-nei-cun-chu-li/"/>
+    <id>https://javacodeshow.github.io/2022/06/10/linux-fu-wu-qi-java-nei-cun-chu-li/</id>
+    <published>2022-06-10T14:15:00.000Z</published>
+    <updated>2023-03-01T15:15:29.866Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;java服务器内存处理&quot;&gt;&lt;a href=&quot;#java服务器内存处理&quot; class=&quot;headerlink&quot; title=&quot;java服务器内存处理&quot;&gt;&lt;/a&gt;java服务器内存处理&lt;/h1&gt;&lt;h2 id=&quot;查看服务器总内存占用&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="linux" scheme="https://JavaCodeShow.github.io/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="https://JavaCodeShow.github.io/tags/linux/"/>
+    
+      <category term="java" scheme="https://JavaCodeShow.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RocketMQ高级功能</title>
+    <link href="https://javacodeshow.github.io/2021/04/30/rocketmq-gao-ji-gong-neng/"/>
+    <id>https://javacodeshow.github.io/2021/04/30/rocketmq-gao-ji-gong-neng/</id>
+    <published>2021-04-30T08:51:00.000Z</published>
+    <updated>2023-03-01T15:15:29.848Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;RocketMQ高级功能&quot;&gt;&lt;a href=&quot;#RocketMQ高级功能&quot; class=&quot;headerlink&quot; title=&quot;RocketMQ高级功能&quot;&gt;&lt;/a&gt;RocketMQ高级功能&lt;/h1&gt;&lt;h2 id=&quot;1-刷盘机制&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="RocketMQ" scheme="https://JavaCodeShow.github.io/categories/RocketMQ/"/>
+    
+    
+      <category term="RocketMQ" scheme="https://JavaCodeShow.github.io/tags/RocketMQ/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</title>
+    <link href="https://javacodeshow.github.io/2021/04/02/shi-yong-rocketmq-spring-boot-starter-fa-song-xiao-fei-xiao-xi-de-jian-dan-shi-li/"/>
+    <id>https://javacodeshow.github.io/2021/04/02/shi-yong-rocketmq-spring-boot-starter-fa-song-xiao-fei-xiao-xi-de-jian-dan-shi-li/</id>
+    <published>2021-04-02T08:51:00.000Z</published>
+    <updated>2023-03-01T15:15:29.868Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;使用rocketmq-spring-boot-starter发送，消费消息的简单示例&quot;&gt;&lt;a href=&quot;#使用rocketmq-spring-boot-starter发送，消费消息的简单示例&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="RocketMQ" scheme="https://JavaCodeShow.github.io/categories/RocketMQ/"/>
+    
+    
+      <category term="RocketMQ" scheme="https://JavaCodeShow.github.io/tags/RocketMQ/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RocketMQ生产消息，消费消息的几种案例</title>
+    <link href="https://javacodeshow.github.io/2021/04/01/rocketmq-sheng-chan-xiao-xi-xiao-fei-xiao-xi-de-ji-chong-an-li/"/>
+    <id>https://javacodeshow.github.io/2021/04/01/rocketmq-sheng-chan-xiao-xi-xiao-fei-xiao-xi-de-ji-chong-an-li/</id>
+    <published>2021-04-01T08:51:00.000Z</published>
+    <updated>2023-03-01T15:15:29.848Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-Producer发送消息的三种方式&quot;&gt;&lt;a href=&quot;#1-Producer发送消息的三种方式&quot; class=&quot;headerlink&quot; title=&quot;1. Producer发送消息的三种方式&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="RocketMQ" scheme="https://JavaCodeShow.github.io/categories/RocketMQ/"/>
+    
+    
+      <category term="RocketMQ" scheme="https://JavaCodeShow.github.io/tags/RocketMQ/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux安装RocketMQ</title>
+    <link href="https://javacodeshow.github.io/2021/03/31/linux-an-zhuang-rocketmq/"/>
+    <id>https://javacodeshow.github.io/2021/03/31/linux-an-zhuang-rocketmq/</id>
+    <published>2021-03-31T08:51:00.000Z</published>
+    <updated>2023-03-01T15:15:29.851Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;linux安装RocketMQ&quot;&gt;&lt;a href=&quot;#linux安装RocketMQ&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="RocketMQ" scheme="https://JavaCodeShow.github.io/categories/RocketMQ/"/>
+    
+    
+      <category term="RocketMQ" scheme="https://JavaCodeShow.github.io/tags/RocketMQ/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux安装jenkins部署SpringBoot应用</title>
+    <link href="https://javacodeshow.github.io/2021/03/30/linux-an-zhuang-jenkins/"/>
+    <id>https://javacodeshow.github.io/2021/03/30/linux-an-zhuang-jenkins/</id>
+    <published>2021-03-30T08:51:00.000Z</published>
+    <updated>2023-03-01T15:15:29.851Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;linux安装jenkins部署SpringBoot应用&quot;&gt;&lt;a href=&quot;#linux安装jenkins部署SpringBoot应用&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="jenkins" scheme="https://JavaCodeShow.github.io/categories/jenkins/"/>
+    
+    
+      <category term="jenkins" scheme="https://JavaCodeShow.github.io/tags/jenkins/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux常用命令</title>
+    <link href="https://javacodeshow.github.io/2021/03/26/linux-chang-yong-ming-ling/"/>
+    <id>https://javacodeshow.github.io/2021/03/26/linux-chang-yong-ming-ling/</id>
+    <published>2021-03-26T02:55:00.000Z</published>
+    <updated>2023-03-01T15:15:29.866Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title&gt;&lt;/a&gt;&lt;/h3&gt;&lt;h2 id=&quot;一、查看文本&quot;&gt;&lt;a href=&quot;#一、查看文本&quot; class=&quot;headerlink&quot; title=&quot;一、查看文本&quot;&gt;&lt;/a&gt;一、查看文本&lt;/h2&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+      <category term="linux" scheme="https://JavaCodeShow.github.io/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="https://JavaCodeShow.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IDEA使用JRebel进行热部署</title>
+    <link href="https://javacodeshow.github.io/2021/01/12/idea-shi-yong-jrebel-jin-xing-re-bu-shu/"/>
+    <id>https://javacodeshow.github.io/2021/01/12/idea-shi-yong-jrebel-jin-xing-re-bu-shu/</id>
+    <published>2021-01-12T02:55:00.000Z</published>
+    <updated>2023-03-01T15:15:29.847Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;IDEA使用JRebel进行热部署教程&quot;&gt;&lt;a href=&quot;#IDEA使用JRebel进行热部署教程&quot; class=&quot;headerlink&quot; title=&quot;IDEA使用JRebel进行热部署教程&quot;&gt;&lt;/a&gt;IDEA使用JRebel进行热部署教程&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+      <category term="热部署" scheme="https://JavaCodeShow.github.io/categories/%E7%83%AD%E9%83%A8%E7%BD%B2/"/>
+    
+    
+      <category term="热部署" scheme="https://JavaCodeShow.github.io/tags/%E7%83%AD%E9%83%A8%E7%BD%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>alertmanager安装教程</title>
+    <link href="https://javacodeshow.github.io/2020/07/01/alertmanager-an-zhuang/"/>
+    <id>https://javacodeshow.github.io/2020/07/01/alertmanager-an-zhuang/</id>
+    <published>2020-07-01T02:55:00.000Z</published>
+    <updated>2023-03-01T15:15:29.848Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-下载Alertmanager&quot;&gt;&lt;a href=&quot;#1-下载Alertmanager&quot; class=&quot;headerlink&quot; title=&quot;1. 下载Alertmanager&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="prometheus" scheme="https://JavaCodeShow.github.io/categories/prometheus/"/>
+    
+    
+      <category term="prometheus" scheme="https://JavaCodeShow.github.io/tags/prometheus/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring注解介绍</title>
+    <link href="https://javacodeshow.github.io/2020/07/01/spring-zhu-jie/"/>
+    <id>https://javacodeshow.github.io/2020/07/01/spring-zhu-jie/</id>
+    <published>2020-07-01T02:55:00.000Z</published>
+    <updated>2023-03-01T15:15:29.867Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;ol&gt;
+&lt;li&gt;@Controller   
+        
+      
+    
+    </summary>
+    
+    
+      <category term="SpringBoot" scheme="https://JavaCodeShow.github.io/categories/SpringBoot/"/>
+    
+    
+      <category term="SpringBoot" scheme="https://JavaCodeShow.github.io/tags/SpringBoot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>prometheus告警规则配置</title>
+    <link href="https://javacodeshow.github.io/2020/07/01/prometheus-gao-jing-gui-ze-pei-zhi/"/>
+    <id>https://javacodeshow.github.io/2020/07/01/prometheus-gao-jing-gui-ze-pei-zhi/</id>
+    <published>2020-07-01T02:55:00.000Z</published>
+    <updated>2023-03-01T15:15:29.866Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-创建告警规则配置文件&quot;&gt;&lt;a href=&quot;#1-创建告警规则配置文件&quot; class=&quot;headerlink&quot; title=&quot;1. 创建告警规则配置文件&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="prometheus" scheme="https://JavaCodeShow.github.io/categories/prometheus/"/>
+    
+    
+      <category term="prometheus" scheme="https://JavaCodeShow.github.io/tags/prometheus/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用prometheus监控SpringBoot项目</title>
+    <link href="https://javacodeshow.github.io/2020/07/01/cai-yong-prometheus-jian-kong-springboot-xiang-mu/"/>
+    <id>https://javacodeshow.github.io/2020/07/01/cai-yong-prometheus-jian-kong-springboot-xiang-mu/</id>
+    <published>2020-07-01T02:55:00.000Z</published>
+    <updated>2023-03-01T15:15:29.868Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-springboot项目中配置prometheus&quot;&gt;&lt;a href=&quot;#1-springboot项目中配置prometheus&quot; class=&quot;headerlink&quot; title=&quot;1. springboot项目中配置prometheus&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="prometheus" scheme="https://JavaCodeShow.github.io/categories/prometheus/"/>
+    
+    
+      <category term="prometheus" scheme="https://JavaCodeShow.github.io/tags/prometheus/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker启动MySQL</title>
+    <link href="https://javacodeshow.github.io/2020/05/22/docker-qi-dong-mysql/"/>
+    <id>https://javacodeshow.github.io/2020/05/22/docker-qi-dong-mysql/</id>
+    <published>2020-05-22T14:15:00.000Z</published>
+    <updated>2023-03-01T15:15:29.849Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;docker启动MySQL&quot;&gt;&lt;a href=&quot;#docker启动MySQL&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="https://JavaCodeShow.github.io/categories/docker/"/>
+    
+    
+      <category term="docker" scheme="https://JavaCodeShow.github.io/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot使用jetcache本地缓存</title>
+    <link href="https://javacodeshow.github.io/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/"/>
+    <id>https://javacodeshow.github.io/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/</id>
+    <published>2020-05-12T14:15:00.000Z</published>
+    <updated>2023-03-01T15:15:29.848Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;SpringBoot使用jetcache本地缓存&quot;&gt;&lt;a href=&quot;#SpringBoot使用jetcache本地缓存&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="高性能缓存" scheme="https://JavaCodeShow.github.io/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E7%BC%93%E5%AD%98/"/>
+    
+    
+      <category term="jetcache" scheme="https://JavaCodeShow.github.io/tags/jetcache/"/>
+    
+  </entry>
+  
+</feed>

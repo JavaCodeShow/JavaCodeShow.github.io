@@ -1,0 +1,1260 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="linux安装RocketMQ, 后端,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,高并发,微服务,分布式">
+    <meta name="description" content="追求技术，不断提升。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>linux安装RocketMQ | 江峰的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="江峰的博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">江峰的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">江峰的博客</div>
+        <div class="logo-desc">
+            
+            追求技术，不断提升。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JavaCodeShow" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JavaCodeShow" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">linux安装RocketMQ</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    .toc-fixed .toc-link::before{
+        position: fixed!important;/*当toc的位置改为fixed时，.toc-link::before也要改为fixed*/
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        /*background-color: #42b983;*/
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/RocketMQ/">
+                                <span class="chip bg-color">RocketMQ</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/RocketMQ/" class="post-category">
+                                RocketMQ
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-03-31
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    11 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="linux安装RocketMQ"><a href="#linux安装RocketMQ" class="headerlink" title="linux安装RocketMQ"></a>linux安装RocketMQ</h1><p>前提条件：RocketMQ是基于java语言开发的。运行RocketMQ需要java环境。JDK的版本应该 &gt;= 1.8。请确保安装了JDK。</p>
+<p>查看方式：</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z rocketmq]# java -version
+java version &quot;1.8.0_131&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_131-b11)
+Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)</code></pre><p>本人用的是阿里云服务器。JDK版本是1.8，maven版本是3.6.3</p>
+<h2 id="一、下载RocketMQ"><a href="#一、下载RocketMQ" class="headerlink" title="一、下载RocketMQ"></a>一、下载RocketMQ</h2><p>该地址列出了RocketMQ所有发布的版本：<a href="https://archive.apache.org/dist/rocketmq/" target="_blank" rel="noopener">https://archive.apache.org/dist/rocketmq/</a></p>
+<p>这里将RocketMQ安装到Linux文件系统的/usr/java/rocketmq目录</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">cd</span> /usr/java/rocketmq</code></pre>
+<p>下载之后进行解压缩：</p>
+<pre class=" language-bash"><code class="language-bash">unzip rocketmq-all-4.8.0-bin-release.zip</code></pre>
+<p>这边将目录名字修改一下,解压完毕也就不需要了，删除zip包</p>
+<pre><code>rm -rf rocketmq-all-4.8.0-bin-release.zip
+mv rocketmq-all-4.8.0-bin-release rocketmq</code></pre><p>解压目录说明</p>
+<pre class=" language-bash"><code class="language-bash">rocketmq
+    ├── benchmark <span class="token comment" spellcheck="true">#性能测试脚本</span>
+    ├── bin       <span class="token comment" spellcheck="true">#命令行工具</span>
+    ├── conf      <span class="token comment" spellcheck="true">#配置文件目录</span>
+    ├── lib       <span class="token comment" spellcheck="true">#依赖的第三方类库</span>
+    ├── LICENSE
+    ├── NOTICE
+    └── README.md</code></pre>
+<h2 id="二、启动RocketMQ"><a href="#二、启动RocketMQ" class="headerlink" title="二、启动RocketMQ"></a>二、启动RocketMQ</h2><h3 id="2-1-启动NameServer"><a href="#2-1-启动NameServer" class="headerlink" title="2.1 启动NameServer"></a>2.1 启动NameServer</h3><ul>
+<li><p>启动NameServer</p>
+<pre><code>nohup sh bin/mqnamesrv &gt;/dev/null &amp;</code></pre></li>
+<li><p>查看NameServer启动日志</p>
+<pre><code>tail -500f ~/logs/rocketmqlogs/namesrv.log</code></pre></li>
+</ul>
+<h3 id="2-2-启动Broker"><a href="#2-2-启动Broker" class="headerlink" title="2.2 启动Broker"></a>2.2 启动Broker</h3><ul>
+<li><p>启动broker</p>
+<pre><code>nohup sh bin/mqbroker -n localhost:9876 &gt;/dev/null &amp;</code></pre></li>
+<li><p>查看Broker启动日志</p>
+<pre><code>tail -500f ~/logs/rocketmqlogs/broker.log </code></pre></li>
+</ul>
+<h3 id="2-3-启动失败内存问题解决"><a href="#2-3-启动失败内存问题解决" class="headerlink" title="2.3 启动失败内存问题解决"></a>2.3 启动失败内存问题解决</h3><ul>
+<li><p>这里发现会由于内存不足启动失败</p>
+<p>RocketMQ默认的虚拟机内存较大，启动NameServer和Broker如果因为内存不足失败，需要编辑如下两个配置文件，修改JVM内存大小</p>
+<pre><code># 编辑runbroker.sh和runserver.sh修改默认JVM大小
+vi runbroker.sh
+vi runserver.sh</code></pre></li>
+<li><p>参考设置：</p>
+<pre><code>JAVA_OPT=&quot;${JAVA_OPT} -server -Xms128m -Xmx128m -Xmn64m -XX:MetaspaceSize=64m  -XX:MaxMetaspaceSize=128m&quot;</code></pre></li>
+</ul>
+<p>改完保存重新启动即可。查看启动日志验证是否成功。</p>
+<p>也可以通过jps- l 来验证</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z rocketmq]# jps -l
+20358 org.apache.rocketmq.broker.BrokerStartup
+19965 org.apache.rocketmq.namesrv.NamesrvStartup
+22349 sun.tools.jps.Jps</code></pre><h3 id="2-4-测试RocketMQ"><a href="#2-4-测试RocketMQ" class="headerlink" title="2.4 测试RocketMQ"></a>2.4 测试RocketMQ</h3><ul>
+<li><p>发送消息：使用安装包的Demo发送消息</p>
+<pre><code>sh bin/tools.sh org.apache.rocketmq.example.quickstart.Producer</code></pre></li>
+<li><p>接收消息</p>
+<pre><code>sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer</code></pre></li>
+</ul>
+<h3 id="2-5-关闭RocketMQ"><a href="#2-5-关闭RocketMQ" class="headerlink" title="2.5 关闭RocketMQ"></a>2.5 关闭RocketMQ</h3><ul>
+<li><p>关闭NameServer</p>
+<pre><code>sh bin/mqshutdown namesrv</code></pre></li>
+<li><p>关闭Broker</p>
+<pre><code>sh bin/mqshutdown broker</code></pre></li>
+</ul>
+<h2 id="三、RocketMQ集群搭建"><a href="#三、RocketMQ集群搭建" class="headerlink" title="三、RocketMQ集群搭建"></a>三、RocketMQ集群搭建</h2><p>一个完整的RocketMQ集群由NameServer集群，Broker集群，Producer集群，Consumer集群组成。本节主要介绍NameServer集群，Broker集群的搭建。</p>
+<ul>
+<li><p>NameServer是一个几乎无状态节点，可集群部署，节点之间无任何信息同步。</p>
+</li>
+<li><p>Broker部署相对复杂，Broker分为Master与Slave，一个Master可以对应多个Slave，但是一个Slave只能对应一个Master，Master与Slave的对应关系通过指定相同的BrokerName，不同的BrokerId来定义，BrokerId为0表示Master，非0表示Slave。Master也可以部署多个。每个Broker与NameServer集群中的所有节点建立长连接，定时注册Topic信息到所有NameServer。</p>
+</li>
+<li><p>Producer与NameServer集群中的其中一个节点（随机选择）建立长连接，定期从NameServer取Topic路由信息，并向提供Topic服务的Master建立长连接，且定时向Master发送心跳。Producer完全无状态，可集群部署。</p>
+</li>
+<li><p>Consumer与NameServer集群中的其中一个节点（随机选择）建立长连接，定期从NameServer取Topic路由信息，并向提供Topic服务的Master、Slave建立长连接，且定时向Master、Slave发送心跳。Consumer既可以从Master订阅消息，也可以从Slave订阅消息，订阅规则由Broker配置决定。</p>
+</li>
+</ul>
+<h3 id="3-1-集群模式"><a href="#3-1-集群模式" class="headerlink" title="3.1 集群模式"></a>3.1 集群模式</h3><h4 id="1）单Master模式"><a href="#1）单Master模式" class="headerlink" title="1）单Master模式"></a>1）单Master模式</h4><p>这种方式风险较大，一旦Broker重启或者宕机时，会导致整个服务不可用。不建议线上环境使用,可以用于本地测试。</p>
+<h4 id="2）多Master模式"><a href="#2）多Master模式" class="headerlink" title="2）多Master模式"></a>2）多Master模式</h4><p>一个集群无Slave，全是Master，例如2个Master或者3个Master，这种模式的优缺点如下：</p>
+<ul>
+<li>优点：配置简单，单个Master宕机或重启维护对应用无影响，在磁盘配置为RAID10时，即使机器宕机不可恢复情况下，由于RAID10磁盘非常可靠，消息也不会丢（异步刷盘丢失少量消息，同步刷盘一条不丢），性能最高；</li>
+<li>缺点：单台机器宕机期间，这台机器上未被消费的消息在机器恢复之前不可订阅，消息实时性会受到影响。</li>
+</ul>
+<h4 id="3）多Master多Slave模式（异步）"><a href="#3）多Master多Slave模式（异步）" class="headerlink" title="3）多Master多Slave模式（异步）"></a>3）多Master多Slave模式（异步）</h4><p>每个Master配置一个Slave，有多对Master-Slave，HA采用异步复制方式，主备有短暂消息延迟（毫秒级），这种模式的优缺点如下：</p>
+<ul>
+<li>优点：即使磁盘损坏，消息丢失的非常少，且消息实时性不会受影响，同时Master宕机后，消费者仍然可以从Slave消费，而且此过程对应用透明，不需要人工干预，性能同多Master模式几乎一样；</li>
+<li>缺点：Master宕机，磁盘损坏情况下会丢失少量消息。</li>
+</ul>
+<h4 id="4）多Master多Slave模式（同步）"><a href="#4）多Master多Slave模式（同步）" class="headerlink" title="4）多Master多Slave模式（同步）"></a>4）多Master多Slave模式（同步）</h4><p>每个Master配置一个Slave，有多对Master-Slave，HA采用同步双写方式，即只有主备都写成功，才向应用返回成功，这种模式的优缺点如下：</p>
+<ul>
+<li>优点：数据与服务都无单点故障，Master宕机情况下，消息无延迟，服务可用性与数据可用性都非常高；</li>
+<li>缺点：性能比异步复制模式略低（大约低10%左右），发送单个消息的RT会略高，且目前版本在主节点宕机后，备机不能自动切换为主机。</li>
+</ul>
+<h3 id="3-2-环境变量配置"><a href="#3-2-环境变量配置" class="headerlink" title="3.2 环境变量配置"></a>3.2 环境变量配置</h3><pre><code>vim /etc/profile</code></pre><p>在profile文件的末尾加入如下命令</p>
+<pre><code>#set rocketmq
+ROCKETMQ_HOME=/usr/java/rocketmq
+PATH=$PATH:$ROCKETMQ_HOME/bin
+export ROCKETMQ_HOME PATH</code></pre><p>输入:wq! 保存并退出， 并使得配置立刻生效：</p>
+<pre><code>source /etc/profile</code></pre><h3 id="3-3-防火墙配置"><a href="#3-3-防火墙配置" class="headerlink" title="3.3 防火墙配置"></a>3.3 防火墙配置</h3><p>宿主机需要远程访问虚拟机的rocketmq服务和web服务，需要开放相关的端口号，简单粗暴的方式是直接关闭防火墙</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 关闭防火墙</span>
+systemctl stop firewalld.service 
+<span class="token comment" spellcheck="true"># 查看防火墙的状态</span>
+firewall-cmd --state 
+<span class="token comment" spellcheck="true"># 禁止firewall开机启动</span>
+systemctl disable firewalld.service</code></pre>
+<p>或者为了安全，只开放特定的端口号，RocketMQ默认使用3个端口：9876 、10911 、11011 。如果防火墙没有关闭的话，那么防火墙就必须开放这些端口：</p>
+<ul>
+<li><code>nameserver</code> 默认使用 9876 端口</li>
+<li><code>master</code> 默认使用 10911 端口</li>
+<li><code>slave</code> 默认使用11011 端口</li>
+</ul>
+<p>执行以下命令：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 开放name server默认端口</span>
+firewall-cmd --remove-port<span class="token operator">=</span>9876/tcp --permanent
+<span class="token comment" spellcheck="true"># 开放master默认端口</span>
+firewall-cmd --remove-port<span class="token operator">=</span>10911/tcp --permanent
+<span class="token comment" spellcheck="true"># 开放slave默认端口 (当前集群模式可不开启)</span>
+firewall-cmd --remove-port<span class="token operator">=</span>11011/tcp --permanent 
+<span class="token comment" spellcheck="true"># 重启防火墙</span>
+firewall-cmd --reload</code></pre>
+<h3 id="3-3-单Master模式"><a href="#3-3-单Master模式" class="headerlink" title="3.3 单Master模式"></a>3.3 单Master模式</h3><h4 id="3-3-1-创建消息存储路径"><a href="#3-3-1-创建消息存储路径" class="headerlink" title="3.3.1 创建消息存储路径"></a>3.3.1 创建消息存储路径</h4><p>系统根目录执行一下命令</p>
+<pre><code>cd /
+mkdir -p /data/rocketmq/single-master/broker-a/store
+mkdir -p /data/rocketmq/single-master/broker-a/store/commitlog
+mkdir -p /data/rocketmq/single-master/broker-a/store/consumequeue
+mkdir -p /data/rocketmq/single-master/broker-a/store/index
+mkdir -p /data/rocketmq/single-master/broker-a/store/checkpoint
+mkdir -p /data/rocketmq/single-master/broker-a/store/abort</code></pre><h4 id="3-3-2-修改broker配置文件"><a href="#3-3-2-修改broker配置文件" class="headerlink" title="3.3.2  修改broker配置文件"></a>3.3.2  修改broker配置文件</h4><pre><code>vi /usr/java/rocketmq/conf/broker.conf</code></pre><pre><code>#所属集群名字
+brokerClusterName=single-master
+#broker名字，注意此处不同的配置文件填写的不一样
+brokerName=broker-a
+#0 表示 Master，&gt;0 表示 Slave
+brokerId=0
+#nameServer地址，分号分割
+namesrvAddr=1.15.226.249:9876
+# 你的公网IP
+brokerIP1=1.15.226.249
+#在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
+defaultTopicQueueNums=4
+#是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
+autoCreateTopicEnable=true
+#是否允许 Broker 自动创建订阅组，建议线下开启，线上关闭
+autoCreateSubscriptionGroup=true
+#Broker 对外服务的监听端口
+listenPort=10911
+#删除文件时间点，默认凌晨 4点
+deleteWhen=04
+#文件保留时间，默认 48 小时
+fileReservedTime=48
+#commitLog每个文件的大小默认1G
+mapedFileSizeCommitLog=1073741824
+#ConsumeQueue每个文件默认存30W条，根据业务情况调整
+mapedFileSizeConsumeQueue=300000
+#destroyMapedFileIntervalForcibly=120000
+#redeleteHangedFileInterval=120000
+#检测物理文件磁盘空间
+diskMaxUsedSpaceRatio=88
+#存储路径
+storePathRootDir=/data/rocketmq/single-master/broker-a/store
+#commitLog 存储路径
+storePathCommitLog=/data/rocketmq/single-master/broker-a/store/commitlog
+#消费队列存储路径存储路径
+storePathConsumeQueue=/data/rocketmq/single-master/broker-a/store/consumequeue
+#消息索引存储路径
+storePathIndex=/data/rocketmq/single-master/broker-a/store/index
+#checkpoint 文件存储路径
+storeCheckpoint=/data/rocketmq/single-master/broker-a/store/checkpoint
+#abort 文件存储路径
+abortFile=/data/rocketmq/single-master/broker-a/store/abort
+#限制的消息大小
+maxMessageSize=65536
+#flushCommitLogLeastPages=4
+#flushConsumeQueueLeastPages=2
+#flushCommitLogThoroughInterval=10000
+#flushConsumeQueueThoroughInterval=60000
+#Broker 的角色
+#- ASYNC_MASTER 异步复制Master
+#- SYNC_MASTER 同步双写Master
+#- SLAVE
+brokerRole=ASYNC_MASTER
+#刷盘方式
+#- ASYNC_FLUSH 异步刷盘
+#- SYNC_FLUSH 同步刷盘
+flushDiskType=ASYNC_FLUSH
+#checkTransactionMessageEnable=false
+#发消息线程池数量
+sendMessageThreadPoolNums=18
+#拉消息线程池数量
+pullMessageThreadPoolNums=18</code></pre><h4 id="3-3-3-启动"><a href="#3-3-3-启动" class="headerlink" title="3.3.3 启动"></a>3.3.3 启动</h4><ul>
+<li><p>启动NameServer</p>
+<pre><code>nohup sh bin/mqnamesrv &gt;/dev/null &amp;</code></pre></li>
+<li><p>查看NameServer启动日志</p>
+<pre><code>tail -500f ~/logs/rocketmqlogs/namesrv.log</code></pre></li>
+<li><p>启动broker</p>
+<pre><code>nohup sh bin/mqbroker -c conf/broker.conf &gt;/dev/null &amp;</code></pre></li>
+<li><p>查看Broker启动日志</p>
+<pre><code>tail -500f ~/logs/rocketmqlogs/broker.log </code></pre></li>
+<li><p>关闭NameServer</p>
+<pre><code>sh bin/mqshutdown namesrv</code></pre></li>
+<li><p>关闭Broker</p>
+<pre><code>sh bin/mqshutdown broker</code></pre></li>
+</ul>
+<p>注意：broker启动时不会读取broker.conf中的配置，尽管也可以启动，但是如果需要使得配置文件生效，必须通过-c参数进行指定。</p>
+<p>验证启动成功</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# jps -l
+1354 org.apache.rocketmq.namesrv.NamesrvStartup
+1739 org.apache.rocketmq.broker.BrokerStartup
+[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# </code></pre><h4 id="3-3-4-查看集群列表信息（集群中使用）"><a href="#3-3-4-查看集群列表信息（集群中使用）" class="headerlink" title="3.3.4 查看集群列表信息（集群中使用）"></a>3.3.4 查看集群列表信息（集群中使用）</h4><pre class=" language-bash"><code class="language-bash">$ sh bin/mqadmin clusterList -n 1.15.226.249:9876
+<span class="token comment" spellcheck="true">#Cluster Name    #Broker Name   #BID        #Addr           #Version   #...(略)</span>
+single-master    broker-a      0        192.168.1.3:10911     V4_6_0    …</code></pre>
+<p>输出的每一列说明如下：</p>
+<ul>
+<li>Cluster Name：集群的名称，即brokerClusterName配置项的值</li>
+<li>Broker Name：Broker的名称，即brokerName配置项的值</li>
+<li>BID：Broker的ID，这里显示为0，即brokerId配置项的值</li>
+<li>Addr：监听的IP/端口，供生产者/消费者访问，端口即listenPort配置项的值</li>
+<li>Version：broker的版本</li>
+</ul>
+<h2 id="四、RocketMQ控制台安装"><a href="#四、RocketMQ控制台安装" class="headerlink" title="四、RocketMQ控制台安装"></a>四、RocketMQ控制台安装</h2><p>下载代码并编译打包</p>
+<pre><code>git clone https://github.com/apache/rocketmq-externals
+cd rocketmq-console
+mvn clean package -Dmaven.test.skip=true</code></pre><p>注意：打包前在<code>rocketmq-console</code>中配置<code>namesrv</code>集群地址：</p>
+<pre class=" language-sh"><code class="language-sh">rocketmq.config.namesrvAddr=1.15.226.249:9876</code></pre>
+<p>最好将server.port也修改一下。默认是8080。</p>
+<p>上传到linux服务器任意一个目录。</p>
+<p>启动rocketmq-console：注意jar包的名称需要改为自己的jar包名称</p>
+<pre class=" language-sh"><code class="language-sh">nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn32m rocketmq-console-ng-1.0.0.jar >/dev/null &</code></pre>
+<p>启动成功后，我们就可以通过浏览器访问：http://公网ip:port</p>
+<h2 id="五、遇到的问题"><a href="#五、遇到的问题" class="headerlink" title="五、遇到的问题"></a>五、遇到的问题</h2><ol>
+<li><p>启动broker失败</p>
+<pre><code>2020-8-24 13:11:11 INFO main - Try to shutdown service thread:AllocateMappedFileService started:true lastThread:Thread[AllocateMappedFileService,5,main]
+2020-8-24 13:11:11 INFO main - shutdown thread AllocateMappedFileService interrupt true
+2020-8-24 13:11:11 INFO main - join thread AllocateMappedFileService elapsed time(ms) 5 90000
+2020-8-24 13:11:11 INFO main - Try to shutdown service thread:PullRequestHoldService started:false lastThread:null</code></pre><p>解决原因：将broker的存储路径storePathRootDir给注释掉。使用broker默认的存储路径（/root/store）。</p>
+<p>可以临时解决一下。这不是很好的解决方案。具体原因未找出来。</p>
+</li>
+<li><p>producer没有连接上broker</p>
+<pre><code>com.alibaba.rocketmq.remoting.exception.RemotingConnectException: connect to &lt;127.0.0.1:9876&gt; failed</code></pre><p>这个修改broker的配置文件。需要修改两个参数</p>
+<pre><code># 你的公网IP
+namesrvAddr=1.15.226.249:9876
+# 你的公网IP，不指定就是127.0.0.1。而127.0.0.1在外网环境中无法访问。
+brokerIP1=1.15.226.249</code></pre><p>rocketmq控制台也是如此。需要指定namesrvAddr的外网ip。</p>
+</li>
+</ol>
+
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/RocketMQ/">
+                                    <span class="chip bg-color">RocketMQ</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">您的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/04/01/rocketmq-sheng-chan-xiao-xi-xiao-fei-xiao-xi-de-ji-chong-an-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="RocketMQ生产消息，消费消息的几种案例">
+                        
+                        <span class="card-title">RocketMQ生产消息，消费消息的几种案例</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文对RocketMQ发送消息的几种案例进行了简单的介绍和示例。用来参考和回顾再好不过了。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/RocketMQ/" class="post-category">
+                                    RocketMQ
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/RocketMQ/">
+                        <span class="chip bg-color">RocketMQ</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/03/30/linux-an-zhuang-jenkins/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="linux安装jenkins部署SpringBoot应用">
+                        
+                        <span class="card-title">linux安装jenkins部署SpringBoot应用</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            linux安装jenkins部署SpringBoot应用完整教程。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/jenkins/" class="post-category">
+                                    jenkins
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/jenkins/">
+                        <span class="chip bg-color">jenkins</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="https://JavaCodeShow.github.io" target="_blank">江峰</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JavaCodeShow" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1546844168@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1546844168" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1546844168" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
