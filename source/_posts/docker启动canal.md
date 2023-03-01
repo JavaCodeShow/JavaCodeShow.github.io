@@ -16,7 +16,7 @@ tags:
 
 ## 一、安装MySQL：
 
-参考文章：https://007code.cn/2020/05/22/docker-qi-dong-mysql/
+参考文章：https://javacode.cc/2020/05/22/docker-qi-dong-mysql/
 
 1. 查看是否开启biglog
 
