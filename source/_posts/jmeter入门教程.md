@@ -16,7 +16,7 @@ tags:
 
 1. 下载jmeter
 
-   官网：http://jmeter.apache.org/
+   官网：https://jmeter.apache.org/
 
 2. 解压Jmeter包（解压后即可使用）
 
