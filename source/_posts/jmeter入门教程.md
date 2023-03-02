@@ -20,11 +20,19 @@ tags:
 
 2. 解压Jmeter包（解压后即可使用）
 
-3. 双击解压后的文件夹bin目录下的Jmeter.bat启动Jmeter
+3. 修改jmeter的语言为中文（默认为英文）
+
+   1. 打开jmeter的bin目录下面的jmeter.properties
+
+   2. 修改language=zh_CN，记得把注释放开。修改后如下图所示：
+
+      ![](https://img-blog.csdnimg.cn/c7e2e13c6c1149ffbdde09ede939914b.png)
+
+4. 双击解压后的文件夹bin目录下的Jmeter.bat启动Jmeter
 
    ![](https://img-blog.csdnimg.cn/6a719791901e437590603276a6cedfb7.png#pic_center)
 
-4. 创建线程组
+5. 创建线程组
 
    ![](https://img-blog.csdnimg.cn/4380a774fbf3434c882fdb52761a6a4e.png#pic_center)
 
