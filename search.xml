@@ -392,6 +392,75 @@ build/
 ]]></content>
   </entry>
   <entry>
+    <title>SpringBoot使用jetcache本地缓存</title>
+    <url>/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/</url>
+    <content><![CDATA[<h1 id="SpringBoot使用jetcache本地缓存"><a href="#SpringBoot使用jetcache本地缓存" class="headerlink" title="SpringBoot使用jetcache本地缓存"></a>SpringBoot使用jetcache本地缓存</h1><h2 id="引入mavne依赖"><a href="#引入mavne依赖" class="headerlink" title="引入mavne依赖"></a>引入mavne依赖</h2><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.alicp.jetcache&lt;/groupId&gt;
+    &lt;artifactId&gt;jetcache-starter-redis&lt;/artifactId&gt;
+    &lt;version&gt;2.6.4&lt;/version&gt;
+&lt;/dependency&gt;</code></pre><h2 id="添加配置文件"><a href="#添加配置文件" class="headerlink" title="添加配置文件"></a>添加配置文件</h2><pre><code># cache 状态监控刷新时间
+jetcache.statIntervalMinutes=1
+jetcache.areaInCacheName=false
+# 进程内的并发访问保护默认开关
+jetcache.penetrationProtect=true
+jetcache.local.default.type=caffeine
+jetcache.local.default.keyConvertor=fastjson
+# 默认单个 method cache 支持数量100个，需要具体看服务情况调整
+jetcache.local.default.limit=100
+# 缓存失效时间，全局默认10s
+jetcache.local.default.expireAfterWriteInMillis=10000
+</code></pre><h2 id="开启缓存"><a href="#开启缓存" class="headerlink" title="开启缓存"></a>开启缓存</h2><p>在启动类上添加@EnableMethodCache注解，扫描指定包下面的@Cached注解，使缓存生效。</p>
+<p>注意：jetcache是基于AOP的，所以需要放在public方法上，并且不能是本类方法调用。</p>
+<pre><code>@SpringBootApplication
+@EnableMethodCache(basePackages = &quot;xxx.xxx&quot;)
+public class RedisSpringBootMain {
+    public static void main(String[] args) {
+        SpringApplication.run(RedisSpringBootMain.class, args);
+    }
+}</code></pre><h2 id="缓存名称删除规则"><a href="#缓存名称删除规则" class="headerlink" title="缓存名称删除规则"></a>缓存名称删除规则</h2><p>AreaName+cacheName, cacheName 如果未指定，则通过类签名+函数签名+参数签名实现</p>
+<h2 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h2><p>key支持spel表达式，可自定义key的生成规则。不指定key，则使用默认规则</p>
+<pre><code>   /**
+     * 单个key
+     */
+    @PostMapping(&quot;/jetCacheGet&quot;)
+    @Cached(cacheType = CacheType.LOCAL, expire = 6)
+    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet(@RequestBody String bizShowId) {
+        log.info(&quot;从数据库获得数据&quot;);
+        return BaseResult.success(UserDTO.getUserList());
+    }</code></pre><pre><code>     /**
+     * 对象
+     */
+    @PostMapping(&quot;/jetCacheGet2&quot;)
+    @Cached(cacheType = CacheType.LOCAL, expire = 6)
+    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet2(@RequestBody UserDTO userDTO) {
+        log.info(&quot;从数据库获得数据&quot;);
+        return BaseResult.success(UserDTO.getUserList());
+    }
+</code></pre><pre><code>    /**
+     * 集合排序
+     */
+    @PostMapping(&quot;/jetCacheGet3&quot;)
+    @Cached(cacheType = CacheType.LOCAL, key = &quot;T(com.jf.common.utils.jetcache.JetCacheUtils).sorted(#bizShowIdList)&quot;, expire = 6)
+    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet3(@RequestBody List&lt;String&gt; bizShowIdList) {
+        log.info(&quot;从数据库获得数据&quot;);
+        return BaseResult.success(UserDTO.getUserList());
+    }</code></pre><pre><code>    /**
+     * 集合对象排序
+     */
+    @PostMapping(&quot;/jetCacheGet4&quot;)
+    @Cached(cacheType = CacheType.LOCAL, key = &quot;T(com.jf.common.utils.jetcache.JetCacheUtils).sorted(#UserDTO)&quot;, expire = 6)
+    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet4(@RequestBody List&lt;UserDTO&gt; userDTOList) {
+        log.info(&quot;从数据库获得数据&quot;);
+        return BaseResult.success(UserDTO.getUserList());
+    }</code></pre>]]></content>
+      <categories>
+        <category>高性能缓存</category>
+      </categories>
+      <tags>
+        <tag>jetcache</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RocketMQ生产消息，消费消息的几种案例</title>
     <url>/2021/04/01/rocketmq-sheng-chan-xiao-xi-xiao-fei-xiao-xi-de-ji-chong-an-li/</url>
     <content><![CDATA[<h2 id="1-Producer发送消息的三种方式"><a href="#1-Producer发送消息的三种方式" class="headerlink" title="1. Producer发送消息的三种方式"></a>1. Producer发送消息的三种方式</h2><p>Producer 发送消息，RocketMQ 提供了三种模式。</p>
@@ -590,6 +659,137 @@ messages<span class="token punctuation">.</span><span class="token function">add
       </categories>
       <tags>
         <tag>RocketMQ</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker启动MySQL</title>
+    <url>/2020/05/22/docker-qi-dong-mysql/</url>
+    <content><![CDATA[<h1 id="docker启动MySQL"><a href="#docker启动MySQL" class="headerlink" title="docker启动MySQL"></a>docker启动MySQL</h1><ol>
+<li><p>查询mysql镜像</p>
+<pre><code>docker search mysql</code></pre></li>
+<li><p>从docker hub拉取镜像</p>
+<pre><code>docker pull mysql:8.0.28</code></pre></li>
+<li><p>查看mysql镜像</p>
+<pre><code>docker images  | grep mysql</code></pre></li>
+<li><p>复制文件</p>
+<pre><code>#创建目录
+mkdir -p /usr/java/docker/mysql/conf &amp;&amp; mkdir -p /usr/java/docker/mysql/data &amp;&amp; mkdir -p /usr/java/docker/mysql/logs
+
+#启动容器，为了复制文件
+docker run -p 3306:3306 --name mysql -d -e MYSQL_ROOT_PASSWORD=“123456” mysql:8.0.28
+
+#复制文件
+docker cp mysql:/etc/mysql/my.cnf /usr/java/docker/mysql/conf
+
+#删除容器
+docker rm -f mysql</code></pre></li>
+<li><p>使用docker运行mysql</p>
+<pre><code>docker run -p 3306:3306 --name mysql \
+-v /usr/java/docker/mysql/logs:/var/log/mysql \
+-v /usr/java/docker/mysql/data:/var/lib/mysql \
+-v /usr/java/docker/mysql/conf:/etc/mysql/conf.d \
+-e MYSQL_ROOT_PASSWORD=123456 \
+--restart=always \
+--privileged=true \
+-d \
+mysql:8.0.28</code></pre><p>命令解释说明：</p>
+<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
+<p>–name mysql  指定该容器名称，查看和进行操作都比较方便。</p>
+<p>-e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码</p>
+<p>-d mysql:8.0.28   在后台运行mysql镜像产生的容器</p>
+</li>
+</ol>
+<ol start="6">
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep mysql</code></pre></li>
+</ol>
+<ol start="7">
+<li><p>通过navicat连接mysql出现2059的问题</p>
+<p><strong>原因</strong>：8.0之后mysql更改了密码的加密规则，只要在命令窗口把加密方法改回去即可。</p>
+<p><strong>解决办法</strong>：</p>
+<ol>
+<li><p>进入到docker容器里面的mysql</p>
+<pre><code>docker exec -it mysql bash</code></pre></li>
+<li><p>进去之后不用切换目录。直接输入下面的命令登录MySQL</p>
+<pre><code>mysql -uroot -p123456</code></pre></li>
+<li><p>然后运行以下SQL</p>
+<pre><code>alter user &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; password expire never;
+alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;123456&#39;;
+flush privileges;</code></pre></li>
+<li><p>重新启动docker里面的mysql容器</p>
+<pre><code>docker restart mysql</code></pre></li>
+</ol>
+</li>
+</ol>
+<ol start="8">
+<li>通过navicat客户端重新连接即可</li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>arthas常用命令记录</title>
+    <url>/2022/09/05/arthas-chang-yong-ming-ling-ji-lu/</url>
+    <content><![CDATA[<h1 id="arthas常用命令记录-md"><a href="#arthas常用命令记录-md" class="headerlink" title="arthas常用命令记录.md"></a>arthas常用命令记录.md</h1><h2 id="下载arthas"><a href="#下载arthas" class="headerlink" title="下载arthas"></a>下载arthas</h2><pre><code>curl -O https://arthas.aliyun.com/arthas-boot.jar</code></pre><h2 id="启动arthas"><a href="#启动arthas" class="headerlink" title="启动arthas"></a>启动arthas</h2><pre><code>java -jar arthas-boot.jar</code></pre><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
+<li><p><strong>arthas后台异步任务</strong></p>
+<ol>
+<li><p>arthas使用&amp;在后台异步执行任务</p>
+<pre><code>trace Test t &amp;</code></pre></li>
+<li><p>通过jobs查看后台异步任务</p>
+<pre><code>jobs</code></pre></li>
+</ol>
+</li>
+<li><p><strong>dashboard：查看当前系统的实时数据面板</strong></p>
+<pre class=" language-text"><code class="language-text">dashboard</code></pre>
+</li>
+<li><p><strong>memory：查看 JVM 内存信息。</strong></p>
+<pre><code>memory</code></pre></li>
+<li><p><strong>sysenv查看当前JVM的环境属性（System Environment Variables），支持通过<code>TAB</code>键自动补全</strong></p>
+<pre><code>sysenv</code></pre></li>
+<li><p><strong>sysprop查看当前 JVM 的系统属性(System Property)，支持通过<code>TAB</code>键自动补全</strong></p>
+<p><strong>此命令可以查看配置文件的信息</strong></p>
+<pre><code>sysprop</code></pre></li>
+<li><p><strong>thread：查看当前线程信息，查看线程的堆栈</strong></p>
+<ol>
+<li><p>查看当前最忙的前 N 个线程并打印堆栈</p>
+<pre><code>thread -n 3</code></pre></li>
+<li><p>thread id, 显示指定线程的运行堆栈</p>
+<pre><code>thread 1</code></pre></li>
+<li><p>thread -b, 找出当前阻塞其他线程的线程</p>
+<pre><code>thread -b</code></pre></li>
+</ol>
+</li>
+<li><p><strong>jad：反编译指定已加载类的源码</strong></p>
+<pre><code>jad --source-only java.lang.String</code></pre></li>
+<li><p><strong>monitor：方法执行监控</strong></p>
+<pre><code>monitor com.jf.redisstudy.controller.HelloController getName  -n 10  --cycle 10 &amp;</code></pre></li>
+<li><p><strong>stack：输出当前方法被调用的调用路径</strong></p>
+<pre><code>stack com.jf.redisstudy.controller.HelloController hello  -n 5 </code></pre></li>
+<li><p><strong>trace：方法内部调用路径，并输出方法路径上的每个节点上耗时</strong></p>
+<pre><code>trace com.jf.redisstudy.controller.HelloController hello  -n 5 --skipJDKMethod false &amp;</code></pre></li>
+<li><p><strong>tt：方法执行数据的时空隧道，记录下指定方法每次调用的入参和返回信息，并能对这些不同的时间下调用进行观测</strong></p>
+<p>tt命令可以用在类上，也可以用在方法上</p>
+<p>用法方法上：</p>
+<pre><code>tt -t com.jf.redisstudy.controller.HelloController hello -n 5 &amp;</code></pre><p>当你用 tt 记录了一大片的时间片段之后，你希望能从中筛选出自己需要的时间片段，这个时候你就需要对现有记录进行检索。</p>
+<pre><code>tt -l</code></pre><p>查看调用信息</p>
+<pre><code>tt -i 索引id</code></pre><p>重做一次调用</p>
+<pre><code>tt -i 索引id -p</code></pre></li>
+<li><p><strong>watch：方法执行出入参查看</strong></p>
+<pre><code>watch com.jf.redisstudy.controller.HelloController hello &#39;{params,returnObj,throwExp}&#39;  -n 5  -x 3 &amp;</code></pre></li>
+<li><p><strong>json格式查看结果</strong></p>
+<pre><code>options json-format true</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>arthas</category>
+      </categories>
+      <tags>
+        <tag>arthas</tag>
       </tags>
   </entry>
   <entry>
@@ -844,200 +1044,6 @@ mv alertmanager-0.17.0.linux-amd64 /usr/local/alertmanager</code></pre><h2 id="2
       </tags>
   </entry>
   <entry>
-    <title>arthas常用命令记录</title>
-    <url>/2022/09/05/arthas-chang-yong-ming-ling-ji-lu/</url>
-    <content><![CDATA[<h1 id="arthas常用命令记录-md"><a href="#arthas常用命令记录-md" class="headerlink" title="arthas常用命令记录.md"></a>arthas常用命令记录.md</h1><h2 id="下载arthas"><a href="#下载arthas" class="headerlink" title="下载arthas"></a>下载arthas</h2><pre><code>curl -O https://arthas.aliyun.com/arthas-boot.jar</code></pre><h2 id="启动arthas"><a href="#启动arthas" class="headerlink" title="启动arthas"></a>启动arthas</h2><pre><code>java -jar arthas-boot.jar</code></pre><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
-<li><p><strong>arthas后台异步任务</strong></p>
-<ol>
-<li><p>arthas使用&amp;在后台异步执行任务</p>
-<pre><code>trace Test t &amp;</code></pre></li>
-<li><p>通过jobs查看后台异步任务</p>
-<pre><code>jobs</code></pre></li>
-</ol>
-</li>
-<li><p><strong>dashboard：查看当前系统的实时数据面板</strong></p>
-<pre class=" language-text"><code class="language-text">dashboard</code></pre>
-</li>
-<li><p><strong>memory：查看 JVM 内存信息。</strong></p>
-<pre><code>memory</code></pre></li>
-<li><p><strong>sysenv查看当前JVM的环境属性（System Environment Variables），支持通过<code>TAB</code>键自动补全</strong></p>
-<pre><code>sysenv</code></pre></li>
-<li><p><strong>sysprop查看当前 JVM 的系统属性(System Property)，支持通过<code>TAB</code>键自动补全</strong></p>
-<p><strong>此命令可以查看配置文件的信息</strong></p>
-<pre><code>sysprop</code></pre></li>
-<li><p><strong>thread：查看当前线程信息，查看线程的堆栈</strong></p>
-<ol>
-<li><p>查看当前最忙的前 N 个线程并打印堆栈</p>
-<pre><code>thread -n 3</code></pre></li>
-<li><p>thread id, 显示指定线程的运行堆栈</p>
-<pre><code>thread 1</code></pre></li>
-<li><p>thread -b, 找出当前阻塞其他线程的线程</p>
-<pre><code>thread -b</code></pre></li>
-</ol>
-</li>
-<li><p><strong>jad：反编译指定已加载类的源码</strong></p>
-<pre><code>jad --source-only java.lang.String</code></pre></li>
-<li><p><strong>monitor：方法执行监控</strong></p>
-<pre><code>monitor com.jf.redisstudy.controller.HelloController getName  -n 10  --cycle 10 &amp;</code></pre></li>
-<li><p><strong>stack：输出当前方法被调用的调用路径</strong></p>
-<pre><code>stack com.jf.redisstudy.controller.HelloController hello  -n 5 </code></pre></li>
-<li><p><strong>trace：方法内部调用路径，并输出方法路径上的每个节点上耗时</strong></p>
-<pre><code>trace com.jf.redisstudy.controller.HelloController hello  -n 5 --skipJDKMethod false &amp;</code></pre></li>
-<li><p><strong>tt：方法执行数据的时空隧道，记录下指定方法每次调用的入参和返回信息，并能对这些不同的时间下调用进行观测</strong></p>
-<p>tt命令可以用在类上，也可以用在方法上</p>
-<p>用法方法上：</p>
-<pre><code>tt -t com.jf.redisstudy.controller.HelloController hello -n 5 &amp;</code></pre><p>当你用 tt 记录了一大片的时间片段之后，你希望能从中筛选出自己需要的时间片段，这个时候你就需要对现有记录进行检索。</p>
-<pre><code>tt -l</code></pre><p>查看调用信息</p>
-<pre><code>tt -i 索引id</code></pre><p>重做一次调用</p>
-<pre><code>tt -i 索引id -p</code></pre></li>
-<li><p><strong>watch：方法执行出入参查看</strong></p>
-<pre><code>watch com.jf.redisstudy.controller.HelloController hello &#39;{params,returnObj,throwExp}&#39;  -n 5  -x 3 &amp;</code></pre></li>
-<li><p><strong>json格式查看结果</strong></p>
-<pre><code>options json-format true</code></pre></li>
-</ol>
-]]></content>
-      <categories>
-        <category>arthas</category>
-      </categories>
-      <tags>
-        <tag>arthas</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot使用jetcache本地缓存</title>
-    <url>/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/</url>
-    <content><![CDATA[<h1 id="SpringBoot使用jetcache本地缓存"><a href="#SpringBoot使用jetcache本地缓存" class="headerlink" title="SpringBoot使用jetcache本地缓存"></a>SpringBoot使用jetcache本地缓存</h1><h2 id="引入mavne依赖"><a href="#引入mavne依赖" class="headerlink" title="引入mavne依赖"></a>引入mavne依赖</h2><pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.alicp.jetcache&lt;/groupId&gt;
-    &lt;artifactId&gt;jetcache-starter-redis&lt;/artifactId&gt;
-    &lt;version&gt;2.6.4&lt;/version&gt;
-&lt;/dependency&gt;</code></pre><h2 id="添加配置文件"><a href="#添加配置文件" class="headerlink" title="添加配置文件"></a>添加配置文件</h2><pre><code># cache 状态监控刷新时间
-jetcache.statIntervalMinutes=1
-jetcache.areaInCacheName=false
-# 进程内的并发访问保护默认开关
-jetcache.penetrationProtect=true
-jetcache.local.default.type=caffeine
-jetcache.local.default.keyConvertor=fastjson
-# 默认单个 method cache 支持数量100个，需要具体看服务情况调整
-jetcache.local.default.limit=100
-# 缓存失效时间，全局默认10s
-jetcache.local.default.expireAfterWriteInMillis=10000
-</code></pre><h2 id="开启缓存"><a href="#开启缓存" class="headerlink" title="开启缓存"></a>开启缓存</h2><p>在启动类上添加@EnableMethodCache注解，扫描指定包下面的@Cached注解，使缓存生效。</p>
-<p>注意：jetcache是基于AOP的，所以需要放在public方法上，并且不能是本类方法调用。</p>
-<pre><code>@SpringBootApplication
-@EnableMethodCache(basePackages = &quot;xxx.xxx&quot;)
-public class RedisSpringBootMain {
-    public static void main(String[] args) {
-        SpringApplication.run(RedisSpringBootMain.class, args);
-    }
-}</code></pre><h2 id="缓存名称删除规则"><a href="#缓存名称删除规则" class="headerlink" title="缓存名称删除规则"></a>缓存名称删除规则</h2><p>AreaName+cacheName, cacheName 如果未指定，则通过类签名+函数签名+参数签名实现</p>
-<h2 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h2><p>key支持spel表达式，可自定义key的生成规则。不指定key，则使用默认规则</p>
-<pre><code>   /**
-     * 单个key
-     */
-    @PostMapping(&quot;/jetCacheGet&quot;)
-    @Cached(cacheType = CacheType.LOCAL, expire = 6)
-    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet(@RequestBody String bizShowId) {
-        log.info(&quot;从数据库获得数据&quot;);
-        return BaseResult.success(UserDTO.getUserList());
-    }</code></pre><pre><code>     /**
-     * 对象
-     */
-    @PostMapping(&quot;/jetCacheGet2&quot;)
-    @Cached(cacheType = CacheType.LOCAL, expire = 6)
-    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet2(@RequestBody UserDTO userDTO) {
-        log.info(&quot;从数据库获得数据&quot;);
-        return BaseResult.success(UserDTO.getUserList());
-    }
-</code></pre><pre><code>    /**
-     * 集合排序
-     */
-    @PostMapping(&quot;/jetCacheGet3&quot;)
-    @Cached(cacheType = CacheType.LOCAL, key = &quot;T(com.jf.common.utils.jetcache.JetCacheUtils).sorted(#bizShowIdList)&quot;, expire = 6)
-    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet3(@RequestBody List&lt;String&gt; bizShowIdList) {
-        log.info(&quot;从数据库获得数据&quot;);
-        return BaseResult.success(UserDTO.getUserList());
-    }</code></pre><pre><code>    /**
-     * 集合对象排序
-     */
-    @PostMapping(&quot;/jetCacheGet4&quot;)
-    @Cached(cacheType = CacheType.LOCAL, key = &quot;T(com.jf.common.utils.jetcache.JetCacheUtils).sorted(#UserDTO)&quot;, expire = 6)
-    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet4(@RequestBody List&lt;UserDTO&gt; userDTOList) {
-        log.info(&quot;从数据库获得数据&quot;);
-        return BaseResult.success(UserDTO.getUserList());
-    }</code></pre>]]></content>
-      <categories>
-        <category>高性能缓存</category>
-      </categories>
-      <tags>
-        <tag>jetcache</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>docker启动ElasticSearch</title>
-    <url>/2022/08/03/docker-qi-dong-elasticsearch/</url>
-    <content><![CDATA[<h1 id="docker启动ElasticSearch"><a href="#docker启动ElasticSearch" class="headerlink" title="docker启动ElasticSearch"></a>docker启动ElasticSearch</h1><ol>
-<li><p>查询ElasticSearch镜像</p>
-<pre><code>docker search elasticsearch</code></pre></li>
-<li><p>从docker hub拉取最新镜像</p>
-<pre><code>docker pull elasticsearch:7.6.0 </code></pre></li>
-<li><p>查看ElasticSearch镜像</p>
-<pre><code>docker images | grep elasticsearch</code></pre></li>
-<li><p>配置文件</p>
-<p>在/usr/java/docker文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置</p>
-<pre><code>mkdir -p /usr/java/docker/elasticsearch/config</code></pre><p>在/usr/java/docker文件夹下创建es的data文件夹</p>
-<pre><code>mkdir -p /usr/java/docker/elasticsearch/data</code></pre><p>[http.host:0.0.0.0]允许任何远程机器访问es，并将其写入es的配置文件中</p>
-<pre><code>echo &quot;http.host: 0.0.0.0&quot; &gt;&gt; /usr/java/docker/elasticsearch/config/elasticsearch.yml</code></pre><p>查看配置文件</p>
-<pre><code>cat /usr/java/docker/elasticsearch/config/elasticsearch.yml</code></pre><p>保证权限问题</p>
-<pre><code>chmod -R 777 /usr/java/docker/elasticsearch</code></pre></li>
-</ol>
-<ol start="5">
-<li><p>使用docker运行ElasticSearch</p>
-<pre><code>docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
--e &quot;discovery.type=single-node&quot; \
--e ES_JAVA_OPTS=&quot;-Xms64m -Xmx128m&quot; \
--v /usr/java/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
--v /usr/java/docker/elasticsearch/data:/usr/share/elasticsearch/data \
--v /usr/java/docker/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
--d elasticsearch:7.6.0</code></pre><blockquote>
-<p>命令解释说明：</p>
-<p>docker run –name elasticsearch 创建一个es容器并起一个名字<br>-p 9200:9200 将linux的9200端口映射到docker容器的9200端口，用来给es发送http请求<br>-p 9300:9300 9300是es在分布式集群状态下节点之间的通信端口<br>-e 指定jvm内存，当前es以单节点模式运行<br>-v 挂载命令，将虚拟机中的路径和docker中的路径进行关联<br>-d 后台启动服务</p>
-</blockquote>
-<blockquote>
-<p>注意：ES_JAVA_OPTS非常重要，指定开发时es运行时的最小和最大内存占用为64M和128M，否则就    会占用全部可用内存</p>
-</blockquote>
-</li>
-<li><p>查看是否运行成功</p>
-<pre><code>docker ps | grep elasticsearch</code></pre></li>
-<li><p>查看启动日志</p>
-<pre><code>docker logs elasticsearch</code></pre></li>
-<li><p>在浏览器地址栏访问<a href="http://ip:9200/，可以看到" target="_blank" rel="noopener">http://ip:9200/，可以看到</a> es 启动成功后返回类似下面的数据</p>
-<pre><code>{
-  &quot;name&quot;: &quot;3717e262d33f&quot;,
-  &quot;cluster_name&quot;: &quot;elasticsearch&quot;,
-  &quot;cluster_uuid&quot;: &quot;njGUk4ruRDSQHT4xZTzB3A&quot;,
-  &quot;version&quot;: {
-    &quot;number&quot;: &quot;7.6.0&quot;,
-    &quot;build_flavor&quot;: &quot;default&quot;,
-    &quot;build_type&quot;: &quot;docker&quot;,
-    &quot;build_hash&quot;: &quot;7f634e9f44834fbc12724506cc1da681b0c3b1e3&quot;,
-    &quot;build_date&quot;: &quot;2020-02-06T00:09:00.449973Z&quot;,
-    &quot;build_snapshot&quot;: false,
-    &quot;lucene_version&quot;: &quot;8.4.0&quot;,
-    &quot;minimum_wire_compatibility_version&quot;: &quot;6.8.0&quot;,
-    &quot;minimum_index_compatibility_version&quot;: &quot;6.0.0-beta1&quot;
-  },
-  &quot;tagline&quot;: &quot;You Know, for Search&quot;
-}</code></pre></li>
-</ol>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>docker启动Canal</title>
     <url>/2022/09/07/docker-qi-dong-canal/</url>
     <content><![CDATA[<h1 id="docker启动Canal"><a href="#docker启动Canal" class="headerlink" title="docker启动Canal"></a>docker启动Canal</h1><p>备注：该文章暂时还有点问题，请勿阅读。</p>
@@ -1125,105 +1131,6 @@ canal/canal-server:v1.1.6</code></pre></li>
       </tags>
   </entry>
   <entry>
-    <title>docker启动nacos</title>
-    <url>/2020/05/12/docker-qi-dong-nacos/</url>
-    <content><![CDATA[<h1 id="docker启动nacos"><a href="#docker启动nacos" class="headerlink" title="docker启动nacos"></a>docker启动nacos</h1><h2 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h2><ol>
-<li><p>查询nacos镜像</p>
-<pre><code>docker search nacos</code></pre></li>
-<li><p>从docker hub拉取最新镜像</p>
-<pre><code>docker pull nacos/nacos-server</code></pre></li>
-<li><p>查看nacos镜像</p>
-<pre><code>docker images  | grep nacos</code></pre></li>
-<li><p>使用docker运行nacos</p>
-<pre><code>docker run -d -p 8848:8848 --env MODE=standalone  -e JVM_XMS=128m -e JVM_XMX=128m  --name nacos   nacos/nacos-server</code></pre><p>命令解释说明：</p>
-<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
-<p>–name nacos 指定该容器名称，查看和进行操作都比较方便。</p>
-<p>-e JVM_XMS=128m -e JVM_XMX=128m  给nacos分配jvm的内存。内存够的话可以不加这一行</p>
-<p>–env MODE=standalone  单机模式启动</p>
-</li>
-<li><p>查看是否运行成功</p>
-<pre><code>docker ps | grep nacos</code></pre></li>
-</ol>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>docker启动MySQL</title>
-    <url>/2020/05/22/docker-qi-dong-mysql/</url>
-    <content><![CDATA[<h1 id="docker启动MySQL"><a href="#docker启动MySQL" class="headerlink" title="docker启动MySQL"></a>docker启动MySQL</h1><ol>
-<li><p>查询mysql镜像</p>
-<pre><code>docker search mysql</code></pre></li>
-<li><p>从docker hub拉取镜像</p>
-<pre><code>docker pull mysql:8.0.28</code></pre></li>
-<li><p>查看mysql镜像</p>
-<pre><code>docker images  | grep mysql</code></pre></li>
-<li><p>复制文件</p>
-<pre><code>#创建目录
-mkdir -p /usr/java/docker/mysql/conf &amp;&amp; mkdir -p /usr/java/docker/mysql/data &amp;&amp; mkdir -p /usr/java/docker/mysql/logs
-
-#启动容器，为了复制文件
-docker run -p 3306:3306 --name mysql -d -e MYSQL_ROOT_PASSWORD=“123456” mysql:8.0.28
-
-#复制文件
-docker cp mysql:/etc/mysql/my.cnf /usr/java/docker/mysql/conf
-
-#删除容器
-docker rm -f mysql</code></pre></li>
-<li><p>使用docker运行mysql</p>
-<pre><code>docker run -p 3306:3306 --name mysql \
--v /usr/java/docker/mysql/logs:/var/log/mysql \
--v /usr/java/docker/mysql/data:/var/lib/mysql \
--v /usr/java/docker/mysql/conf:/etc/mysql/conf.d \
--e MYSQL_ROOT_PASSWORD=123456 \
---restart=always \
---privileged=true \
--d \
-mysql:8.0.28</code></pre><p>命令解释说明：</p>
-<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
-<p>–name mysql  指定该容器名称，查看和进行操作都比较方便。</p>
-<p>-e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码</p>
-<p>-d mysql:8.0.28   在后台运行mysql镜像产生的容器</p>
-</li>
-</ol>
-<ol start="6">
-<li><p>查看是否运行成功</p>
-<pre><code>docker ps | grep mysql</code></pre></li>
-</ol>
-<ol start="7">
-<li><p>通过navicat连接mysql出现2059的问题</p>
-<p><strong>原因</strong>：8.0之后mysql更改了密码的加密规则，只要在命令窗口把加密方法改回去即可。</p>
-<p><strong>解决办法</strong>：</p>
-<ol>
-<li><p>进入到docker容器里面的mysql</p>
-<pre><code>docker exec -it mysql bash</code></pre></li>
-<li><p>进去之后不用切换目录。直接输入下面的命令登录MySQL</p>
-<pre><code>mysql -uroot -p123456</code></pre></li>
-<li><p>然后运行以下SQL</p>
-<pre><code>alter user &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; password expire never;
-alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;123456&#39;;
-flush privileges;</code></pre></li>
-<li><p>重新启动docker里面的mysql容器</p>
-<pre><code>docker restart mysql</code></pre></li>
-</ol>
-</li>
-</ol>
-<ol start="8">
-<li>通过navicat客户端重新连接即可</li>
-</ol>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>docker启动redis</title>
     <url>/2020/05/12/docker-qi-dong-redis/</url>
     <content><![CDATA[<h1 id="docker启动redis"><a href="#docker启动redis" class="headerlink" title="docker启动redis"></a>docker启动redis</h1><ol>
@@ -1277,6 +1184,63 @@ flush privileges;</code></pre></li>
       </categories>
       <tags>
         <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jmeter入门教程</title>
+    <url>/2020/05/12/jmeter-ru-men-jiao-cheng/</url>
+    <content><![CDATA[<h1 id="jmeter入门教程"><a href="#jmeter入门教程" class="headerlink" title="jmeter入门教程"></a>jmeter入门教程</h1><ol>
+<li><p>下载jmeter</p>
+<p>官网：<a href="https://jmeter.apache.org/" target="_blank" rel="noopener">https://jmeter.apache.org/</a></p>
+</li>
+<li><p>解压Jmeter包（解压后即可使用）</p>
+</li>
+<li><p>修改jmeter的语言为中文（默认为英文）</p>
+<ol>
+<li><p>打开jmeter的bin目录下面的jmeter.properties</p>
+</li>
+<li><p>修改language=zh_CN，记得把注释放开。修改后如下图所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/c7e2e13c6c1149ffbdde09ede939914b.png" alt></p>
+</li>
+</ol>
+</li>
+<li><p>双击解压后的文件夹bin目录下的Jmeter.bat启动Jmeter</p>
+<p><img src="https://img-blog.csdnimg.cn/6a719791901e437590603276a6cedfb7.png#pic_center" alt></p>
+</li>
+<li><p>创建线程组</p>
+<p><img src="https://img-blog.csdnimg.cn/4380a774fbf3434c882fdb52761a6a4e.png#pic_center" alt></p>
+</li>
+</ol>
+<ol start="5">
+<li><p>设置线程参数：开启10个线程，同时启动，每个线程重复一次</p>
+<p><img src="https://img-blog.csdnimg.cn/ed9ae8dac6a84651b340353c22a3e413.png#pic_center" alt></p>
+</li>
+<li><p>添加http请求</p>
+<p><img src="https://img-blog.csdnimg.cn/a2f0e74ab3434f17b44fc1ebba739e13.png#pic_center" alt></p>
+</li>
+<li><p>发起get请求</p>
+<p><img src="https://img-blog.csdnimg.cn/165e4d0459984b65872369baa1221a6f.png#pic_center" alt></p>
+</li>
+<li><p>发起post请求</p>
+<p><img src="https://img-blog.csdnimg.cn/656f2ec789af4612861a48217a1a78d5.png#pic_center" alt></p>
+</li>
+</ol>
+<p>注意：post请求需要设置content-type</p>
+<p><img src="https://img-blog.csdnimg.cn/d3e49a6bd7e14893a5f38d438bb8ff48.png#pic_center" alt></p>
+<p><img src="https://img-blog.csdnimg.cn/62028f9ed2f2439bb1c8d873a39a3d5f.png#pic_center" alt></p>
+<ol start="9">
+<li><p>查看请求结果</p>
+<p><img src="https://img-blog.csdnimg.cn/694cb95c84e646d8b0888b27202fc59a.png#pic_center" alt></p>
+</li>
+<li><p>JMeter聚合报告（Aggregate Report）理解：<a href="https://blog.csdn.net/lion19930924/article/details/51189218" target="_blank" rel="noopener">https://blog.csdn.net/lion19930924/article/details/51189218</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>压测</category>
+      </categories>
+      <tags>
+        <tag>jmeter</tag>
       </tags>
   </entry>
   <entry>
@@ -1369,6 +1333,139 @@ docker push new-repo:tagname</code></pre></li>
       </categories>
       <tags>
         <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker启动nacos</title>
+    <url>/2020/05/12/docker-qi-dong-nacos/</url>
+    <content><![CDATA[<h1 id="docker启动nacos"><a href="#docker启动nacos" class="headerlink" title="docker启动nacos"></a>docker启动nacos</h1><h2 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h2><ol>
+<li><p>查询nacos镜像</p>
+<pre><code>docker search nacos</code></pre></li>
+<li><p>从docker hub拉取最新镜像</p>
+<pre><code>docker pull nacos/nacos-server</code></pre></li>
+<li><p>查看nacos镜像</p>
+<pre><code>docker images  | grep nacos</code></pre></li>
+<li><p>使用docker运行nacos</p>
+<pre><code>docker run -d -p 8848:8848 --env MODE=standalone  -e JVM_XMS=128m -e JVM_XMX=128m  --name nacos   nacos/nacos-server</code></pre><p>命令解释说明：</p>
+<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
+<p>–name nacos 指定该容器名称，查看和进行操作都比较方便。</p>
+<p>-e JVM_XMS=128m -e JVM_XMX=128m  给nacos分配jvm的内存。内存够的话可以不加这一行</p>
+<p>–env MODE=standalone  单机模式启动</p>
+</li>
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep nacos</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker启动ElasticSearch</title>
+    <url>/2022/08/03/docker-qi-dong-elasticsearch/</url>
+    <content><![CDATA[<h1 id="docker启动ElasticSearch"><a href="#docker启动ElasticSearch" class="headerlink" title="docker启动ElasticSearch"></a>docker启动ElasticSearch</h1><ol>
+<li><p>查询ElasticSearch镜像</p>
+<pre><code>docker search elasticsearch</code></pre></li>
+<li><p>从docker hub拉取最新镜像</p>
+<pre><code>docker pull elasticsearch:7.6.0 </code></pre></li>
+<li><p>查看ElasticSearch镜像</p>
+<pre><code>docker images | grep elasticsearch</code></pre></li>
+<li><p>配置文件</p>
+<p>在/usr/java/docker文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置</p>
+<pre><code>mkdir -p /usr/java/docker/elasticsearch/config</code></pre><p>在/usr/java/docker文件夹下创建es的data文件夹</p>
+<pre><code>mkdir -p /usr/java/docker/elasticsearch/data</code></pre><p>[http.host:0.0.0.0]允许任何远程机器访问es，并将其写入es的配置文件中</p>
+<pre><code>echo &quot;http.host: 0.0.0.0&quot; &gt;&gt; /usr/java/docker/elasticsearch/config/elasticsearch.yml</code></pre><p>查看配置文件</p>
+<pre><code>cat /usr/java/docker/elasticsearch/config/elasticsearch.yml</code></pre><p>保证权限问题</p>
+<pre><code>chmod -R 777 /usr/java/docker/elasticsearch</code></pre></li>
+</ol>
+<ol start="5">
+<li><p>使用docker运行ElasticSearch</p>
+<pre><code>docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+-e &quot;discovery.type=single-node&quot; \
+-e ES_JAVA_OPTS=&quot;-Xms64m -Xmx128m&quot; \
+-v /usr/java/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /usr/java/docker/elasticsearch/data:/usr/share/elasticsearch/data \
+-v /usr/java/docker/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-d elasticsearch:7.6.0</code></pre><blockquote>
+<p>命令解释说明：</p>
+<p>docker run –name elasticsearch 创建一个es容器并起一个名字<br>-p 9200:9200 将linux的9200端口映射到docker容器的9200端口，用来给es发送http请求<br>-p 9300:9300 9300是es在分布式集群状态下节点之间的通信端口<br>-e 指定jvm内存，当前es以单节点模式运行<br>-v 挂载命令，将虚拟机中的路径和docker中的路径进行关联<br>-d 后台启动服务</p>
+</blockquote>
+<blockquote>
+<p>注意：ES_JAVA_OPTS非常重要，指定开发时es运行时的最小和最大内存占用为64M和128M，否则就    会占用全部可用内存</p>
+</blockquote>
+</li>
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep elasticsearch</code></pre></li>
+<li><p>查看启动日志</p>
+<pre><code>docker logs elasticsearch</code></pre></li>
+<li><p>在浏览器地址栏访问<a href="http://ip:9200/，可以看到" target="_blank" rel="noopener">http://ip:9200/，可以看到</a> es 启动成功后返回类似下面的数据</p>
+<pre><code>{
+  &quot;name&quot;: &quot;3717e262d33f&quot;,
+  &quot;cluster_name&quot;: &quot;elasticsearch&quot;,
+  &quot;cluster_uuid&quot;: &quot;njGUk4ruRDSQHT4xZTzB3A&quot;,
+  &quot;version&quot;: {
+    &quot;number&quot;: &quot;7.6.0&quot;,
+    &quot;build_flavor&quot;: &quot;default&quot;,
+    &quot;build_type&quot;: &quot;docker&quot;,
+    &quot;build_hash&quot;: &quot;7f634e9f44834fbc12724506cc1da681b0c3b1e3&quot;,
+    &quot;build_date&quot;: &quot;2020-02-06T00:09:00.449973Z&quot;,
+    &quot;build_snapshot&quot;: false,
+    &quot;lucene_version&quot;: &quot;8.4.0&quot;,
+    &quot;minimum_wire_compatibility_version&quot;: &quot;6.8.0&quot;,
+    &quot;minimum_index_compatibility_version&quot;: &quot;6.0.0-beta1&quot;
+  },
+  &quot;tagline&quot;: &quot;You Know, for Search&quot;
+}</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kafka入门基本使用命令</title>
+    <url>/2020/05/07/kafka-ru-men-shi-yong-guan-jian-ming-ling/</url>
+    <content><![CDATA[<h2 id="一-修改配置文件"><a href="#一-修改配置文件" class="headerlink" title="一 修改配置文件"></a>一 修改配置文件</h2><p>在kafka解压目录下下有一个config的文件夹，里面放置的是我们的配置文件　　</p>
+<ol>
+<li>consumer.properites 消费者配置，此处我们使用默认的即可</li>
+<li>producer.properties 生产者配置，此处我们使用默认的即可</li>
+<li>server.properties kafka服务器的配置，此配置文件用来配置kafka服务器，</li>
+<li>broker.id 申明当前kafka服务器在集群中的唯一ID，需配置为integer,并且集群中的每一个kafka服务器的id都应是唯一的，我们这里采用默认配置即可</li>
+<li>listeners 申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址。如果是在远程服务器上运行则必须配置，例如：listeners=PLAINTEXT:// 192.168.180.128:9092。并确保服务器的9092端口能够访问，如果想外部电脑上的程序也能访问此kafka，就必须指定ip地址，不然java中会报key为null的错误。zookeeper.connect 申明kafka所连接的zookeeper的地址 ，需配置为zookeeper的地址，由于本次使用的是kafka高版本中自带zookeeper，使用默认配置即可zookeeper.connect=localhost:2181</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">修改server.properties
+本机使用：
+        listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092
+        advertised.listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092 
+远程使用
+         listeners<span class="token operator">=</span>PLAINTEXT://内网ip:9092
+        advertised.listeners<span class="token operator">=</span>PLAINTEXT://公网ip:9092 </code></pre>
+<h2 id="二-运行"><a href="#二-运行" class="headerlink" title="二 运行"></a>二 运行</h2><h3 id="2-1-启动zookeeper"><a href="#2-1-启动zookeeper" class="headerlink" title="2.1 启动zookeeper"></a>2.1 启动zookeeper</h3><p>cd进入kafka解压目录，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/zookeeper-server-start.sh config/zookeeper.properties</code></pre>
+<h3 id="2-2-启动kafka"><a href="#2-2-启动kafka" class="headerlink" title="2.2 启动kafka"></a>2.2 启动kafka</h3><p>cd进入kafka解压目录，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties</code></pre>
+<p><strong>kafka后台运行</strong></p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties <span class="token operator">&amp;</span></code></pre>
+<h3 id="2-3-创建topic"><a href="#2-3-创建topic" class="headerlink" title="2.3 创建topic"></a>2.3 创建topic</h3><p>创建一个名为test的topic　</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic <span class="token function">test</span>　</code></pre>
+<h3 id="2-4-查看topic"><a href="#2-4-查看topic" class="headerlink" title="2.4 查看topic"></a>2.4 查看topic</h3><pre><code>bin/kafka-topics.sh --list --zookeeper localhost:2181</code></pre><h3 id="2-5-创建消费者"><a href="#2-5-创建消费者" class="headerlink" title="2.5 创建消费者"></a>2.5 创建消费者</h3><p>可以创建一个用于消费topic为test的消费者，加上–from-beginning表示从开始所有的消息都显示出来</p>
+<p>在kafka解压目录打开终端，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class="token function">test</span> --from-beginning</code></pre>
+<h3 id="2-6-创建一个消息生产者"><a href="#2-6-创建一个消息生产者" class="headerlink" title="2.6 创建一个消息生产者"></a>2.6 创建一个消息生产者</h3><p>在kafka解压目录打开一个新的终端，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="token function">test</span></code></pre>
+<h3 id="2-7-删除topic"><a href="#2-7-删除topic" class="headerlink" title="2.7 删除topic"></a>2.7 删除topic</h3><pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic accreditNotify</code></pre>
+]]></content>
+      <categories>
+        <category>Kafka</category>
+      </categories>
+      <tags>
+        <tag>kafka</tag>
       </tags>
   </entry>
   <entry>
@@ -1500,94 +1597,6 @@ thread -n 3
       </categories>
       <tags>
         <tag>线上问题排查</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>jmeter入门教程</title>
-    <url>/2020/05/12/jmeter-ru-men-jiao-cheng/</url>
-    <content><![CDATA[<h1 id="jmeter入门教程"><a href="#jmeter入门教程" class="headerlink" title="jmeter入门教程"></a>jmeter入门教程</h1><ol>
-<li><p>下载jmeter</p>
-<p>官网：<a href="https://jmeter.apache.org/" target="_blank" rel="noopener">https://jmeter.apache.org/</a></p>
-</li>
-<li><p>解压Jmeter包（解压后即可使用）</p>
-</li>
-<li><p>双击解压后的文件夹bin目录下的Jmeter.bat启动Jmeter</p>
-<p><img src="https://img-blog.csdnimg.cn/6a719791901e437590603276a6cedfb7.png#pic_center" alt></p>
-</li>
-<li><p>创建线程组</p>
-<p><img src="https://img-blog.csdnimg.cn/4380a774fbf3434c882fdb52761a6a4e.png#pic_center" alt></p>
-</li>
-</ol>
-<ol start="5">
-<li><p>设置线程参数：开启10个线程，同时启动，每个线程重复一次</p>
-<p><img src="https://img-blog.csdnimg.cn/ed9ae8dac6a84651b340353c22a3e413.png#pic_center" alt></p>
-</li>
-<li><p>添加http请求</p>
-<p><img src="https://img-blog.csdnimg.cn/a2f0e74ab3434f17b44fc1ebba739e13.png#pic_center" alt></p>
-</li>
-<li><p>发起get请求</p>
-<p><img src="https://img-blog.csdnimg.cn/165e4d0459984b65872369baa1221a6f.png#pic_center" alt></p>
-</li>
-<li><p>发起post请求</p>
-<p><img src="https://img-blog.csdnimg.cn/656f2ec789af4612861a48217a1a78d5.png#pic_center" alt></p>
-</li>
-</ol>
-<p>注意：post请求需要设置content-type</p>
-<p><img src="https://img-blog.csdnimg.cn/d3e49a6bd7e14893a5f38d438bb8ff48.png#pic_center" alt></p>
-<p><img src="https://img-blog.csdnimg.cn/62028f9ed2f2439bb1c8d873a39a3d5f.png#pic_center" alt></p>
-<ol start="9">
-<li><p>查看请求结果</p>
-<p><img src="https://img-blog.csdnimg.cn/694cb95c84e646d8b0888b27202fc59a.png#pic_center" alt></p>
-</li>
-<li><p>JMeter聚合报告（Aggregate Report）理解：<a href="https://blog.csdn.net/lion19930924/article/details/51189218" target="_blank" rel="noopener">https://blog.csdn.net/lion19930924/article/details/51189218</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>压测</category>
-      </categories>
-      <tags>
-        <tag>jmeter</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kafka入门基本使用命令</title>
-    <url>/2020/05/07/kafka-ru-men-shi-yong-guan-jian-ming-ling/</url>
-    <content><![CDATA[<h2 id="一-修改配置文件"><a href="#一-修改配置文件" class="headerlink" title="一 修改配置文件"></a>一 修改配置文件</h2><p>在kafka解压目录下下有一个config的文件夹，里面放置的是我们的配置文件　　</p>
-<ol>
-<li>consumer.properites 消费者配置，此处我们使用默认的即可</li>
-<li>producer.properties 生产者配置，此处我们使用默认的即可</li>
-<li>server.properties kafka服务器的配置，此配置文件用来配置kafka服务器，</li>
-<li>broker.id 申明当前kafka服务器在集群中的唯一ID，需配置为integer,并且集群中的每一个kafka服务器的id都应是唯一的，我们这里采用默认配置即可</li>
-<li>listeners 申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址。如果是在远程服务器上运行则必须配置，例如：listeners=PLAINTEXT:// 192.168.180.128:9092。并确保服务器的9092端口能够访问，如果想外部电脑上的程序也能访问此kafka，就必须指定ip地址，不然java中会报key为null的错误。zookeeper.connect 申明kafka所连接的zookeeper的地址 ，需配置为zookeeper的地址，由于本次使用的是kafka高版本中自带zookeeper，使用默认配置即可zookeeper.connect=localhost:2181</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">修改server.properties
-本机使用：
-        listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092
-        advertised.listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092 
-远程使用
-         listeners<span class="token operator">=</span>PLAINTEXT://内网ip:9092
-        advertised.listeners<span class="token operator">=</span>PLAINTEXT://公网ip:9092 </code></pre>
-<h2 id="二-运行"><a href="#二-运行" class="headerlink" title="二 运行"></a>二 运行</h2><h3 id="2-1-启动zookeeper"><a href="#2-1-启动zookeeper" class="headerlink" title="2.1 启动zookeeper"></a>2.1 启动zookeeper</h3><p>cd进入kafka解压目录，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/zookeeper-server-start.sh config/zookeeper.properties</code></pre>
-<h3 id="2-2-启动kafka"><a href="#2-2-启动kafka" class="headerlink" title="2.2 启动kafka"></a>2.2 启动kafka</h3><p>cd进入kafka解压目录，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties</code></pre>
-<p><strong>kafka后台运行</strong></p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties <span class="token operator">&amp;</span></code></pre>
-<h3 id="2-3-创建topic"><a href="#2-3-创建topic" class="headerlink" title="2.3 创建topic"></a>2.3 创建topic</h3><p>创建一个名为test的topic　</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic <span class="token function">test</span>　</code></pre>
-<h3 id="2-4-查看topic"><a href="#2-4-查看topic" class="headerlink" title="2.4 查看topic"></a>2.4 查看topic</h3><pre><code>bin/kafka-topics.sh --list --zookeeper localhost:2181</code></pre><h3 id="2-5-创建消费者"><a href="#2-5-创建消费者" class="headerlink" title="2.5 创建消费者"></a>2.5 创建消费者</h3><p>可以创建一个用于消费topic为test的消费者，加上–from-beginning表示从开始所有的消息都显示出来</p>
-<p>在kafka解压目录打开终端，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class="token function">test</span> --from-beginning</code></pre>
-<h3 id="2-6-创建一个消息生产者"><a href="#2-6-创建一个消息生产者" class="headerlink" title="2.6 创建一个消息生产者"></a>2.6 创建一个消息生产者</h3><p>在kafka解压目录打开一个新的终端，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="token function">test</span></code></pre>
-<h3 id="2-7-删除topic"><a href="#2-7-删除topic" class="headerlink" title="2.7 删除topic"></a>2.7 删除topic</h3><pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic accreditNotify</code></pre>
-]]></content>
-      <categories>
-        <category>Kafka</category>
-      </categories>
-      <tags>
-        <tag>kafka</tag>
       </tags>
   </entry>
   <entry>
@@ -1840,228 +1849,6 @@ brokerIP1=1.15.226.249</code></pre><p>rocketmq控制台也是如此。需要指�
       </tags>
   </entry>
   <entry>
-    <title>linux安装jenkins部署SpringBoot应用</title>
-    <url>/2021/03/30/linux-an-zhuang-jenkins/</url>
-    <content><![CDATA[<h1 id="linux安装jenkins部署SpringBoot应用"><a href="#linux安装jenkins部署SpringBoot应用" class="headerlink" title="linux安装jenkins部署SpringBoot应用"></a>linux安装jenkins部署SpringBoot应用</h1><h2 id="一、安装jdk和maven"><a href="#一、安装jdk和maven" class="headerlink" title="一、安装jdk和maven"></a>一、安装jdk和maven</h2><p>首先在安装jenkins之前。需要先安装jdk 和 maven。至于 jdk 和 maven 和安装教程，这里就不说了。</p>
-<p><strong>查看jdk安装成功</strong>：java -version</p>
-<p>显示下面的信息说明安装成功</p>
-<pre><code>[root@iZuf6j6c7vo33inl2830e3Z ~]# java -version
-java version &quot;1.8.0_131&quot;
-Java(TM) SE Runtime Environment (build 1.8.0_131-b11)
-Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
-[root@iZuf6j6c7vo33inl2830e3Z ~]# </code></pre><p><strong>查看maven安装成功</strong>：mvn -v</p>
-<p>显示下面的信息说明安装成功</p>
-<pre><code>[root@iZuf6j6c7vo33inl2830e3Z ~]# mvn -v
-Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
-Maven home: /usr/java/apache-maven-3.6.3
-Java version: 1.8.0_131, vendor: Oracle Corporation, runtime: /usr/java/jdk1.8/jre
-Default locale: en_US, platform encoding: UTF-8
-OS name: &quot;linux&quot;, version: &quot;3.10.0-1160.11.1.el7.x86_64&quot;, arch: &quot;amd64&quot;, family: &quot;unix&quot;
-[root@iZuf6j6c7vo33inl2830e3Z ~]# </code></pre><p>在进行下面的操作之前，请确保这两个安装完毕。</p>
-<h2 id="二、安装git"><a href="#二、安装git" class="headerlink" title="二、安装git"></a>二、安装git</h2><h3 id="2-1-安装git命令"><a href="#2-1-安装git命令" class="headerlink" title="2.1 安装git命令"></a>2.1 安装git命令</h3><pre><code>yum install git
-</code></pre><h3 id="2-2-查看git是否安装成功"><a href="#2-2-查看git是否安装成功" class="headerlink" title="2.2 查看git是否安装成功"></a>2.2 查看git是否安装成功</h3><pre><code>[root@iZuf6j6c7vo33inl2830e3Z ~]# git version
-git version 1.8.3.1</code></pre><h3 id="2-3-配置全局的用户名和密码"><a href="#2-3-配置全局的用户名和密码" class="headerlink" title="2.3 配置全局的用户名和密码"></a>2.3 配置全局的用户名和密码</h3><pre><code>git config --global user.name &quot;admin&quot;
-git config --global user.email &quot;admin@abc.com&quot;</code></pre><h3 id="2-4-生成授权证书"><a href="#2-4-生成授权证书" class="headerlink" title="2.4 生成授权证书"></a>2.4 生成授权证书</h3><p>中间直接全部回车就行</p>
-<pre><code>ssh-keygen -t rsa -C &quot;admin@abc.com&quot;</code></pre><h3 id="2-5-github-ssh配置"><a href="#2-5-github-ssh配置" class="headerlink" title="2.5 github ssh配置"></a>2.5 github ssh配置</h3><p>复制/root/.ssh/id_rsa.pub里的内容，到github进行配置ssh公钥</p>
-<h2 id="三、在linux服务器里面安装jenkins"><a href="#三、在linux服务器里面安装jenkins" class="headerlink" title="三、在linux服务器里面安装jenkins"></a>三、在linux服务器里面安装jenkins</h2><h3 id="3-1-下载jenkins的rpm包"><a href="#3-1-下载jenkins的rpm包" class="headerlink" title="3.1 下载jenkins的rpm包"></a>3.1 下载jenkins的rpm包</h3><p>这是目前最新 jenkins LTS版本，在<a href="https://mirrors.tuna.tsinghua.edu.cnredhat-stable/" target="_blank" rel="noopener">清华大学镜像站</a>  这个里面下载最新版的jenkins。</p>
-<p>mkdir /usr/java/jenkins</p>
-<p>然后上传到linux服务器。</p>
-<pre><code>[root@iZuf6j6c7vo33inl2830e3Z jenkins]# pwd
-/usr/java/jenkins
-[root@iZuf6j6c7vo33inl2830e3Z jenkins]# ls
-jenkins-2.222.3-1.1.noarch.rpm
-[root@iZuf6j6c7vo33inl2830e3Z jenkins]# </code></pre><h3 id="3-2-安装"><a href="#3-2-安装" class="headerlink" title="3.2 安装"></a>3.2 安装</h3><pre><code>sudo yum install jenkins-2.222.3-1.1.noarch.rpm</code></pre><h3 id="3-3-修改端口"><a href="#3-3-修改端口" class="headerlink" title="3.3 修改端口"></a>3.3 修改端口</h3><p>jenkins 默认8080端口，建议修改一下。以免和tomcat的默认端口号冲突。</p>
-<pre><code>vim /etc/sysconfig/jenkins</code></pre><p>可以看到  JENKINS_PORT=”8080”， 这里改为   JENKINS_PORT=”8091”</p>
-<h3 id="3-4-修改默认镜像源"><a href="#3-4-修改默认镜像源" class="headerlink" title="3.4 修改默认镜像源"></a>3.4 修改默认镜像源</h3><pre><code>vim /var/libhudson.model.UpdateCenter.xml </code></pre><p>将 url 修改为 清华大学官方镜像：<a href="https://mirrors.tuna.tsinghua.edu.cnupdates/update-center.json" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cnupdates/update-center.json</a></p>
-<pre><code>&lt;?xml version=&#39;1.1&#39; encoding=&#39;UTF-8&#39;?&gt;
-&lt;sites&gt;
-  &lt;site&gt;
-    &lt;id&gt;default&lt;/id&gt;
-    &lt;url&gt;https://mirrors.tuna.tsinghua.edu.cnupdates/update-center.json&lt;/url&gt;
-  &lt;/site&gt;
-&lt;/sites&gt;</code></pre><h3 id="3-5-启动jenkins"><a href="#3-5-启动jenkins" class="headerlink" title="3.5 启动jenkins"></a>3.5 启动jenkins</h3><pre><code>启动jenkins：service jenkins start
-关闭jenkins：service jenkins stop
-重启jenkins：service jenkins restart
-</code></pre><p>这里因为没有修改jdk的地址，会启动失败</p>
-<pre><code>[root@iZuf6j6c7vo33inl2830e3Z jenkins]# systemctl start jenkins.service
-Job for jenkins.service failed because the control process exited with error code. See &quot;systemctl status jenkins.service&quot; and &quot;journalctl -xe&quot; for details.
-[root@iZuf6j6c7vo33inl2830e3Z jenkins]# </code></pre><p>查看失败原因</p>
-<pre><code>systemctl status jenkins.service</code></pre><pre><code>
-[root@iZuf6j6c7vo33inl2830e3Z jenkins]# systemctl status jenkins.service
-● jenkins.service - LSB: Jenkins Automation Server
-   Loaded: loaded (/etc/rc.d/init.d/jenkins; bad; vendor preset: disabled)
-   Active: failed (Result: exit-code) since Mon 2021-03-29 15:07:28 CST; 19s ago
-     Docs: man:systemd-sysv-generator(8)
-  Process: 18344 ExecStart=/etc/rc.d/init.d/jenkins start (code=exited, status=1/FAILURE)
-
-Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: Starting LSB: Jenkins Automation Server...
-Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z runuser[18351]: pam_unix(runuser:session): session opened for user jenkins by (uid=0)
-Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z jenkins[18344]: Starting Jenkins bash: /usr/bin/java: No such file or directory
-Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: jenkins.service: control process exited, code=exited status=1
-Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z jenkins[18344]: [FAILED]
-Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: Failed to start LSB: Jenkins Automation Server.
-Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: Unit jenkins.service entered failed state.
-Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: jenkins.service failed.
-</code></pre><p>从这一行：Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z jenkins[18344]: Starting Jenkins bash: /usr/bin/java: No such file or directory</p>
-<p>可以看到是没有修改jdk的地址导致的。 </p>
-<p>如果忘了jdk的地址可以通过    which java  这个命令查看</p>
-<p>修改jenkins里面jdk的地址：</p>
-<pre><code>vim /etc/init.d/jenkins</code></pre><p>在这个文件里面找到修改jdk地址的地方，改为自己的jdk地址就好了。然后重新启动</p>
-<h3 id="3-6-查看jenkins启动成功"><a href="#3-6-查看jenkins启动成功" class="headerlink" title="3.6 查看jenkins启动成功"></a>3.6 查看jenkins启动成功</h3><pre><code>ps -ef | grep jenkins</code></pre><h3 id="3-7-访问jenkins"><a href="#3-7-访问jenkins" class="headerlink" title="3.7 访问jenkins"></a>3.7 访问jenkins</h3><p>http://公网ip地址:端口号</p>
-<p>我本人的是：<a href="http://139.224.103.236:8091" target="_blank" rel="noopener">http://139.224.103.236:8091</a></p>
-<h2 id="三、jenkins初始化配置"><a href="#三、jenkins初始化配置" class="headerlink" title="三、jenkins初始化配置"></a>三、jenkins初始化配置</h2><p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_21-49-44.png" alt="Snipaste_2021-03-29_21-49-44"></p>
-<p>输入下面的命令，即可获取密码</p>
-<pre class=" language-undefined"><code class="language-undefined">cat /root/.jenkins/secrets/initialAdminPassword  </code></pre>
-<p>安装插件，直接安装默认提供的插件即可。</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/6907580-d2ae24d404f8d137.png" alt></p>
-<p>创建管理员账号</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/6907580-ce4cf9c7eb5b435f.png" alt="6907580-ce4cf9c7eb5b435f"></p>
-<h2 id="四、jenkins基本配置"><a href="#四、jenkins基本配置" class="headerlink" title="四、jenkins基本配置"></a>四、jenkins基本配置</h2><blockquote>
-<p>开发人员将工作区的代码提交到代码库（svn或者git），代码库再调用钩子程序通知Jenkins（我已经更新了代码，你也要重新部署一版了），钩子程序是我们自己编写，这个钩子程序很容易后续会提到怎么编写钩子程序<br>Jenkins收到代码库的提醒之后立马去代码库里获取最新的源码，再通过调用maven插件将源码打包成jar，再通过Publish over SSH插件将jar包传到一台或者多台服务器上，再调用服务器的脚本启动jar包，这就是Jenkins工作的整体流程。</p>
-</blockquote>
-<h3 id="4-1-插件安装"><a href="#4-1-插件安装" class="headerlink" title="4.1 插件安装"></a>4.1 插件安装</h3><p><strong>安装Publish over SSH插件并配置</strong></p>
-<p>系统管理==》插件管理</p>
-<p>搜索Publish over SSH下载安装成功后后重新登陆jenkins</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-06-03.png" alt></p>
-<p>​        </p>
-<h3 id="4-2-系统配置"><a href="#4-2-系统配置" class="headerlink" title="4.2 系统配置"></a>4.2 系统配置</h3><p><strong>系统配置里面有一些实用的功能可以进行配置。需要的话可以自行配置。</strong></p>
-<p>拉到最后面找到Publish over SSH，点击新增</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20200524113201698.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20200524113301937.png" alt></p>
-<p>​    name：随便填<br>​    Hostname：服务器IP（这个就是要把打包好的jar包发送并运行的目标主机）<br>​    Username：root<br>​    Remote Directory：要发送到的远程主机的目录，这里我们填 / 根目录就行，因为后面这个路径我们还要配置</p>
-<p>​    填好之后在点击高级配置密码和端口</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_23-38-06.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_23-39-26.png" alt></p>
-<p>​    测试一下，能连接上即可。</p>
-<h3 id="4-3-全局工具配置"><a href="#4-3-全局工具配置" class="headerlink" title="4.3 全局工具配置"></a>4.3 全局工具配置</h3><p>在这里配置jdk，git，maven的位置</p>
-<p><strong>maven配置</strong></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-03-22.png" alt></p>
-<p>​        <strong>JDK安装</strong></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-04-56.png" alt></p>
-<p>​    <strong>git安装</strong></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-05-59.png" alt></p>
-<p>​    <strong>maven安装</strong></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-06-54.png" alt></p>
-<h3 id="4-4-节点配置"><a href="#4-4-节点配置" class="headerlink" title="4.4 节点配置"></a>4.4 节点配置</h3><p>在Jenkins中依次点击：系统管理 -&gt; 节点管理 -&gt; 新建节点</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20191019135659465.png" alt></p>
-<p>保存后，点击启动代理配置，查看日志是否成功</p>
-<h2 id="五、构建maven项目"><a href="#五、构建maven项目" class="headerlink" title="五、构建maven项目"></a>五、构建maven项目</h2><p>接下来可以新建一个任务执行了</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-09-30.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-11-34.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-13-18.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-17-03.png" alt></p>
-<p>配置项目构建完成后进行的操作。这里可以配置通过ssh连接远程其他服务器执行，或者本机直接执行等。</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_15-43-54.png" alt></p>
-<p>本机运行shell命令</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-19-12.png" alt></p>
-<p>远程服务器上运行shell命令。这个服务器就是在前面通过publish and ssh配置的服务器。</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_00-03-14.png" alt></p>
-<p>术语解释：</p>
-<blockquote>
-<p><strong>Source files</strong>：Source files的目录是基于当前项目的目录(可以从jenkins的安装目录下找到)：例如当前项目名称为distribute-id-ms，则对于root用户，Source files中的目录是相对于/usr/lib/jenkins/workspace/distribute-id-ms目录下的，因此，如果我们要发送distribute-id-ms下的target目录下的distribute-id-ms-1.0.jar包，所以这里需要填写：target/distribute-id-ms-1.0.jar</p>
-<p><strong>Remove prefix</strong>：表示需要移除的目录，比如这里填写target，则表示发布时，只把distribute-id-ms-1.0.jar发布到远程linux，而不包含target目录结构</p>
-<p><strong>Remote directory</strong>：表示需要把编译好的war包发布到远程linux的哪个目录下</p>
-<p><strong>Exec command</strong>：需要执行的shell命令，shell命令在远程linux服务器上执行.</p>
-</blockquote>
-<p>shell脚本配置如下：</p>
-<pre><code>#!/bin/sh
-
-echo &quot;开始执行shell脚本&quot;
-
-# 在jenkins环境中一定要加这句话，否则这个脚本进程最后会被杀死
-export BUILD_ID=dontKillMe
-
-# 指定最后编译好的jar的存放位置
-JAR_PATH=/usr/java/spring-application-jar
-
-# 如果路径不存在，就创建路径
-[ ! -e $JAR_PATH ] &amp;&amp; mkdir -p $JAR_PATH 
-
-# 指定jenkins中存放编译好的jar的位置
-JENKINS_JAR_PATH=/usr/lib/jenkins/workspace/distribute-id-ms/target
-
-# 如果路径不存在，就创建路径
-[ ! -e $JENKINS_JAR_PATH ] &amp;&amp; mkdir -p $JENKINS_JAR_PATH
-
-# 指定jenkins中存放编译好的jar的名称(这个jar的名字和pom文件配置有关)
-JENKINS_JAR_NAME=distribute-id-ms-1.0.jar
-
-# 获取该项目的进程号，用于重新部署项目前杀死进程
-pid=`ps -ef|grep distribute-id-ms-1.0.jar | grep -v grep|awk &#39;{print $2}&#39;`
-
-echo &quot;  =====关闭Java应用======&quot;
-
-for i in $pid
-do
-  echo &quot;Kill the $1 process [ $i ]&quot;
-  kill -9 $i
-done
-
-echo &quot;  =====启动Java应用======&quot;
-
-# 进入Jenkins中编译好的jar的位置
-cd ${JENKINS_JAR_PATH}
-
-# 将Jenkins中编译好的jar复制到最终存放项目jar的位置
-cp $JENKINS_JAR_PATH/$JENKINS_JAR_NAME $JAR_PATH
-
-# 进入到存放项目jar的位置
-cd ${JAR_PATH}
-
-# 后台启动项目，并且将控制台日志输出到nohup.out中
-
-nohup java -jar ${JENKINS_JAR_NAME} &gt;/dev/null &amp;
-
-echo &quot;shell脚本执行完毕&quot;
-
-</code></pre><p><strong>注意事项：上面的目录是我自身配置的目录。实际目录根据自身情况检查一下。以免出现不必要的错误。这个可以在服务器上面创建一个脚本执行检查一下。</strong></p>
-<p>最后，保存一下。构建项目即可。根据构建日志分析项目构建情况。</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_16-28-53.png" alt></p>
-<p>至此：使用Jenkins运行SpringBoot项目到此结束。</p>
-<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>通过实际部署Jenkins，并构建SpringBoot + maven项目，大大加深了对jenkins的熟悉。看到最后的build success</p>
-<p>，内心还是有点小激动的。实际部署操作一遍，并且写这篇博客共花了两天的时间。期间，也参考了其他人的博客，非常感谢！</p>
-<p>写这边博客的初衷，也是网上很难找到一篇从头到尾完整的使用Jenkins构建maven项目发布的教程。</p>
-<p>希望这边博客，能对各位有所帮助！！！</p>
-]]></content>
-      <categories>
-        <category>jenkins</category>
-      </categories>
-      <tags>
-        <tag>jenkins</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>linux常用命令</title>
-    <url>/2021/03/26/linux-chang-yong-ming-ling/</url>
-    <content><![CDATA[<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="一、查看文本"><a href="#一、查看文本" class="headerlink" title="一、查看文本"></a>一、查看文本</h2><h2 id="二、搜索文本里面的内容"><a href="#二、搜索文本里面的内容" class="headerlink" title="二、搜索文本里面的内容"></a>二、搜索文本里面的内容</h2><h2 id="三、端口号"><a href="#三、端口号" class="headerlink" title="三、端口号"></a>三、端口号</h2><ol>
-<li><h3 id="查看端口号是否在使用："><a href="#查看端口号是否在使用：" class="headerlink" title="查看端口号是否在使用："></a>查看端口号是否在使用：</h3><p>lsof -i:8080</p>
-</li>
-</ol>
-<ol start="2">
-<li><h3 id="对外部开放端口号"><a href="#对外部开放端口号" class="headerlink" title="对外部开放端口号"></a>对外部开放端口号</h3><p><strong>查询指定端口是否已经开放</strong><br>firewall-cmd –query-port=3306/tcp<br>返回yes/no。此时也有可能返回firewalld is not running，此时需要打开防火墙在开放端口。</p>
-</li>
-</ol>
-<p>   <strong>添加指定需要开放的端口：</strong><br>   firewall-cmd –add-port=3306/tcp –permanent</p>
-<p>   <strong>载入添加的端口：</strong><br>   firewall-cmd –reload</p>
-<h2 id="四、防火墙"><a href="#四、防火墙" class="headerlink" title="四、防火墙"></a>四、防火墙</h2><ol>
-<li><p>查看防火墙状态 systemctl status firewalld</p>
-</li>
-<li><p>开启防火墙 systemctl start firewalld</p>
-</li>
-<li><p>关闭防火墙 systemctl stop firewalld</p>
-</li>
-</ol>
-<h2 id="五、内存"><a href="#五、内存" class="headerlink" title="五、内存"></a>五、内存</h2><p>​    free -h</p>
-<h2 id="六、磁盘"><a href="#六、磁盘" class="headerlink" title="六、磁盘"></a>六、磁盘</h2><p>​     df -h</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java应用服务器内存处理</title>
     <url>/2022/06/10/linux-fu-wu-qi-java-nei-cun-chu-li/</url>
     <content><![CDATA[<h1 id="java服务器内存处理"><a href="#java服务器内存处理" class="headerlink" title="java服务器内存处理"></a>java服务器内存处理</h1><h2 id="查看服务器总内存占用"><a href="#查看服务器总内存占用" class="headerlink" title="查看服务器总内存占用"></a>查看服务器总内存占用</h2><pre><code>free -h</code></pre><p>显示如下：</p>
@@ -2180,6 +1967,49 @@ annotations:
       </tags>
   </entry>
   <entry>
+    <title>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</title>
+    <url>/2021/04/02/shi-yong-rocketmq-spring-boot-starter-fa-song-xiao-fei-xiao-xi-de-jian-dan-shi-li/</url>
+    <content><![CDATA[<h1 id="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"><a href="#使用rocketmq-spring-boot-starter发送，消费消息的简单示例" class="headerlink" title="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"></a>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</h1><h2 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1. 引入依赖"></a>1. 引入依赖</h2><pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> rokcetmq starter  <span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>rocketmq<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>rocketmq<span class="token operator">-</span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">2.2</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></code></pre>
+<h2 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h2><pre class=" language-java"><code class="language-java"># application<span class="token punctuation">.</span>properties
+rocketmq<span class="token punctuation">.</span>name<span class="token operator">-</span>server<span class="token operator">=</span><span class="token number">139.224</span><span class="token punctuation">.</span><span class="token number">103.236</span><span class="token operator">:</span><span class="token number">9876</span>
+rocketmq<span class="token punctuation">.</span>producer<span class="token punctuation">.</span>group<span class="token operator">=</span>spring<span class="token operator">-</span>application<span class="token operator">-</span>name</code></pre>
+<h2 id="3-生产者发送消息"><a href="#3-生产者发送消息" class="headerlink" title="3. 生产者发送消息"></a>3. 生产者发送消息</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 引入rocketMQTemplate</span>
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> RocketMQTemplate rocketMQTemplate<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 通过rocketMQTemplate发送消息。</span>
+<span class="token comment" spellcheck="true">// destination: formats: `topicName:tags`</span>
+<span class="token comment" spellcheck="true">// payload: 消息内容</span>
+rocketMQTemplate<span class="token punctuation">.</span><span class="token function">syncSend</span><span class="token punctuation">(</span><span class="token string">"CSS:ORDER_CANCEL"</span><span class="token punctuation">,</span> <span class="token string">"orderId-111"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="4-消费者接受消息"><a href="#4-消费者接受消息" class="headerlink" title="4. 消费者接受消息"></a>4. 消费者接受消息</h2><p>消费的的依赖和配置文件同生产者一样。组名修改即可。</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
+<span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@RocketMQMessageListener</span><span class="token punctuation">(</span>topic <span class="token operator">=</span> <span class="token string">"CSS"</span><span class="token punctuation">,</span> selectorExpression <span class="token operator">=</span> <span class="token string">"ORDER_CANCEL"</span><span class="token punctuation">,</span> consumerGroup <span class="token operator">=</span> <span class="token string">"spring-application-name"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestConsumer</span> <span class="token keyword">implements</span> <span class="token class-name">RocketMQListener</span><span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onMessage</span><span class="token punctuation">(</span>String message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Receive message："</span> <span class="token operator">+</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 业务逻辑处理。。。</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>本文对Spring项目里面对RocketMQ发送消息和消费消息，进行了简单的示例说明。方便大家入门使用！</p>
+<p>实际项目中。有能力的公司一般都会对RocketMQ进行二次封装，将RocketMQ的用法化繁为简。</p>
+<p>后面会陆续介绍RocketMQ的高级用法。</p>
+]]></content>
+      <categories>
+        <category>RocketMQ</category>
+      </categories>
+      <tags>
+        <tag>RocketMQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring注解介绍</title>
     <url>/2020/07/01/spring-zhu-jie/</url>
     <content><![CDATA[<ol>
@@ -2254,69 +2084,6 @@ annotations:
       </categories>
       <tags>
         <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用hexo写博客</title>
-    <url>/2022/06/11/shi-yong-hexo-xie-bo-ke/</url>
-    <content><![CDATA[<h1 id="使用hexo写博客"><a href="#使用hexo写博客" class="headerlink" title="使用hexo写博客"></a>使用hexo写博客</h1><h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>node的版本号一定要正确，不然可能会出现版本不适配等一系列问题。这里node使用12.18.3版本</p>
-<p>node下载：<a href="https://nodejs.org/download/release/v12.18.3/" target="_blank" rel="noopener">https://nodejs.org/download/release/v12.18.3/</a></p>
-<p>下载文件为：node-v12.18.3-x64.msi </p>
-<pre><code>git version
-node -v
-npm -v</code></pre><h2 id="npm缓存清除"><a href="#npm缓存清除" class="headerlink" title="npm缓存清除"></a>npm缓存清除</h2><pre><code>npm cache clean --force</code></pre><h2 id="npm镜像"><a href="#npm镜像" class="headerlink" title="npm镜像"></a>npm镜像</h2><p>国内npm比较慢，安装cnpm淘宝镜像</p>
-<pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="重新生成node-modules"><a href="#重新生成node-modules" class="headerlink" title="重新生成node_modules"></a>重新生成node_modules</h2><pre><code>rm -rf node_modules &amp;&amp; npm install --force</code></pre><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install -g hexo-cli</code></pre><h2 id="部署插件"><a href="#部署插件" class="headerlink" title="部署插件"></a>部署插件</h2><pre><code>npm install hexo-deployer-git --save</code></pre><h2 id="使用以及部署"><a href="#使用以及部署" class="headerlink" title="使用以及部署"></a>使用以及部署</h2><pre><code>hexo clean #清理各种缓存和旧文件
-hexo g     #生成静态文件
-hexo s     #开启服务器预览
-hexo d     #部署到git服务器上</code></pre>]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</title>
-    <url>/2021/04/02/shi-yong-rocketmq-spring-boot-starter-fa-song-xiao-fei-xiao-xi-de-jian-dan-shi-li/</url>
-    <content><![CDATA[<h1 id="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"><a href="#使用rocketmq-spring-boot-starter发送，消费消息的简单示例" class="headerlink" title="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"></a>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</h1><h2 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1. 引入依赖"></a>1. 引入依赖</h2><pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> rokcetmq starter  <span class="token operator">--</span><span class="token operator">></span>
-<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>rocketmq<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>rocketmq<span class="token operator">-</span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">2.2</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></code></pre>
-<h2 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h2><pre class=" language-java"><code class="language-java"># application<span class="token punctuation">.</span>properties
-rocketmq<span class="token punctuation">.</span>name<span class="token operator">-</span>server<span class="token operator">=</span><span class="token number">139.224</span><span class="token punctuation">.</span><span class="token number">103.236</span><span class="token operator">:</span><span class="token number">9876</span>
-rocketmq<span class="token punctuation">.</span>producer<span class="token punctuation">.</span>group<span class="token operator">=</span>spring<span class="token operator">-</span>application<span class="token operator">-</span>name</code></pre>
-<h2 id="3-生产者发送消息"><a href="#3-生产者发送消息" class="headerlink" title="3. 生产者发送消息"></a>3. 生产者发送消息</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 引入rocketMQTemplate</span>
-<span class="token annotation punctuation">@Autowired</span>
-<span class="token keyword">private</span> RocketMQTemplate rocketMQTemplate<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">// 通过rocketMQTemplate发送消息。</span>
-<span class="token comment" spellcheck="true">// destination: formats: `topicName:tags`</span>
-<span class="token comment" spellcheck="true">// payload: 消息内容</span>
-rocketMQTemplate<span class="token punctuation">.</span><span class="token function">syncSend</span><span class="token punctuation">(</span><span class="token string">"CSS:ORDER_CANCEL"</span><span class="token punctuation">,</span> <span class="token string">"orderId-111"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h2 id="4-消费者接受消息"><a href="#4-消费者接受消息" class="headerlink" title="4. 消费者接受消息"></a>4. 消费者接受消息</h2><p>消费的的依赖和配置文件同生产者一样。组名修改即可。</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
-<span class="token annotation punctuation">@Component</span>
-<span class="token annotation punctuation">@RocketMQMessageListener</span><span class="token punctuation">(</span>topic <span class="token operator">=</span> <span class="token string">"CSS"</span><span class="token punctuation">,</span> selectorExpression <span class="token operator">=</span> <span class="token string">"ORDER_CANCEL"</span><span class="token punctuation">,</span> consumerGroup <span class="token operator">=</span> <span class="token string">"spring-application-name"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestConsumer</span> <span class="token keyword">implements</span> <span class="token class-name">RocketMQListener</span><span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onMessage</span><span class="token punctuation">(</span>String message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Receive message："</span> <span class="token operator">+</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 业务逻辑处理。。。</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>本文对Spring项目里面对RocketMQ发送消息和消费消息，进行了简单的示例说明。方便大家入门使用！</p>
-<p>实际项目中。有能力的公司一般都会对RocketMQ进行二次封装，将RocketMQ的用法化繁为简。</p>
-<p>后面会陆续介绍RocketMQ的高级用法。</p>
-]]></content>
-      <categories>
-        <category>RocketMQ</category>
-      </categories>
-      <tags>
-        <tag>RocketMQ</tag>
       </tags>
   </entry>
   <entry>
@@ -2903,6 +2670,248 @@ scrape_configs:               # 通过这里的配置控制prometheus监控的�
       </categories>
       <tags>
         <tag>prometheus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用hexo写博客</title>
+    <url>/2022/06/11/shi-yong-hexo-xie-bo-ke/</url>
+    <content><![CDATA[<h1 id="使用hexo写博客"><a href="#使用hexo写博客" class="headerlink" title="使用hexo写博客"></a>使用hexo写博客</h1><h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>node的版本号一定要正确，不然可能会出现版本不适配等一系列问题。这里node使用12.18.3版本</p>
+<p>node下载：<a href="https://nodejs.org/download/release/v12.18.3/" target="_blank" rel="noopener">https://nodejs.org/download/release/v12.18.3/</a></p>
+<p>下载文件为：node-v12.18.3-x64.msi </p>
+<pre><code>git version
+node -v
+npm -v</code></pre><h2 id="npm缓存清除"><a href="#npm缓存清除" class="headerlink" title="npm缓存清除"></a>npm缓存清除</h2><pre><code>npm cache clean --force</code></pre><h2 id="npm镜像"><a href="#npm镜像" class="headerlink" title="npm镜像"></a>npm镜像</h2><p>国内npm比较慢，安装cnpm淘宝镜像</p>
+<pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="重新生成node-modules"><a href="#重新生成node-modules" class="headerlink" title="重新生成node_modules"></a>重新生成node_modules</h2><pre><code>rm -rf node_modules &amp;&amp; npm install --force</code></pre><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install -g hexo-cli</code></pre><h2 id="部署插件"><a href="#部署插件" class="headerlink" title="部署插件"></a>部署插件</h2><pre><code>npm install hexo-deployer-git --save</code></pre><h2 id="使用以及部署"><a href="#使用以及部署" class="headerlink" title="使用以及部署"></a>使用以及部署</h2><pre><code>hexo clean #清理各种缓存和旧文件
+hexo g     #生成静态文件
+hexo s     #开启服务器预览
+hexo d     #部署到git服务器上</code></pre>]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux安装jenkins部署SpringBoot应用</title>
+    <url>/2021/03/30/linux-an-zhuang-jenkins/</url>
+    <content><![CDATA[<h1 id="linux安装jenkins部署SpringBoot应用"><a href="#linux安装jenkins部署SpringBoot应用" class="headerlink" title="linux安装jenkins部署SpringBoot应用"></a>linux安装jenkins部署SpringBoot应用</h1><h2 id="一、安装jdk和maven"><a href="#一、安装jdk和maven" class="headerlink" title="一、安装jdk和maven"></a>一、安装jdk和maven</h2><p>首先在安装jenkins之前。需要先安装jdk 和 maven。至于 jdk 和 maven 和安装教程，这里就不说了。</p>
+<p><strong>查看jdk安装成功</strong>：java -version</p>
+<p>显示下面的信息说明安装成功</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z ~]# java -version
+java version &quot;1.8.0_131&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_131-b11)
+Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
+[root@iZuf6j6c7vo33inl2830e3Z ~]# </code></pre><p><strong>查看maven安装成功</strong>：mvn -v</p>
+<p>显示下面的信息说明安装成功</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z ~]# mvn -v
+Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+Maven home: /usr/java/apache-maven-3.6.3
+Java version: 1.8.0_131, vendor: Oracle Corporation, runtime: /usr/java/jdk1.8/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: &quot;linux&quot;, version: &quot;3.10.0-1160.11.1.el7.x86_64&quot;, arch: &quot;amd64&quot;, family: &quot;unix&quot;
+[root@iZuf6j6c7vo33inl2830e3Z ~]# </code></pre><p>在进行下面的操作之前，请确保这两个安装完毕。</p>
+<h2 id="二、安装git"><a href="#二、安装git" class="headerlink" title="二、安装git"></a>二、安装git</h2><h3 id="2-1-安装git命令"><a href="#2-1-安装git命令" class="headerlink" title="2.1 安装git命令"></a>2.1 安装git命令</h3><pre><code>yum install git
+</code></pre><h3 id="2-2-查看git是否安装成功"><a href="#2-2-查看git是否安装成功" class="headerlink" title="2.2 查看git是否安装成功"></a>2.2 查看git是否安装成功</h3><pre><code>[root@iZuf6j6c7vo33inl2830e3Z ~]# git version
+git version 1.8.3.1</code></pre><h3 id="2-3-配置全局的用户名和密码"><a href="#2-3-配置全局的用户名和密码" class="headerlink" title="2.3 配置全局的用户名和密码"></a>2.3 配置全局的用户名和密码</h3><pre><code>git config --global user.name &quot;admin&quot;
+git config --global user.email &quot;admin@abc.com&quot;</code></pre><h3 id="2-4-生成授权证书"><a href="#2-4-生成授权证书" class="headerlink" title="2.4 生成授权证书"></a>2.4 生成授权证书</h3><p>中间直接全部回车就行</p>
+<pre><code>ssh-keygen -t rsa -C &quot;admin@abc.com&quot;</code></pre><h3 id="2-5-github-ssh配置"><a href="#2-5-github-ssh配置" class="headerlink" title="2.5 github ssh配置"></a>2.5 github ssh配置</h3><p>复制/root/.ssh/id_rsa.pub里的内容，到github进行配置ssh公钥</p>
+<h2 id="三、在linux服务器里面安装jenkins"><a href="#三、在linux服务器里面安装jenkins" class="headerlink" title="三、在linux服务器里面安装jenkins"></a>三、在linux服务器里面安装jenkins</h2><h3 id="3-1-下载jenkins的rpm包"><a href="#3-1-下载jenkins的rpm包" class="headerlink" title="3.1 下载jenkins的rpm包"></a>3.1 下载jenkins的rpm包</h3><p>这是目前最新 jenkins LTS版本，在<a href="https://mirrors.tuna.tsinghua.edu.cnredhat-stable/" target="_blank" rel="noopener">清华大学镜像站</a>  这个里面下载最新版的jenkins。</p>
+<p>mkdir /usr/java/jenkins</p>
+<p>然后上传到linux服务器。</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z jenkins]# pwd
+/usr/java/jenkins
+[root@iZuf6j6c7vo33inl2830e3Z jenkins]# ls
+jenkins-2.222.3-1.1.noarch.rpm
+[root@iZuf6j6c7vo33inl2830e3Z jenkins]# </code></pre><h3 id="3-2-安装"><a href="#3-2-安装" class="headerlink" title="3.2 安装"></a>3.2 安装</h3><pre><code>sudo yum install jenkins-2.222.3-1.1.noarch.rpm</code></pre><h3 id="3-3-修改端口"><a href="#3-3-修改端口" class="headerlink" title="3.3 修改端口"></a>3.3 修改端口</h3><p>jenkins 默认8080端口，建议修改一下。以免和tomcat的默认端口号冲突。</p>
+<pre><code>vim /etc/sysconfig/jenkins</code></pre><p>可以看到  JENKINS_PORT=”8080”， 这里改为   JENKINS_PORT=”8091”</p>
+<h3 id="3-4-修改默认镜像源"><a href="#3-4-修改默认镜像源" class="headerlink" title="3.4 修改默认镜像源"></a>3.4 修改默认镜像源</h3><pre><code>vim /var/libhudson.model.UpdateCenter.xml </code></pre><p>将 url 修改为 清华大学官方镜像：<a href="https://mirrors.tuna.tsinghua.edu.cnupdates/update-center.json" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cnupdates/update-center.json</a></p>
+<pre><code>&lt;?xml version=&#39;1.1&#39; encoding=&#39;UTF-8&#39;?&gt;
+&lt;sites&gt;
+  &lt;site&gt;
+    &lt;id&gt;default&lt;/id&gt;
+    &lt;url&gt;https://mirrors.tuna.tsinghua.edu.cnupdates/update-center.json&lt;/url&gt;
+  &lt;/site&gt;
+&lt;/sites&gt;</code></pre><h3 id="3-5-启动jenkins"><a href="#3-5-启动jenkins" class="headerlink" title="3.5 启动jenkins"></a>3.5 启动jenkins</h3><pre><code>启动jenkins：service jenkins start
+关闭jenkins：service jenkins stop
+重启jenkins：service jenkins restart
+</code></pre><p>这里因为没有修改jdk的地址，会启动失败</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z jenkins]# systemctl start jenkins.service
+Job for jenkins.service failed because the control process exited with error code. See &quot;systemctl status jenkins.service&quot; and &quot;journalctl -xe&quot; for details.
+[root@iZuf6j6c7vo33inl2830e3Z jenkins]# </code></pre><p>查看失败原因</p>
+<pre><code>systemctl status jenkins.service</code></pre><pre><code>
+[root@iZuf6j6c7vo33inl2830e3Z jenkins]# systemctl status jenkins.service
+● jenkins.service - LSB: Jenkins Automation Server
+   Loaded: loaded (/etc/rc.d/init.d/jenkins; bad; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Mon 2021-03-29 15:07:28 CST; 19s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 18344 ExecStart=/etc/rc.d/init.d/jenkins start (code=exited, status=1/FAILURE)
+
+Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: Starting LSB: Jenkins Automation Server...
+Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z runuser[18351]: pam_unix(runuser:session): session opened for user jenkins by (uid=0)
+Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z jenkins[18344]: Starting Jenkins bash: /usr/bin/java: No such file or directory
+Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: jenkins.service: control process exited, code=exited status=1
+Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z jenkins[18344]: [FAILED]
+Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: Failed to start LSB: Jenkins Automation Server.
+Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: Unit jenkins.service entered failed state.
+Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: jenkins.service failed.
+</code></pre><p>从这一行：Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z jenkins[18344]: Starting Jenkins bash: /usr/bin/java: No such file or directory</p>
+<p>可以看到是没有修改jdk的地址导致的。 </p>
+<p>如果忘了jdk的地址可以通过    which java  这个命令查看</p>
+<p>修改jenkins里面jdk的地址：</p>
+<pre><code>vim /etc/init.d/jenkins</code></pre><p>在这个文件里面找到修改jdk地址的地方，改为自己的jdk地址就好了。然后重新启动</p>
+<h3 id="3-6-查看jenkins启动成功"><a href="#3-6-查看jenkins启动成功" class="headerlink" title="3.6 查看jenkins启动成功"></a>3.6 查看jenkins启动成功</h3><pre><code>ps -ef | grep jenkins</code></pre><h3 id="3-7-访问jenkins"><a href="#3-7-访问jenkins" class="headerlink" title="3.7 访问jenkins"></a>3.7 访问jenkins</h3><p>http://公网ip地址:端口号</p>
+<p>我本人的是：<a href="http://139.224.103.236:8091" target="_blank" rel="noopener">http://139.224.103.236:8091</a></p>
+<h2 id="三、jenkins初始化配置"><a href="#三、jenkins初始化配置" class="headerlink" title="三、jenkins初始化配置"></a>三、jenkins初始化配置</h2><p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_21-49-44.png" alt="Snipaste_2021-03-29_21-49-44"></p>
+<p>输入下面的命令，即可获取密码</p>
+<pre class=" language-undefined"><code class="language-undefined">cat /root/.jenkins/secrets/initialAdminPassword  </code></pre>
+<p>安装插件，直接安装默认提供的插件即可。</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/6907580-d2ae24d404f8d137.png" alt></p>
+<p>创建管理员账号</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/6907580-ce4cf9c7eb5b435f.png" alt="6907580-ce4cf9c7eb5b435f"></p>
+<h2 id="四、jenkins基本配置"><a href="#四、jenkins基本配置" class="headerlink" title="四、jenkins基本配置"></a>四、jenkins基本配置</h2><blockquote>
+<p>开发人员将工作区的代码提交到代码库（svn或者git），代码库再调用钩子程序通知Jenkins（我已经更新了代码，你也要重新部署一版了），钩子程序是我们自己编写，这个钩子程序很容易后续会提到怎么编写钩子程序<br>Jenkins收到代码库的提醒之后立马去代码库里获取最新的源码，再通过调用maven插件将源码打包成jar，再通过Publish over SSH插件将jar包传到一台或者多台服务器上，再调用服务器的脚本启动jar包，这就是Jenkins工作的整体流程。</p>
+</blockquote>
+<h3 id="4-1-插件安装"><a href="#4-1-插件安装" class="headerlink" title="4.1 插件安装"></a>4.1 插件安装</h3><p><strong>安装Publish over SSH插件并配置</strong></p>
+<p>系统管理==》插件管理</p>
+<p>搜索Publish over SSH下载安装成功后后重新登陆jenkins</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-06-03.png" alt></p>
+<p>​        </p>
+<h3 id="4-2-系统配置"><a href="#4-2-系统配置" class="headerlink" title="4.2 系统配置"></a>4.2 系统配置</h3><p><strong>系统配置里面有一些实用的功能可以进行配置。需要的话可以自行配置。</strong></p>
+<p>拉到最后面找到Publish over SSH，点击新增</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20200524113201698.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20200524113301937.png" alt></p>
+<p>​    name：随便填<br>​    Hostname：服务器IP（这个就是要把打包好的jar包发送并运行的目标主机）<br>​    Username：root<br>​    Remote Directory：要发送到的远程主机的目录，这里我们填 / 根目录就行，因为后面这个路径我们还要配置</p>
+<p>​    填好之后在点击高级配置密码和端口</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_23-38-06.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_23-39-26.png" alt></p>
+<p>​    测试一下，能连接上即可。</p>
+<h3 id="4-3-全局工具配置"><a href="#4-3-全局工具配置" class="headerlink" title="4.3 全局工具配置"></a>4.3 全局工具配置</h3><p>在这里配置jdk，git，maven的位置</p>
+<p><strong>maven配置</strong></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-03-22.png" alt></p>
+<p>​        <strong>JDK安装</strong></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-04-56.png" alt></p>
+<p>​    <strong>git安装</strong></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-05-59.png" alt></p>
+<p>​    <strong>maven安装</strong></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-06-54.png" alt></p>
+<h3 id="4-4-节点配置"><a href="#4-4-节点配置" class="headerlink" title="4.4 节点配置"></a>4.4 节点配置</h3><p>在Jenkins中依次点击：系统管理 -&gt; 节点管理 -&gt; 新建节点</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20191019135659465.png" alt></p>
+<p>保存后，点击启动代理配置，查看日志是否成功</p>
+<h2 id="五、构建maven项目"><a href="#五、构建maven项目" class="headerlink" title="五、构建maven项目"></a>五、构建maven项目</h2><p>接下来可以新建一个任务执行了</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-09-30.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-11-34.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-13-18.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-17-03.png" alt></p>
+<p>配置项目构建完成后进行的操作。这里可以配置通过ssh连接远程其他服务器执行，或者本机直接执行等。</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_15-43-54.png" alt></p>
+<p>本机运行shell命令</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-19-12.png" alt></p>
+<p>远程服务器上运行shell命令。这个服务器就是在前面通过publish and ssh配置的服务器。</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_00-03-14.png" alt></p>
+<p>术语解释：</p>
+<blockquote>
+<p><strong>Source files</strong>：Source files的目录是基于当前项目的目录(可以从jenkins的安装目录下找到)：例如当前项目名称为distribute-id-ms，则对于root用户，Source files中的目录是相对于/usr/lib/jenkins/workspace/distribute-id-ms目录下的，因此，如果我们要发送distribute-id-ms下的target目录下的distribute-id-ms-1.0.jar包，所以这里需要填写：target/distribute-id-ms-1.0.jar</p>
+<p><strong>Remove prefix</strong>：表示需要移除的目录，比如这里填写target，则表示发布时，只把distribute-id-ms-1.0.jar发布到远程linux，而不包含target目录结构</p>
+<p><strong>Remote directory</strong>：表示需要把编译好的war包发布到远程linux的哪个目录下</p>
+<p><strong>Exec command</strong>：需要执行的shell命令，shell命令在远程linux服务器上执行.</p>
+</blockquote>
+<p>shell脚本配置如下：</p>
+<pre><code>#!/bin/sh
+
+echo &quot;开始执行shell脚本&quot;
+
+# 在jenkins环境中一定要加这句话，否则这个脚本进程最后会被杀死
+export BUILD_ID=dontKillMe
+
+# 指定最后编译好的jar的存放位置
+JAR_PATH=/usr/java/spring-application-jar
+
+# 如果路径不存在，就创建路径
+[ ! -e $JAR_PATH ] &amp;&amp; mkdir -p $JAR_PATH 
+
+# 指定jenkins中存放编译好的jar的位置
+JENKINS_JAR_PATH=/usr/lib/jenkins/workspace/distribute-id-ms/target
+
+# 如果路径不存在，就创建路径
+[ ! -e $JENKINS_JAR_PATH ] &amp;&amp; mkdir -p $JENKINS_JAR_PATH
+
+# 指定jenkins中存放编译好的jar的名称(这个jar的名字和pom文件配置有关)
+JENKINS_JAR_NAME=distribute-id-ms-1.0.jar
+
+# 获取该项目的进程号，用于重新部署项目前杀死进程
+pid=`ps -ef|grep distribute-id-ms-1.0.jar | grep -v grep|awk &#39;{print $2}&#39;`
+
+echo &quot;  =====关闭Java应用======&quot;
+
+for i in $pid
+do
+  echo &quot;Kill the $1 process [ $i ]&quot;
+  kill -9 $i
+done
+
+echo &quot;  =====启动Java应用======&quot;
+
+# 进入Jenkins中编译好的jar的位置
+cd ${JENKINS_JAR_PATH}
+
+# 将Jenkins中编译好的jar复制到最终存放项目jar的位置
+cp $JENKINS_JAR_PATH/$JENKINS_JAR_NAME $JAR_PATH
+
+# 进入到存放项目jar的位置
+cd ${JAR_PATH}
+
+# 后台启动项目，并且将控制台日志输出到nohup.out中
+
+nohup java -jar ${JENKINS_JAR_NAME} &gt;/dev/null &amp;
+
+echo &quot;shell脚本执行完毕&quot;
+
+</code></pre><p><strong>注意事项：上面的目录是我自身配置的目录。实际目录根据自身情况检查一下。以免出现不必要的错误。这个可以在服务器上面创建一个脚本执行检查一下。</strong></p>
+<p>最后，保存一下。构建项目即可。根据构建日志分析项目构建情况。</p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_16-28-53.png" alt></p>
+<p>至此：使用Jenkins运行SpringBoot项目到此结束。</p>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>通过实际部署Jenkins，并构建SpringBoot + maven项目，大大加深了对jenkins的熟悉。看到最后的build success</p>
+<p>，内心还是有点小激动的。实际部署操作一遍，并且写这篇博客共花了两天的时间。期间，也参考了其他人的博客，非常感谢！</p>
+<p>写这边博客的初衷，也是网上很难找到一篇从头到尾完整的使用Jenkins构建maven项目发布的教程。</p>
+<p>希望这边博客，能对各位有所帮助！！！</p>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>jenkins</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux常用命令</title>
+    <url>/2021/03/26/linux-chang-yong-ming-ling/</url>
+    <content><![CDATA[<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="一、查看文本"><a href="#一、查看文本" class="headerlink" title="一、查看文本"></a>一、查看文本</h2><h2 id="二、搜索文本里面的内容"><a href="#二、搜索文本里面的内容" class="headerlink" title="二、搜索文本里面的内容"></a>二、搜索文本里面的内容</h2><h2 id="三、端口号"><a href="#三、端口号" class="headerlink" title="三、端口号"></a>三、端口号</h2><ol>
+<li><h3 id="查看端口号是否在使用："><a href="#查看端口号是否在使用：" class="headerlink" title="查看端口号是否在使用："></a>查看端口号是否在使用：</h3><p>lsof -i:8080</p>
+</li>
+</ol>
+<ol start="2">
+<li><h3 id="对外部开放端口号"><a href="#对外部开放端口号" class="headerlink" title="对外部开放端口号"></a>对外部开放端口号</h3><p><strong>查询指定端口是否已经开放</strong><br>firewall-cmd –query-port=3306/tcp<br>返回yes/no。此时也有可能返回firewalld is not running，此时需要打开防火墙在开放端口。</p>
+</li>
+</ol>
+<p>   <strong>添加指定需要开放的端口：</strong><br>   firewall-cmd –add-port=3306/tcp –permanent</p>
+<p>   <strong>载入添加的端口：</strong><br>   firewall-cmd –reload</p>
+<h2 id="四、防火墙"><a href="#四、防火墙" class="headerlink" title="四、防火墙"></a>四、防火墙</h2><ol>
+<li><p>查看防火墙状态 systemctl status firewalld</p>
+</li>
+<li><p>开启防火墙 systemctl start firewalld</p>
+</li>
+<li><p>关闭防火墙 systemctl stop firewalld</p>
+</li>
+</ol>
+<h2 id="五、内存"><a href="#五、内存" class="headerlink" title="五、内存"></a>五、内存</h2><p>​    free -h</p>
+<h2 id="六、磁盘"><a href="#六、磁盘" class="headerlink" title="六、磁盘"></a>六、磁盘</h2><p>​     df -h</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
 </search>
