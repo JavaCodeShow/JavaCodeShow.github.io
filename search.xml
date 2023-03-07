@@ -998,11 +998,13 @@ docker rm -f mysql</code></pre></li>
 -e MYSQL_ROOT_PASSWORD=123456 \
 --restart=always \
 --privileged=true \
+-v /etc/localtime:/etc/localtime \
 -d \
 mysql:8.0.28</code></pre><p>命令解释说明：</p>
 <p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
 <p>–name mysql  指定该容器名称，查看和进行操作都比较方便。</p>
 <p>-e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码</p>
+<p>-v /etc/localtime:/etc/localtime：共享主机的 localtime</p>
 <p>-d mysql:8.0.28   在后台运行mysql镜像产生的容器</p>
 </li>
 </ol>
