@@ -53,7 +53,7 @@ seata:
     # support: nacos, consul, apollo, zk, etcd3
     type: nacos
     nacos:
-      server-addr: ip:8848
+      server-addr: 1.15.226.249:8848
       namespace: seata
       group: SEATA_GROUP
       username: nacos
@@ -64,7 +64,7 @@ seata:
     type: nacos
     nacos:
       application: seata-server
-      server-addr: ip:8848
+      server-addr: 1.15.226.249:8848
       group: SEATA_GROUP
       namespace: seata
       cluster: default
@@ -174,9 +174,9 @@ store.file.sessionReloadReadSize=100
 store.db.datasource=druid
 store.db.dbType=mysql
 store.db.driverClassName=com.mysql.cj.jdbc.Driver
-store.db.url=jdbc:mysql://ip:3306/seata?useUnicode=true&rewriteBatchedStatements=true
+store.db.url=jdbc:mysql://1.15.226.249:3306/seata?useUnicode=true&rewriteBatchedStatements=true
 store.db.user=root
-store.db.password=xxx
+store.db.password=mimazhaowoyao
 store.db.minConn=5
 store.db.maxConn=30
 store.db.globalTable=global_table
@@ -373,7 +373,7 @@ CREATE TABLE `undo_log` (
        nacos:
          group: SEATA_GROUP
          namespace: seata
-         server-addr: ip:8848
+         server-addr: 1.15.226.249:8848
          username: nacos
          password: nacos
        type: nacos
@@ -382,7 +382,7 @@ CREATE TABLE `undo_log` (
        nacos:
          application: seata-server
          # nacos 服务地址
-         server-addr: ip:8848
+         server-addr: 1.15.226.249:8848
          namespace: seata
          group: SEATA_GROUP
    
