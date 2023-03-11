@@ -58,6 +58,7 @@ tags:
    -e MYSQL_ROOT_PASSWORD=123456 \
    --restart=always \
    --privileged=true \
+   -v /etc/localtime:/etc/localtime \
    -d \
    mysql:8.0.28
    ```
@@ -69,6 +70,8 @@ tags:
    --name mysql  指定该容器名称，查看和进行操作都比较方便。
 
    -e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码
+
+   -v /etc/localtime:/etc/localtime：共享主机的 localtime
 
    -d mysql:8.0.28   在后台运行mysql镜像产生的容器
 
