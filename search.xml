@@ -2910,4 +2910,408 @@ scrape_configs:               # 通过这里的配置控制prometheus监控的�
         <tag>prometheus</tag>
       </tags>
   </entry>
+  <entry>
+    <title>seata入门使用教程</title>
+    <url>/2023/03/10/seate-ru-men-shi-yong/</url>
+    <content><![CDATA[<h1 id="seata入门使用教程"><a href="#seata入门使用教程" class="headerlink" title="seata入门使用教程"></a>seata入门使用教程</h1><h2 id="1-下载seata-server"><a href="#1-下载seata-server" class="headerlink" title="1. 下载seata-server"></a>1. 下载seata-server</h2><p>我这里选择的是1.5.2版本，大家最好选择一样的版本号，版本不一致可能会引发未知的问题。</p>
+<p>下载页面： <a href="http://seata.io/zh-cn/blog/download.html" target="_blank" rel="noopener">http://seata.io/zh-cn/blog/download.html</a><br>目前最新版本1.5.2，点击下载，或者直接点击链接：<a href="https://github.com/seata/seata/releases/download/v1.5.2/seata-server-1.5.2.zip" target="_blank" rel="noopener">下载链接</a></p>
+<h2 id="2-修改配置"><a href="#2-修改配置" class="headerlink" title="2. 修改配置"></a>2. 修改配置</h2><p>需要修改conf目录下面的application.yml，下面是修改后的application.yml，然后启动seata-server，启动命令再bin目录下面。</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">server</span><span class="token punctuation">:</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">7091</span>
+
+<span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> seata<span class="token punctuation">-</span>server
+
+<span class="token key atrule">logging</span><span class="token punctuation">:</span>
+  <span class="token key atrule">config</span><span class="token punctuation">:</span> classpath<span class="token punctuation">:</span>logback<span class="token punctuation">-</span>spring.xml
+  <span class="token key atrule">file</span><span class="token punctuation">:</span>
+    <span class="token key atrule">path</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>user.home<span class="token punctuation">}</span>/logs/seata
+  <span class="token key atrule">extend</span><span class="token punctuation">:</span>
+    <span class="token key atrule">logstash-appender</span><span class="token punctuation">:</span>
+      <span class="token key atrule">destination</span><span class="token punctuation">:</span> 127.0.0.1<span class="token punctuation">:</span><span class="token number">4560</span>
+    <span class="token key atrule">kafka-appender</span><span class="token punctuation">:</span>
+      <span class="token key atrule">bootstrap-servers</span><span class="token punctuation">:</span> 127.0.0.1<span class="token punctuation">:</span><span class="token number">9092</span>
+      <span class="token key atrule">topic</span><span class="token punctuation">:</span> logback_to_logstash
+
+<span class="token key atrule">console</span><span class="token punctuation">:</span>
+  <span class="token key atrule">user</span><span class="token punctuation">:</span>
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> seata
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> seata
+
+<span class="token key atrule">seata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">config</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># support: nacos, consul, apollo, zk, etcd3</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> nacos
+    <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> ip<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> seata
+      <span class="token key atrule">group</span><span class="token punctuation">:</span> SEATA_GROUP
+      <span class="token key atrule">username</span><span class="token punctuation">:</span> nacos
+      <span class="token key atrule">password</span><span class="token punctuation">:</span> nacos
+      <span class="token key atrule">data-id</span><span class="token punctuation">:</span> seataServer.properties
+  <span class="token key atrule">registry</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># support: nacos, eureka, redis, zk, consul, etcd3, sofa</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> nacos
+    <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+      <span class="token key atrule">application</span><span class="token punctuation">:</span> seata<span class="token punctuation">-</span>server
+      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> ip<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">group</span><span class="token punctuation">:</span> SEATA_GROUP
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> seata
+      <span class="token key atrule">cluster</span><span class="token punctuation">:</span> default
+      <span class="token key atrule">username</span><span class="token punctuation">:</span> nacos
+      <span class="token key atrule">password</span><span class="token punctuation">:</span> nacos
+  <span class="token key atrule">store</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># support: file 、 db 、 redis</span>
+    <span class="token key atrule">mode</span><span class="token punctuation">:</span> db
+<span class="token comment" spellcheck="true">#  server:</span>
+<span class="token comment" spellcheck="true">#    service-port: 8091 #If not configured, the default is '${server.port} + 1000'</span>
+  <span class="token key atrule">security</span><span class="token punctuation">:</span>
+    <span class="token key atrule">secretKey</span><span class="token punctuation">:</span> SeataSecretKey0c382ef121d778043159209298fd40bf3850a017
+    <span class="token key atrule">tokenValidityInMilliseconds</span><span class="token punctuation">:</span> <span class="token number">1800000</span>
+    <span class="token key atrule">ignore</span><span class="token punctuation">:</span>
+      <span class="token key atrule">urls</span><span class="token punctuation">:</span> /<span class="token punctuation">,</span>/**/*.css<span class="token punctuation">,</span>/**/*.js<span class="token punctuation">,</span>/**/*.html<span class="token punctuation">,</span>/**/*.map<span class="token punctuation">,</span>/**/*.svg<span class="token punctuation">,</span>/**/*.png<span class="token punctuation">,</span>/**/*.ico<span class="token punctuation">,</span>/console<span class="token punctuation">-</span>fe/public/**<span class="token punctuation">,</span>/api/v1/auth/login</code></pre>
+<h2 id="3-nacos配置"><a href="#3-nacos配置" class="headerlink" title="3. nacos配置"></a>3. nacos配置</h2><ol>
+<li>创建命名空间seata</li>
+<li>增加配置文件 Data Id：seataServer.properties， Group：SEATA_GROUP， 文件格式选择properties</li>
+</ol>
+<pre class=" language-properties"><code class="language-properties"><span class="token comment" spellcheck="true">#For details about configuration items, see https://seata.io/zh-cn/docs/user/configurations.html</span>
+<span class="token comment" spellcheck="true">#Transport configuration, for client and server</span>
+<span class="token attr-name">transport.type</span><span class="token punctuation">=</span><span class="token attr-value">TCP</span>
+<span class="token attr-name">transport.server</span><span class="token punctuation">=</span><span class="token attr-value">NIO</span>
+<span class="token attr-name">transport.heartbeat</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">transport.enableTmClientBatchSendRequest</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">transport.enableRmClientBatchSendRequest</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">transport.enableTcServerBatchSendResponse</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">transport.rpcRmRequestTimeout</span><span class="token punctuation">=</span><span class="token attr-value">30000</span>
+<span class="token attr-name">transport.rpcTmRequestTimeout</span><span class="token punctuation">=</span><span class="token attr-value">30000</span>
+<span class="token attr-name">transport.rpcTcRequestTimeout</span><span class="token punctuation">=</span><span class="token attr-value">30000</span>
+<span class="token attr-name">transport.threadFactory.bossThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyBoss</span>
+<span class="token attr-name">transport.threadFactory.workerThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyServerNIOWorker</span>
+<span class="token attr-name">transport.threadFactory.serverExecutorThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyServerBizHandler</span>
+<span class="token attr-name">transport.threadFactory.shareBossWorker</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">transport.threadFactory.clientSelectorThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyClientSelector</span>
+<span class="token attr-name">transport.threadFactory.clientSelectorThreadSize</span><span class="token punctuation">=</span><span class="token attr-value">1</span>
+<span class="token attr-name">transport.threadFactory.clientWorkerThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyClientWorkerThread</span>
+<span class="token attr-name">transport.threadFactory.bossThreadSize</span><span class="token punctuation">=</span><span class="token attr-value">1</span>
+<span class="token attr-name">transport.threadFactory.workerThreadSize</span><span class="token punctuation">=</span><span class="token attr-value">default</span>
+<span class="token attr-name">transport.shutdown.wait</span><span class="token punctuation">=</span><span class="token attr-value">3</span>
+<span class="token attr-name">transport.serialization</span><span class="token punctuation">=</span><span class="token attr-value">seata</span>
+<span class="token attr-name">transport.compressor</span><span class="token punctuation">=</span><span class="token attr-value">none</span>
+
+<span class="token comment" spellcheck="true">#Transaction routing rules configuration, only for the client</span>
+<span class="token attr-name">service.vgroupMapping.default_tx_group</span><span class="token punctuation">=</span><span class="token attr-value">default</span>
+<span class="token comment" spellcheck="true">#If you use a registry, you can ignore it</span>
+<span class="token attr-name">service.default.grouplist</span><span class="token punctuation">=</span><span class="token attr-value">127.0.0.1:8091</span>
+<span class="token attr-name">service.enableDegrade</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">service.disableGlobalTransaction</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+
+<span class="token comment" spellcheck="true">#Transaction rule configuration, only for the client</span>
+<span class="token attr-name">client.rm.asyncCommitBufferLimit</span><span class="token punctuation">=</span><span class="token attr-value">10000</span>
+<span class="token attr-name">client.rm.lock.retryInterval</span><span class="token punctuation">=</span><span class="token attr-value">10</span>
+<span class="token attr-name">client.rm.lock.retryTimes</span><span class="token punctuation">=</span><span class="token attr-value">30</span>
+<span class="token attr-name">client.rm.lock.retryPolicyBranchRollbackOnConflict</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">client.rm.reportRetryCount</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
+<span class="token attr-name">client.rm.tableMetaCheckEnable</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">client.rm.tableMetaCheckerInterval</span><span class="token punctuation">=</span><span class="token attr-value">60000</span>
+<span class="token attr-name">client.rm.sqlParserType</span><span class="token punctuation">=</span><span class="token attr-value">druid</span>
+<span class="token attr-name">client.rm.reportSuccessEnable</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">client.rm.sagaBranchRegisterEnable</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">client.rm.sagaJsonParser</span><span class="token punctuation">=</span><span class="token attr-value">fastjson</span>
+<span class="token attr-name">client.rm.tccActionInterceptorOrder</span><span class="token punctuation">=</span><span class="token attr-value">-2147482648</span>
+<span class="token attr-name">client.tm.commitRetryCount</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
+<span class="token attr-name">client.tm.rollbackRetryCount</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
+<span class="token attr-name">client.tm.defaultGlobalTransactionTimeout</span><span class="token punctuation">=</span><span class="token attr-value">60000</span>
+<span class="token attr-name">client.tm.degradeCheck</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">client.tm.degradeCheckAllowTimes</span><span class="token punctuation">=</span><span class="token attr-value">10</span>
+<span class="token attr-name">client.tm.degradeCheckPeriod</span><span class="token punctuation">=</span><span class="token attr-value">2000</span>
+<span class="token attr-name">client.tm.interceptorOrder</span><span class="token punctuation">=</span><span class="token attr-value">-2147482648</span>
+<span class="token attr-name">client.undo.dataValidation</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">client.undo.logSerialization</span><span class="token punctuation">=</span><span class="token attr-value">jackson</span>
+<span class="token attr-name">client.undo.onlyCareUpdateColumns</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">server.undo.logSaveDays</span><span class="token punctuation">=</span><span class="token attr-value">7</span>
+<span class="token attr-name">server.undo.logDeletePeriod</span><span class="token punctuation">=</span><span class="token attr-value">86400000</span>
+<span class="token attr-name">client.undo.logTable</span><span class="token punctuation">=</span><span class="token attr-value">undo_log</span>
+<span class="token attr-name">client.undo.compress.enable</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">client.undo.compress.type</span><span class="token punctuation">=</span><span class="token attr-value">zip</span>
+<span class="token attr-name">client.undo.compress.threshold</span><span class="token punctuation">=</span><span class="token attr-value">64k</span>
+<span class="token comment" spellcheck="true">#For TCC transaction mode</span>
+<span class="token attr-name">tcc.fence.logTableName</span><span class="token punctuation">=</span><span class="token attr-value">tcc_fence_log</span>
+<span class="token attr-name">tcc.fence.cleanPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1h</span>
+
+<span class="token comment" spellcheck="true">#Log rule configuration, for client and server</span>
+<span class="token attr-name">log.exceptionRate</span><span class="token punctuation">=</span><span class="token attr-value">100</span>
+
+<span class="token comment" spellcheck="true">#Transaction storage configuration, only for the server. The file, DB, and redis configuration values are optional.</span>
+<span class="token attr-name">store.mode</span><span class="token punctuation">=</span><span class="token attr-value">DB</span>
+<span class="token attr-name">store.lock.mode</span><span class="token punctuation">=</span><span class="token attr-value">file</span>
+<span class="token attr-name">store.session.mode</span><span class="token punctuation">=</span><span class="token attr-value">file</span>
+<span class="token comment" spellcheck="true">#Used for password encryption</span>
+<span class="token attr-name">store.publicKey</span><span class="token punctuation">=</span>
+
+<span class="token comment" spellcheck="true">#If `store.mode,store.lock.mode,store.session.mode` are not equal to `file`, you can remove the configuration block.</span>
+<span class="token attr-name">store.file.dir</span><span class="token punctuation">=</span><span class="token attr-value">file_store/data</span>
+<span class="token attr-name">store.file.maxBranchSessionSize</span><span class="token punctuation">=</span><span class="token attr-value">16384</span>
+<span class="token attr-name">store.file.maxGlobalSessionSize</span><span class="token punctuation">=</span><span class="token attr-value">512</span>
+<span class="token attr-name">store.file.fileWriteBufferCacheSize</span><span class="token punctuation">=</span><span class="token attr-value">16384</span>
+<span class="token attr-name">store.file.flushDiskMode</span><span class="token punctuation">=</span><span class="token attr-value">async</span>
+<span class="token attr-name">store.file.sessionReloadReadSize</span><span class="token punctuation">=</span><span class="token attr-value">100</span>
+
+<span class="token comment" spellcheck="true">#These configurations are required if the `store mode` is `db`. If `store.mode,store.lock.mode,store.session.mode` are not equal to `db`, you can remove the configuration block.</span>
+<span class="token attr-name">store.db.datasource</span><span class="token punctuation">=</span><span class="token attr-value">druid</span>
+<span class="token attr-name">store.db.dbType</span><span class="token punctuation">=</span><span class="token attr-value">mysql</span>
+<span class="token attr-name">store.db.driverClassName</span><span class="token punctuation">=</span><span class="token attr-value">com.mysql.cj.jdbc.Driver</span>
+<span class="token attr-name">store.db.url</span><span class="token punctuation">=</span><span class="token attr-value">jdbc:mysql://ip:3306/seata?useUnicode=true&amp;rewriteBatchedStatements=true</span>
+<span class="token attr-name">store.db.user</span><span class="token punctuation">=</span><span class="token attr-value">root</span>
+<span class="token attr-name">store.db.password</span><span class="token punctuation">=</span><span class="token attr-value">xxx</span>
+<span class="token attr-name">store.db.minConn</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
+<span class="token attr-name">store.db.maxConn</span><span class="token punctuation">=</span><span class="token attr-value">30</span>
+<span class="token attr-name">store.db.globalTable</span><span class="token punctuation">=</span><span class="token attr-value">global_table</span>
+<span class="token attr-name">store.db.branchTable</span><span class="token punctuation">=</span><span class="token attr-value">branch_table</span>
+<span class="token attr-name">store.db.distributedLockTable</span><span class="token punctuation">=</span><span class="token attr-value">distributed_lock</span>
+<span class="token attr-name">store.db.queryLimit</span><span class="token punctuation">=</span><span class="token attr-value">100</span>
+<span class="token attr-name">store.db.lockTable</span><span class="token punctuation">=</span><span class="token attr-value">lock_table</span>
+<span class="token attr-name">store.db.maxWait</span><span class="token punctuation">=</span><span class="token attr-value">5000</span>
+
+<span class="token comment" spellcheck="true">#These configurations are required if the `store mode` is `redis`. If `store.mode,store.lock.mode,store.session.mode` are not equal to `redis`, you can remove the configuration block.</span>
+<span class="token attr-name">store.redis.mode</span><span class="token punctuation">=</span><span class="token attr-value">single</span>
+<span class="token attr-name">store.redis.single.host</span><span class="token punctuation">=</span><span class="token attr-value">127.0.0.1</span>
+<span class="token attr-name">store.redis.single.port</span><span class="token punctuation">=</span><span class="token attr-value">6379</span>
+<span class="token attr-name">store.redis.sentinel.masterName</span><span class="token punctuation">=</span>
+<span class="token attr-name">store.redis.sentinel.sentinelHosts</span><span class="token punctuation">=</span>
+<span class="token attr-name">store.redis.maxConn</span><span class="token punctuation">=</span><span class="token attr-value">10</span>
+<span class="token attr-name">store.redis.minConn</span><span class="token punctuation">=</span><span class="token attr-value">1</span>
+<span class="token attr-name">store.redis.maxTotal</span><span class="token punctuation">=</span><span class="token attr-value">100</span>
+<span class="token attr-name">store.redis.database</span><span class="token punctuation">=</span><span class="token attr-value">0</span>
+<span class="token attr-name">store.redis.password</span><span class="token punctuation">=</span>
+<span class="token attr-name">store.redis.queryLimit</span><span class="token punctuation">=</span><span class="token attr-value">100</span>
+
+<span class="token comment" spellcheck="true">#Transaction rule configuration, only for the server</span>
+<span class="token attr-name">server.recovery.committingRetryPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1000</span>
+<span class="token attr-name">server.recovery.asynCommittingRetryPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1000</span>
+<span class="token attr-name">server.recovery.rollbackingRetryPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1000</span>
+<span class="token attr-name">server.recovery.timeoutRetryPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1000</span>
+<span class="token attr-name">server.maxCommitRetryTimeout</span><span class="token punctuation">=</span><span class="token attr-value">-1</span>
+<span class="token attr-name">server.maxRollbackRetryTimeout</span><span class="token punctuation">=</span><span class="token attr-value">-1</span>
+<span class="token attr-name">server.rollbackRetryTimeoutUnlockEnable</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">server.distributedLockExpireTime</span><span class="token punctuation">=</span><span class="token attr-value">10000</span>
+<span class="token attr-name">server.xaerNotaRetryTimeout</span><span class="token punctuation">=</span><span class="token attr-value">60000</span>
+<span class="token attr-name">server.session.branchAsyncQueueSize</span><span class="token punctuation">=</span><span class="token attr-value">5000</span>
+<span class="token attr-name">server.session.enableBranchAsyncRemove</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">server.enableParallelRequestHandle</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+
+<span class="token comment" spellcheck="true">#Metrics configuration, only for the server</span>
+<span class="token attr-name">metrics.enabled</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">metrics.registryType</span><span class="token punctuation">=</span><span class="token attr-value">compact</span>
+<span class="token attr-name">metrics.exporterList</span><span class="token punctuation">=</span><span class="token attr-value">prometheus</span>
+<span class="token attr-name">metrics.exporterPrometheusPort</span><span class="token punctuation">=</span><span class="token attr-value">9898</span></code></pre>
+<ol start="3">
+<li>再新加一个配置：Data Id：service.vgroupMapping.default_tx_group ，Group：SEATA_GROUP，内容：default</li>
+</ol>
+<h2 id="4-创建seata需要的数据库和表"><a href="#4-创建seata需要的数据库和表" class="headerlink" title="4. 创建seata需要的数据库和表"></a>4. 创建seata需要的数据库和表</h2><ol>
+<li>创建数据库，库名就是seata，然后执行以下sql，创建seata需要的表。</li>
+</ol>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">SET</span> NAMES utf8mb4<span class="token punctuation">;</span>
+<span class="token keyword">SET</span> FOREIGN_KEY_CHECKS <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">-- ----------------------------</span>
+<span class="token comment" spellcheck="true">-- Table structure for branch_table</span>
+<span class="token comment" spellcheck="true">-- ----------------------------</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>branch_table<span class="token punctuation">`</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">`</span>branch_table<span class="token punctuation">`</span>  <span class="token punctuation">(</span>
+  <span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>xid<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>resource_group_id<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>resource_id<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>branch_type<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span><span class="token keyword">status</span><span class="token punctuation">`</span> <span class="token keyword">tinyint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>client_id<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>application_data<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span> <span class="token keyword">datetime</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span> <span class="token keyword">datetime</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span><span class="token punctuation">,</span>
+  <span class="token keyword">INDEX</span> <span class="token punctuation">`</span>idx_xid<span class="token punctuation">`</span><span class="token punctuation">(</span><span class="token punctuation">`</span>xid<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span> <span class="token keyword">CHARACTER SET</span> <span class="token operator">=</span> utf8mb4 <span class="token keyword">COLLATE</span> <span class="token operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="token operator">=</span> Dynamic<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">-- ----------------------------</span>
+<span class="token comment" spellcheck="true">-- Table structure for distributed_lock</span>
+<span class="token comment" spellcheck="true">-- ----------------------------</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>distributed_lock<span class="token punctuation">`</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">`</span>distributed_lock<span class="token punctuation">`</span>  <span class="token punctuation">(</span>
+  <span class="token punctuation">`</span>lock_key<span class="token punctuation">`</span> char<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>lock_value<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>expire<span class="token punctuation">`</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>lock_key<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span> <span class="token keyword">CHARACTER SET</span> <span class="token operator">=</span> utf8mb4 <span class="token keyword">COLLATE</span> <span class="token operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="token operator">=</span> Dynamic<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">-- ----------------------------</span>
+<span class="token comment" spellcheck="true">-- Table structure for global_table</span>
+<span class="token comment" spellcheck="true">-- ----------------------------</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>global_table<span class="token punctuation">`</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">`</span>global_table<span class="token punctuation">`</span>  <span class="token punctuation">(</span>
+  <span class="token punctuation">`</span>xid<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span><span class="token keyword">status</span><span class="token punctuation">`</span> <span class="token keyword">tinyint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>application_id<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>transaction_service_group<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>transaction_name<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>timeout<span class="token punctuation">`</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>begin_time<span class="token punctuation">`</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>application_data<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span> <span class="token keyword">datetime</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span> <span class="token keyword">datetime</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>xid<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span><span class="token punctuation">,</span>
+  <span class="token keyword">INDEX</span> <span class="token punctuation">`</span>idx_status_gmt_modified<span class="token punctuation">`</span><span class="token punctuation">(</span><span class="token punctuation">`</span><span class="token keyword">status</span><span class="token punctuation">`</span><span class="token punctuation">,</span> <span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span><span class="token punctuation">,</span>
+  <span class="token keyword">INDEX</span> <span class="token punctuation">`</span>idx_transaction_id<span class="token punctuation">`</span><span class="token punctuation">(</span><span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span> <span class="token keyword">CHARACTER SET</span> <span class="token operator">=</span> utf8mb4 <span class="token keyword">COLLATE</span> <span class="token operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="token operator">=</span> Dynamic<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">-- ----------------------------</span>
+<span class="token comment" spellcheck="true">-- Table structure for lock_table</span>
+<span class="token comment" spellcheck="true">-- ----------------------------</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>lock_table<span class="token punctuation">`</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">`</span>lock_table<span class="token punctuation">`</span>  <span class="token punctuation">(</span>
+  <span class="token punctuation">`</span>row_key<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>xid<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>resource_id<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>table_name<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>pk<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">36</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span><span class="token keyword">status</span><span class="token punctuation">`</span> <span class="token keyword">tinyint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span> <span class="token keyword">COMMENT</span> <span class="token string">'0:locked ,1:rollbacking'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span> <span class="token keyword">datetime</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span> <span class="token keyword">datetime</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>row_key<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span><span class="token punctuation">,</span>
+  <span class="token keyword">INDEX</span> <span class="token punctuation">`</span>idx_status<span class="token punctuation">`</span><span class="token punctuation">(</span><span class="token punctuation">`</span><span class="token keyword">status</span><span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span><span class="token punctuation">,</span>
+  <span class="token keyword">INDEX</span> <span class="token punctuation">`</span>idx_branch_id<span class="token punctuation">`</span><span class="token punctuation">(</span><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span><span class="token punctuation">,</span>
+  <span class="token keyword">INDEX</span> <span class="token punctuation">`</span>idx_xid<span class="token punctuation">`</span><span class="token punctuation">(</span><span class="token punctuation">`</span>xid<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">USING</span> <span class="token keyword">BTREE</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span> <span class="token keyword">CHARACTER SET</span> <span class="token operator">=</span> utf8mb4 <span class="token keyword">COLLATE</span> <span class="token operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="token operator">=</span> Dynamic<span class="token punctuation">;</span>
+
+<span class="token keyword">SET</span> FOREIGN_KEY_CHECKS <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+</code></pre>
+<ol start="2">
+<li>其他每个业务数据库都需要添加一个undo_log表</li>
+</ol>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">`</span>undo_log<span class="token punctuation">`</span> <span class="token punctuation">(</span>
+  <span class="token punctuation">`</span>id<span class="token punctuation">`</span> <span class="token keyword">bigint</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span> <span class="token keyword">bigint</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>xid<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>context<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>rollback_info<span class="token punctuation">`</span> <span class="token keyword">longblob</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>log_status<span class="token punctuation">`</span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>log_created<span class="token punctuation">`</span> <span class="token keyword">datetime</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>log_modified<span class="token punctuation">`</span> <span class="token keyword">datetime</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">`</span>ext<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>id<span class="token punctuation">`</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">UNIQUE</span> <span class="token keyword">KEY</span> <span class="token punctuation">`</span>ux_undo_log<span class="token punctuation">`</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>xid<span class="token punctuation">`</span><span class="token punctuation">,</span><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">6</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb3<span class="token punctuation">;</span>
+</code></pre>
+<h2 id="5-创建SpringBoot项目验证一下"><a href="#5-创建SpringBoot项目验证一下" class="headerlink" title="5. 创建SpringBoot项目验证一下"></a>5. 创建SpringBoot项目验证一下</h2><ol>
+<li><p>添加seata的maven依赖</p>
+<pre class=" language-xml"><code class="language-xml">
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-alibaba-seata<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.2.0.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+            <span class="token comment" spellcheck="true">&lt;!-- 默认seata客户端版本比较低，排除后重新引入指定版本--></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>exclusions</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>exclusion</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>io.seata<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>seata-spring-boot-starter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exclusion</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exclusions</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>io.seata<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>seata-spring-boot-starter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.5.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+</li>
+</ol>
+<ol start="2">
+<li><p>然后每个服务下面增加以下配置</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">seata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application-id</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>spring.application.name<span class="token punctuation">}</span>
+  <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">enable-auto-data-source-proxy</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">tx-service-group</span><span class="token punctuation">:</span> default_tx_group
+  <span class="token comment" spellcheck="true"># 指定事务分组至集群映射关系，集群名default需要与seata-server注册到Nacos的cluster保持一致</span>
+  <span class="token key atrule">service</span><span class="token punctuation">:</span>
+    <span class="token key atrule">vgroup-mapping</span><span class="token punctuation">:</span>
+      <span class="token key atrule">default_tx_group</span><span class="token punctuation">:</span> default
+  <span class="token key atrule">config</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+      <span class="token key atrule">group</span><span class="token punctuation">:</span> SEATA_GROUP
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> seata
+      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> ip<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">username</span><span class="token punctuation">:</span> nacos
+      <span class="token key atrule">password</span><span class="token punctuation">:</span> nacos
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> nacos
+  <span class="token key atrule">registry</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> nacos
+    <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+      <span class="token key atrule">application</span><span class="token punctuation">:</span> seata<span class="token punctuation">-</span>server
+      <span class="token comment" spellcheck="true"># nacos 服务地址</span>
+      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> ip<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> seata
+      <span class="token key atrule">group</span><span class="token punctuation">:</span> SEATA_GROUP
+</code></pre>
+</li>
+</ol>
+<ol start="3">
+<li><p>@GlobalTransactional</p>
+<p>在方法上增加注解@GlobalTransactional，原有的@Transactional不能删掉，还是需要的。</p>
+<pre><code>    @Transactional
+    @GlobalTransactional
+    public void test() {
+        // 调用服务A
+        // 调用服务B
+        int i = 1 / 0;
+    }
+</code></pre></li>
+<li><p>添加druid配置以及mybatis配置。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>druid<span class="token punctuation">.</span>pool<span class="token punctuation">.</span>DruidDataSource<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>session<span class="token punctuation">.</span>SqlSessionFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>spring<span class="token punctuation">.</span>SqlSessionFactoryBean<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>context<span class="token punctuation">.</span>properties<span class="token punctuation">.</span>ConfigurationProperties<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Bean<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Configuration<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>core<span class="token punctuation">.</span>io<span class="token punctuation">.</span>support<span class="token punctuation">.</span>PathMatchingResourcePatternResolver<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>DataSource<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DruidDataSourceConfig</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"spring.datasource"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> DataSource <span class="token function">druidDataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        DruidDataSource druidDataSource <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DruidDataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> druidDataSource<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> SqlSessionFactory <span class="token function">sqlSessionFactory</span><span class="token punctuation">(</span>DataSource dataSource<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        SqlSessionFactoryBean factoryBean <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        factoryBean<span class="token punctuation">.</span><span class="token function">setDataSource</span><span class="token punctuation">(</span>dataSource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        factoryBean<span class="token punctuation">.</span><span class="token function">setMapperLocations</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PathMatchingResourcePatternResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">getResources</span><span class="token punctuation">(</span><span class="token string">"classpath*:/mybatis/mapper/*.xml"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> factoryBean<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ol>
+<ol start="5">
+<li>至此就可以把服务启动起来验证一下分布式事务是否生效了。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>seata</category>
+      </categories>
+      <tags>
+        <tag>seata</tag>
+      </tags>
+  </entry>
 </search>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://javacodeshow.github.io/"/>
-  <updated>2023-03-01T15:15:29.847Z</updated>
+  <updated>2023-03-11T06:04:48.789Z</updated>
   <id>https://javacodeshow.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>seata入门使用教程</title>
+    <link href="https://javacodeshow.github.io/2023/03/10/seate-ru-men-shi-yong/"/>
+    <id>https://javacodeshow.github.io/2023/03/10/seate-ru-men-shi-yong/</id>
+    <published>2023-03-10T14:15:00.000Z</published>
+    <updated>2023-03-11T06:04:48.789Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;seata入门使用教程&quot;&gt;&lt;a href=&quot;#seata入门使用教程&quot; class=&quot;headerlink&quot; title=&quot;seata入门使用教程&quot;&gt;&lt;/a&gt;seata入门使用教程&lt;/h1&gt;&lt;h2 id=&quot;1-下载seata-server&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="seata" scheme="https://JavaCodeShow.github.io/categories/seata/"/>
+    
+    
+      <category term="seata" scheme="https://JavaCodeShow.github.io/tags/seata/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL45讲</title>
@@ -525,33 +552,6 @@
     
     
       <category term="docker" scheme="https://JavaCodeShow.github.io/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringBoot使用jetcache本地缓存</title>
-    <link href="https://javacodeshow.github.io/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/"/>
-    <id>https://javacodeshow.github.io/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/</id>
-    <published>2020-05-12T14:15:00.000Z</published>
-    <updated>2023-03-01T15:15:29.848Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;SpringBoot使用jetcache本地缓存&quot;&gt;&lt;a href=&quot;#SpringBoot使用jetcache本地缓存&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="高性能缓存" scheme="https://JavaCodeShow.github.io/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E7%BC%93%E5%AD%98/"/>
-    
-    
-      <category term="jetcache" scheme="https://JavaCodeShow.github.io/tags/jetcache/"/>
     
   </entry>
   
