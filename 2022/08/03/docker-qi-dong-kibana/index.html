@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="使用hexo写博客, 后端,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,高并发,微服务,分布式">
+    <meta name="keywords" content="docker启动kibana, 后端,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,高并发,微服务,分布式">
     <meta name="description" content="追求技术，不断提升。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>使用hexo写博客 | 江峰的博客</title>
+    <title>docker启动kibana | 江峰的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -276,12 +276,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">使用hexo写博客</h1>
+                    <h1 class="description center-align post-title">docker启动kibana</h1>
                 </div>
             </div>
         </div>
@@ -406,8 +406,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/hexo/">
-                                <span class="chip bg-color">hexo</span>
+                            <a href="/tags/docker/">
+                                <span class="chip bg-color">docker</span>
                             </a>
                         
                     </div>
@@ -418,8 +418,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/hexo/" class="post-category">
-                                hexo
+                            <a href="/categories/docker/" class="post-category">
+                                docker
                             </a>
                         
                     </div>
@@ -431,7 +431,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-06-11
+                    2022-08-03
                 </div>
                 
 
@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    175
+                    383
                 </div>
                 
 
@@ -462,16 +462,52 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="使用hexo写博客"><a href="#使用hexo写博客" class="headerlink" title="使用hexo写博客"></a>使用hexo写博客</h1><h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>node的版本号一定要正确，不然可能会出现版本不适配等一系列问题。这里node使用12.18.3版本</p>
-<p>node下载：<a href="https://nodejs.org/download/release/v12.18.3/" target="_blank" rel="noopener">https://nodejs.org/download/release/v12.18.3/</a></p>
-<p>下载文件为：node-v12.18.3-x64.msi </p>
-<pre><code>git version
-node -v
-npm -v</code></pre><h2 id="npm缓存清除"><a href="#npm缓存清除" class="headerlink" title="npm缓存清除"></a>npm缓存清除</h2><pre><code>npm cache clean --force</code></pre><h2 id="npm镜像"><a href="#npm镜像" class="headerlink" title="npm镜像"></a>npm镜像</h2><p>国内npm比较慢，安装cnpm淘宝镜像</p>
-<pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="重新生成node-modules"><a href="#重新生成node-modules" class="headerlink" title="重新生成node_modules"></a>重新生成node_modules</h2><pre><code>rm -rf node_modules &amp;&amp; npm install --force</code></pre><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install -g hexo-cli</code></pre><h2 id="部署插件"><a href="#部署插件" class="headerlink" title="部署插件"></a>部署插件</h2><pre><code>npm install hexo-deployer-git --save</code></pre><h2 id="使用以及部署"><a href="#使用以及部署" class="headerlink" title="使用以及部署"></a>使用以及部署</h2><pre><code>hexo clean #清理各种缓存和旧文件
-hexo g     #生成静态文件
-hexo s     #开启服务器预览
-hexo d     #部署到git服务器上</code></pre>
+                <h1 id="docker启动kibana"><a href="#docker启动kibana" class="headerlink" title="docker启动kibana"></a>docker启动kibana</h1><ol>
+<li><p>查询kibana镜像</p>
+<pre><code>docker search kibana</code></pre></li>
+<li><p>从docker hub拉取最新镜像</p>
+<pre><code>docker pull kibana:7.6.0</code></pre></li>
+<li><p>查看kibana镜像</p>
+<pre><code>docker images | grep kibana</code></pre></li>
+<li><p>启动kibana</p>
+<pre><code>docker run -d --name kibana -p 5601:5601 kibana:7.6.0</code></pre></li>
+<li><p>配置文件</p>
+<p>在/usr/java/docker文件夹下创建kibana的config文件夹，将docker中kibana的配置挂载在外部，当我们在linux虚拟机中修改kibana的配置文件时，就会同时修改docker中的kibana的配置</p>
+<pre><code>mkdir -p /usr/java/docker/kibana/config</code></pre><p>复制配置文件</p>
+<pre><code>docker cp kibana:/usr/share/kibana/config /usr/java/docker/kibana/</code></pre><p>修改配置文件</p>
+<pre><code># 默认端口
+server.port: 5601
+# 远程访问
+server.host: &quot;0.0.0.0&quot;        
+# ES 服务器的地址
+elasticsearch.hosts: [&quot;http://1.15.226.249:9200&quot;]
+# 索引名
+kibana.index: &quot;.kibana&quot;
+# 支持中文
+i18n.locale: &quot;zh-CN&quot;
+# 监控
+xpack.monitoring.ui.container.elasticsearch.enabled: true</code></pre><p>查看配置文件</p>
+<pre><code>cat /usr/java/docker/kibana/config/kibana.yml</code></pre><p>保证权限问题</p>
+<pre><code>chmod -R 777 /usr/java/docker</code></pre></li>
+<li><p>删除临时容器</p>
+<pre><code>docker rm -f kibana</code></pre></li>
+<li><p>使用docker运行kibana</p>
+<pre><code>docker run -d --name kibana \
+-p 5601:5601 \
+-v /usr/java/docker/kibana/config:/usr/share/kibana/config \
+-d kibana:7.6.0</code></pre><blockquote>
+<p>命令解释说明：</p>
+<p>docker run –name kibana 创建一个kibana容器并起一个名字<br>-p 5601:5601 将linux的5601端口映射到docker容器的5601端口，用来给kibana发送http请求<br>-v 挂载命令，将虚拟机中的路径和docker中的路径进行关联<br>-d 后台启动服务</p>
+</blockquote>
+</li>
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep kibana</code></pre></li>
+<li><p>查看启动日志</p>
+<pre><code>docker logs kibana</code></pre></li>
+<li><p>在浏览器地址栏访问 <a href="http://ip:5601" target="_blank" rel="noopener">http://ip:5601</a> ，进入到kibana的控制台</p>
+</li>
+</ol>
+
             </div>
             <hr/>
 
@@ -484,8 +520,8 @@ hexo d     #部署到git服务器上</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/hexo/">
-                                    <span class="chip bg-color">hexo</span>
+                                <a href="/tags/docker/">
+                                    <span class="chip bg-color">docker</span>
                                 </a>
                             
                         </div>
@@ -654,19 +690,19 @@ hexo d     #部署到git服务器上</code></pre>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/08/03/docker-qi-dong-kibana/">
+                <a href="/2022/08/03/docker-qi-dong-elasticsearch/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="docker启动kibana">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="docker启动ElasticSearch">
                         
-                        <span class="card-title">docker启动kibana</span>
+                        <span class="card-title">docker启动ElasticSearch</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            通过docker启动kibana
+                            通过docker启动ElasticSearch
                         
                     </div>
                     <div class="publish-info">
@@ -703,31 +739,31 @@ hexo d     #部署到git服务器上</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/06/10/linux-fu-wu-qi-java-nei-cun-chu-li/">
+                <a href="/2022/06/11/shi-yong-hexo-xie-bo-ke/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="java应用服务器内存处理">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="使用hexo写博客">
                         
-                        <span class="card-title">java应用服务器内存处理</span>
+                        <span class="card-title">使用hexo写博客</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            服务器1核2G，内存太小了，只能省吃俭用了。
+                            个人使用hexo记录博客，记录一些常用命令以及方法。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/linux/" class="post-category">
-                                    linux
+                            <a href="/categories/hexo/" class="post-category">
+                                    hexo
                                 </a>
                             
                             
@@ -737,12 +773,8 @@ hexo d     #部署到git服务器上</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/linux/">
-                        <span class="chip bg-color">linux</span>
-                    </a>
-                    
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/hexo/">
+                        <span class="chip bg-color">hexo</span>
                     </a>
                     
                 </div>

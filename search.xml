@@ -3314,4 +3314,60 @@ scrape_configs:               # 通过这里的配置控制prometheus监控的�
         <tag>seata</tag>
       </tags>
   </entry>
+  <entry>
+    <title>docker启动kibana</title>
+    <url>/2022/08/03/docker-qi-dong-kibana/</url>
+    <content><![CDATA[<h1 id="docker启动kibana"><a href="#docker启动kibana" class="headerlink" title="docker启动kibana"></a>docker启动kibana</h1><ol>
+<li><p>查询kibana镜像</p>
+<pre><code>docker search kibana</code></pre></li>
+<li><p>从docker hub拉取最新镜像</p>
+<pre><code>docker pull kibana:7.6.0</code></pre></li>
+<li><p>查看kibana镜像</p>
+<pre><code>docker images | grep kibana</code></pre></li>
+<li><p>启动kibana</p>
+<pre><code>docker run -d --name kibana -p 5601:5601 kibana:7.6.0</code></pre></li>
+<li><p>配置文件</p>
+<p>在/usr/java/docker文件夹下创建kibana的config文件夹，将docker中kibana的配置挂载在外部，当我们在linux虚拟机中修改kibana的配置文件时，就会同时修改docker中的kibana的配置</p>
+<pre><code>mkdir -p /usr/java/docker/kibana/config</code></pre><p>复制配置文件</p>
+<pre><code>docker cp kibana:/usr/share/kibana/config /usr/java/docker/kibana/</code></pre><p>修改配置文件</p>
+<pre><code># 默认端口
+server.port: 5601
+# 远程访问
+server.host: &quot;0.0.0.0&quot;        
+# ES 服务器的地址
+elasticsearch.hosts: [&quot;http://1.15.226.249:9200&quot;]
+# 索引名
+kibana.index: &quot;.kibana&quot;
+# 支持中文
+i18n.locale: &quot;zh-CN&quot;
+# 监控
+xpack.monitoring.ui.container.elasticsearch.enabled: true</code></pre><p>查看配置文件</p>
+<pre><code>cat /usr/java/docker/kibana/config/kibana.yml</code></pre><p>保证权限问题</p>
+<pre><code>chmod -R 777 /usr/java/docker</code></pre></li>
+<li><p>删除临时容器</p>
+<pre><code>docker rm -f kibana</code></pre></li>
+<li><p>使用docker运行kibana</p>
+<pre><code>docker run -d --name kibana \
+-p 5601:5601 \
+-v /usr/java/docker/kibana/config:/usr/share/kibana/config \
+-d kibana:7.6.0</code></pre><blockquote>
+<p>命令解释说明：</p>
+<p>docker run –name kibana 创建一个kibana容器并起一个名字<br>-p 5601:5601 将linux的5601端口映射到docker容器的5601端口，用来给kibana发送http请求<br>-v 挂载命令，将虚拟机中的路径和docker中的路径进行关联<br>-d 后台启动服务</p>
+</blockquote>
+</li>
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep kibana</code></pre></li>
+<li><p>查看启动日志</p>
+<pre><code>docker logs kibana</code></pre></li>
+<li><p>在浏览器地址栏访问 <a href="http://ip:5601" target="_blank" rel="noopener">http://ip:5601</a> ，进入到kibana的控制台</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
 </search>
