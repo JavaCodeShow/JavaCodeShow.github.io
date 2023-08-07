@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    549
+                    563
                 </div>
                 
 
@@ -466,7 +466,7 @@
 <li><p>查询redis镜像</p>
 <pre><code>docker search redis</code></pre></li>
 <li><p>从docker hub拉取最新镜像</p>
-<pre><code>docker pull redis:6.0</code></pre></li>
+<pre><code>docker pull redis:5.0</code></pre></li>
 <li><p>查看redis镜像</p>
 <pre><code>docker images | grep redis</code></pre></li>
 <li><p>创建文件挂载目录</p>
@@ -478,8 +478,8 @@
 <pre><code>#bind 127.0.0.1</code></pre></li>
 <li><p>protected-mode：为了能够让除本机的其余服务器也能远程访问，将 protected-mode yes 修改为 protected-mode no</p>
 <pre><code>protected-mode no</code></pre></li>
-<li><p>daemonize：是否为后台进程，设置为yes，守护进程，后台启动</p>
-<pre><code>daemonize yes</code></pre></li>
+<li><p>daemonize：是否为后台进程，设置为no，守护进程，后台启动（docker里面需要设置为no）</p>
+<pre><code>daemonize no</code></pre></li>
 <li><p>appendonly：是否开启aof持久化，设置为yes</p>
 <pre><code>appendonly yes</code></pre></li>
 </ol>
@@ -488,8 +488,7 @@
 <pre><code>docker run -p 6379:6379 --name redis \
 -v /usr/java/docker/redis/redis.conf:/etc/redis/redis.conf \
 -v /usr/java/docker/redis/data:/data \
--d redis:6.0 redis-server /etc/redis/redis.conf \
---appendonly yes</code></pre><p>命令解释说明：</p>
+-d redis:5.0 redis-server /etc/redis/redis.conf</code></pre><p>命令解释说明：</p>
 <blockquote>
 <p>-p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。</p>
 <p>–name redis指定该容器名称，查看和进行操作都比较方便。</p>
@@ -497,7 +496,6 @@
 <p>为什么需要挂载目录：个人认为docker是个沙箱隔离级别的容器，这个是它的特点及安全机制，不能随便访问外部（主机）资源目录，所以需要这个挂载目录机制。</p>
 <p>-d redis:6.0 表示后台启动redis</p>
 <p>redis-server /etc/redis/redis.conf  以配置文件启动redis，加载容器内的conf文件，最终找到的是挂载的目录/usr/local/docker/redis/redis.conf</p>
-<p>–appendonly yes：redis启动后数据持久化</p>
 </blockquote>
 </li>
 <li><p>查看是否运行成功</p>
@@ -505,6 +503,7 @@
 <li><p>问题记录：</p>
 <p>解决WARNING overcommit_memory is set to 0 Background save may fail under low memory condition：<a href="https://blog.csdn.net/ET1131429439/article/details/126660323" target="_blank" rel="noopener">https://blog.csdn.net/ET1131429439/article/details/126660323</a></p>
 <p>redis客户端链接失败：<a href="https://blog.csdn.net/m0_67394006/article/details/126495657" target="_blank" rel="noopener">https://blog.csdn.net/m0_67394006/article/details/126495657</a></p>
+<p>解决redis启动时的三个警告：<a href="https://blog.csdn.net/a13568hki/article/details/107038136" target="_blank" rel="noopener">https://blog.csdn.net/a13568hki/article/details/107038136</a></p>
 </li>
 </ol>
 
