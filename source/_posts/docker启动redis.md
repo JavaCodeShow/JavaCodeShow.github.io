@@ -23,7 +23,7 @@ tags:
 2. 从docker hub拉取最新镜像
 
    ```
-   docker pull redis:6.0
+   docker pull redis:5.0
    ```
 
 3. 查看redis镜像
@@ -58,10 +58,10 @@ tags:
       protected-mode no
       ```
 
-   3. daemonize：是否为后台进程，设置为yes，守护进程，后台启动
+   3. daemonize：是否为后台进程，设置为no，守护进程，后台启动（docker里面需要设置为no）
 
       ```
-      daemonize yes
+      daemonize no
       ```
 
    4. appendonly：是否开启aof持久化，设置为yes
@@ -76,12 +76,11 @@ tags:
    docker run -p 6379:6379 --name redis \
    -v /usr/java/docker/redis/redis.conf:/etc/redis/redis.conf \
    -v /usr/java/docker/redis/data:/data \
-   -d redis:6.0 redis-server /etc/redis/redis.conf \
-   --appendonly yes
+   -d redis:5.0 redis-server /etc/redis/redis.conf
    ```
-
+   
    命令解释说明：
-
+   
    >-p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。
    >
    >--name redis指定该容器名称，查看和进行操作都比较方便。
@@ -94,8 +93,7 @@ tags:
    >
    >redis-server /etc/redis/redis.conf  以配置文件启动redis，加载容器内的conf文件，最终找到的是挂载的目录/usr/local/docker/redis/redis.conf
    >
-   >–appendonly yes：redis启动后数据持久化
-
+   
 7. 查看是否运行成功
 
    ```
@@ -107,10 +105,8 @@ tags:
    解决WARNING overcommit_memory is set to 0 Background save may fail under low memory condition：https://blog.csdn.net/ET1131429439/article/details/126660323
    
    redis客户端链接失败：https://blog.csdn.net/m0_67394006/article/details/126495657
-
-
-
-
+   
+   解决redis启动时的三个警告：https://blog.csdn.net/a13568hki/article/details/107038136
 
 
 
