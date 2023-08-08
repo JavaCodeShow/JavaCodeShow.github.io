@@ -58,7 +58,7 @@ tags:
    # 远程访问
    server.host: "0.0.0.0"		
    # ES 服务器的地址
-   elasticsearch.hosts: ["http://1.15.226.249:9200"]
+   elasticsearch.hosts: ["http://公网ip:9200"]
    # 索引名
    kibana.index: ".kibana"
    # 支持中文

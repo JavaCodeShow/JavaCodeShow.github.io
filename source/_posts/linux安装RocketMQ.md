@@ -281,9 +281,9 @@ brokerName=broker-a
 #0 表示 Master，>0 表示 Slave
 brokerId=0
 #nameServer地址，分号分割
-namesrvAddr=1.15.226.249:9876
+namesrvAddr=公网ip:9876
 # 你的公网IP
-brokerIP1=1.15.226.249
+brokerIP1=公网ip
 #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
 defaultTopicQueueNums=4
 #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
@@ -393,7 +393,7 @@ pullMessageThreadPoolNums=18
 #### 3.3.4 查看集群列表信息（集群中使用）
 
 ```bash
-$ sh bin/mqadmin clusterList -n 1.15.226.249:9876
+$ sh bin/mqadmin clusterList -n 公网ip:9876
 #Cluster Name    #Broker Name   #BID        #Addr           #Version   #...(略)
 single-master    broker-a      0        192.168.1.3:10911     V4_6_0    …
 ```
@@ -421,7 +421,7 @@ mvn clean package -Dmaven.test.skip=true
 注意：打包前在```rocketmq-console```中配置```namesrv```集群地址：
 
 ```sh
-rocketmq.config.namesrvAddr=1.15.226.249:9876
+rocketmq.config.namesrvAddr=公网ip:9876
 ```
 
 最好将server.port也修改一下。默认是8080。
@@ -463,9 +463,9 @@ nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128
 
    ```
    # 你的公网IP
-   namesrvAddr=1.15.226.249:9876
+   namesrvAddr=公网ip:9876
    # 你的公网IP，不指定就是127.0.0.1。而127.0.0.1在外网环境中无法访问。
-   brokerIP1=1.15.226.249
+   brokerIP1=公网ip
    ```
 
    rocketmq控制台也是如此。需要指定namesrvAddr的外网ip。
