@@ -1015,7 +1015,7 @@ server.port: 5601
 # 远程访问
 server.host: &quot;0.0.0.0&quot;        
 # ES 服务器的地址
-elasticsearch.hosts: [&quot;http://1.15.226.249:9200&quot;]
+elasticsearch.hosts: [&quot;http://公网ip:9200&quot;]
 # 索引名
 kibana.index: &quot;.kibana&quot;
 # 支持中文
@@ -1721,9 +1721,9 @@ brokerName=broker-a
 #0 表示 Master，&gt;0 表示 Slave
 brokerId=0
 #nameServer地址，分号分割
-namesrvAddr=1.15.226.249:9876
+namesrvAddr=公网ip:9876
 # 你的公网IP
-brokerIP1=1.15.226.249
+brokerIP1=公网ip
 #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
 defaultTopicQueueNums=4
 #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
@@ -1794,7 +1794,7 @@ pullMessageThreadPoolNums=18</code></pre><h4 id="3-3-3-启动"><a href="#3-3-3-�
 <pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# jps -l
 1354 org.apache.rocketmq.namesrv.NamesrvStartup
 1739 org.apache.rocketmq.broker.BrokerStartup
-[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# </code></pre><h4 id="3-3-4-查看集群列表信息（集群中使用）"><a href="#3-3-4-查看集群列表信息（集群中使用）" class="headerlink" title="3.3.4 查看集群列表信息（集群中使用）"></a>3.3.4 查看集群列表信息（集群中使用）</h4><pre class=" language-bash"><code class="language-bash">$ sh bin/mqadmin clusterList -n 1.15.226.249:9876
+[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# </code></pre><h4 id="3-3-4-查看集群列表信息（集群中使用）"><a href="#3-3-4-查看集群列表信息（集群中使用）" class="headerlink" title="3.3.4 查看集群列表信息（集群中使用）"></a>3.3.4 查看集群列表信息（集群中使用）</h4><pre class=" language-bash"><code class="language-bash">$ sh bin/mqadmin clusterList -n 公网ip:9876
 <span class="token comment" spellcheck="true">#Cluster Name    #Broker Name   #BID        #Addr           #Version   #...(略)</span>
 single-master    broker-a      0        192.168.1.3:10911     V4_6_0    …</code></pre>
 <p>输出的每一列说明如下：</p>
@@ -1809,7 +1809,7 @@ single-master    broker-a      0        192.168.1.3:10911     V4_6_0    …</cod
 <pre><code>git clone https://github.com/apache/rocketmq-externals
 cd rocketmq-console
 mvn clean package -Dmaven.test.skip=true</code></pre><p>注意：打包前在<code>rocketmq-console</code>中配置<code>namesrv</code>集群地址：</p>
-<pre class=" language-sh"><code class="language-sh">rocketmq.config.namesrvAddr=1.15.226.249:9876</code></pre>
+<pre class=" language-sh"><code class="language-sh">rocketmq.config.namesrvAddr=公网ip:9876</code></pre>
 <p>最好将server.port也修改一下。默认是8080。</p>
 <p>上传到linux服务器任意一个目录。</p>
 <p>启动rocketmq-console：注意jar包的名称需要改为自己的jar包名称</p>
@@ -1826,9 +1826,9 @@ mvn clean package -Dmaven.test.skip=true</code></pre><p>注意：打包前在<co
 <li><p>producer没有连接上broker</p>
 <pre><code>com.alibaba.rocketmq.remoting.exception.RemotingConnectException: connect to &lt;127.0.0.1:9876&gt; failed</code></pre><p>这个修改broker的配置文件。需要修改两个参数</p>
 <pre><code># 你的公网IP
-namesrvAddr=1.15.226.249:9876
+namesrvAddr=公网ip:9876
 # 你的公网IP，不指定就是127.0.0.1。而127.0.0.1在外网环境中无法访问。
-brokerIP1=1.15.226.249</code></pre><p>rocketmq控制台也是如此。需要指定namesrvAddr的外网ip。</p>
+brokerIP1=公网ip</code></pre><p>rocketmq控制台也是如此。需要指定namesrvAddr的外网ip。</p>
 </li>
 </ol>
 ]]></content>
@@ -2266,7 +2266,7 @@ lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href
     <span class="token comment" spellcheck="true"># support: nacos, consul, apollo, zk, etcd3</span>
     <span class="token key atrule">type</span><span class="token punctuation">:</span> nacos
     <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
-      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 1.15.226.249<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 公网ip<span class="token punctuation">:</span><span class="token number">8848</span>
       <span class="token key atrule">namespace</span><span class="token punctuation">:</span> seata
       <span class="token key atrule">group</span><span class="token punctuation">:</span> SEATA_GROUP
       <span class="token key atrule">username</span><span class="token punctuation">:</span> nacos
@@ -2277,7 +2277,7 @@ lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href
     <span class="token key atrule">type</span><span class="token punctuation">:</span> nacos
     <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
       <span class="token key atrule">application</span><span class="token punctuation">:</span> seata<span class="token punctuation">-</span>server
-      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 1.15.226.249<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 公网ip<span class="token punctuation">:</span><span class="token number">8848</span>
       <span class="token key atrule">group</span><span class="token punctuation">:</span> SEATA_GROUP
       <span class="token key atrule">namespace</span><span class="token punctuation">:</span> seata
       <span class="token key atrule">cluster</span><span class="token punctuation">:</span> default
@@ -2383,7 +2383,7 @@ lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href
 <span class="token attr-name">store.db.datasource</span><span class="token punctuation">=</span><span class="token attr-value">druid</span>
 <span class="token attr-name">store.db.dbType</span><span class="token punctuation">=</span><span class="token attr-value">mysql</span>
 <span class="token attr-name">store.db.driverClassName</span><span class="token punctuation">=</span><span class="token attr-value">com.mysql.cj.jdbc.Driver</span>
-<span class="token attr-name">store.db.url</span><span class="token punctuation">=</span><span class="token attr-value">jdbc:mysql://1.15.226.249:3306/seata?useUnicode=true&amp;rewriteBatchedStatements=true</span>
+<span class="token attr-name">store.db.url</span><span class="token punctuation">=</span><span class="token attr-value">jdbc:mysql://公网ip:3306/seata?useUnicode=true&amp;rewriteBatchedStatements=true</span>
 <span class="token attr-name">store.db.user</span><span class="token punctuation">=</span><span class="token attr-value">root</span>
 <span class="token attr-name">store.db.password</span><span class="token punctuation">=</span><span class="token attr-value">mimazhaowoyao</span>
 <span class="token attr-name">store.db.minConn</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
@@ -2567,7 +2567,7 @@ lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href
     <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
       <span class="token key atrule">group</span><span class="token punctuation">:</span> SEATA_GROUP
       <span class="token key atrule">namespace</span><span class="token punctuation">:</span> seata
-      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 1.15.226.249<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 公网ip<span class="token punctuation">:</span><span class="token number">8848</span>
       <span class="token key atrule">username</span><span class="token punctuation">:</span> nacos
       <span class="token key atrule">password</span><span class="token punctuation">:</span> nacos
     <span class="token key atrule">type</span><span class="token punctuation">:</span> nacos
@@ -2576,7 +2576,7 @@ lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href
     <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
       <span class="token key atrule">application</span><span class="token punctuation">:</span> seata<span class="token punctuation">-</span>server
       <span class="token comment" spellcheck="true"># nacos 服务地址</span>
-      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 1.15.226.249<span class="token punctuation">:</span><span class="token number">8848</span>
+      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 公网ip<span class="token punctuation">:</span><span class="token number">8848</span>
       <span class="token key atrule">namespace</span><span class="token punctuation">:</span> seata
       <span class="token key atrule">group</span><span class="token punctuation">:</span> SEATA_GROUP
 </code></pre>
