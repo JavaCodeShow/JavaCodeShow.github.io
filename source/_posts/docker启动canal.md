@@ -51,7 +51,7 @@ tags:
 4. canal默认用户名和密码都是canal,给canal服务创建账号，并分配读的权限。
 
    ```
-   #创建canal账号
+   #创建canal账号,用户命和密码都是canal
    CREATE USER canal IDENTIFIED BY 'canal';    
    GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'canal'@'%';  
    -- GRANT ALL PRIVILEGES ON *.* TO 'canal'@'%' ;  

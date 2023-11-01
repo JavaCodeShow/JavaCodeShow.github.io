@@ -253,7 +253,7 @@ firewall-cmd --reload
 
 #### 3.3.1 创建消息存储路径
 
-系统根目录执行一下命令
+系统根目录执行一下命令，**如果使用默认的存储路径，这个可以忽略不进行配置**
 
 ```
 cd /
@@ -281,9 +281,9 @@ brokerName=broker-a
 #0 表示 Master，>0 表示 Slave
 brokerId=0
 #nameServer地址，分号分割
-namesrvAddr=公网ip:9876
+namesrvAddr=公网IP:9876
 # 你的公网IP
-brokerIP1=公网ip
+brokerIP1=公网IP.249
 #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
 defaultTopicQueueNums=4
 #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
@@ -304,18 +304,6 @@ mapedFileSizeConsumeQueue=300000
 #redeleteHangedFileInterval=120000
 #检测物理文件磁盘空间
 diskMaxUsedSpaceRatio=88
-#存储路径
-storePathRootDir=/data/rocketmq/single-master/broker-a/store
-#commitLog 存储路径
-storePathCommitLog=/data/rocketmq/single-master/broker-a/store/commitlog
-#消费队列存储路径存储路径
-storePathConsumeQueue=/data/rocketmq/single-master/broker-a/store/consumequeue
-#消息索引存储路径
-storePathIndex=/data/rocketmq/single-master/broker-a/store/index
-#checkpoint 文件存储路径
-storeCheckpoint=/data/rocketmq/single-master/broker-a/store/checkpoint
-#abort 文件存储路径
-abortFile=/data/rocketmq/single-master/broker-a/store/abort
 #限制的消息大小
 maxMessageSize=65536
 #flushCommitLogLeastPages=4
@@ -363,7 +351,7 @@ pullMessageThreadPoolNums=18
 * 查看Broker启动日志
 
   ```
-  tail -500f ~/logs/rocketmqlogs/broker.log 
+  tail -500f ~/logs/rocketmqlogs/broker.log
   ```
 
 * 关闭NameServer

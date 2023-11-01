@@ -107,7 +107,8 @@ tags:
    > 如果出现内存不足，可以将%JAVA_HOME%\lib\visualvm\etc目录里面的visualvm.conf的堆内存修改一下。
    >
    > ```
-   > -Xms1024m -J-Xmx4096m
+   > -Xms4096m -J-Xmx4096m
+   > visualvm_default_options="-J-client -J-Xms4096m -J-Xmx4096m ***
    > ```
 
 3. 分析对象
