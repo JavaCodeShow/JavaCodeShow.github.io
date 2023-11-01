@@ -9,6 +9,8 @@ tags:
 	- MySQL
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 不求甚解的读书和不读有何区别
                    						  —— 江峰
     

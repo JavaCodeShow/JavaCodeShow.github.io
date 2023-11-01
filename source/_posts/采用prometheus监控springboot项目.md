@@ -9,6 +9,7 @@ tags:
 	- prometheus
 ---
 
+<meta name="referrer" content="no-referrer" />
 
 ##  1. springboot项目中配置prometheus
 

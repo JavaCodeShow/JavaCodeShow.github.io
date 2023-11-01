@@ -9,6 +9,8 @@ tags:
 	- linux
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 ### 
 
 ## 一、查看文本

@@ -10,7 +10,7 @@ tags:
 
 ---
 
-
+<meta name="referrer" content="no-referrer" />
 
 # jmeter入门教程
 

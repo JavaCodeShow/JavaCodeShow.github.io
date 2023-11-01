@@ -10,6 +10,8 @@ tags:
 
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # docker启动ElasticSearch
 
 1. 查询ElasticSearch镜像

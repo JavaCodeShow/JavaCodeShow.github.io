@@ -10,7 +10,7 @@ tags:
 
 ---
 
-
+<meta name="referrer" content="no-referrer" />
 
 # 使用hexo写博客
 

@@ -10,6 +10,8 @@ tags:
 
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # docker启动kibana
 
 1. 查询kibana镜像

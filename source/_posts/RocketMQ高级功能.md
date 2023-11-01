@@ -9,6 +9,8 @@ tags:
 	- RocketMQ
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # RocketMQ高级功能
 
 ## 1. 刷盘机制

@@ -9,6 +9,8 @@ tags:
 	- 线上问题排查
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # java服务线上问题排查
 
 ## 1、内存

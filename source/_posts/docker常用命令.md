@@ -9,6 +9,8 @@ tags:
 	- docker
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # docker常用命令
 
 ## 基本命令

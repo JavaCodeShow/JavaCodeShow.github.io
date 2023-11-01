@@ -9,6 +9,8 @@ tags:
 	- RocketMQ
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # linux安装RocketMQ
 
 前提条件：RocketMQ是基于java语言开发的。运行RocketMQ需要java环境。JDK的版本应该 >= 1.8。请确保安装了JDK。

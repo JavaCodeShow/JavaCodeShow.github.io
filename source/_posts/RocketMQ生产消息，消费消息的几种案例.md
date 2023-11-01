@@ -9,7 +9,7 @@ tags:
 	- RocketMQ
 ---
 
-
+<meta name="referrer" content="no-referrer" />
 
 ## 1. Producer发送消息的三种方式
 

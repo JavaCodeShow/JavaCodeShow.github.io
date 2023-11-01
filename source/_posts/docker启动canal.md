@@ -10,6 +10,8 @@ tags:
 
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # docker启动Canal
 
 备注：该文章暂时还有点问题，请勿阅读。

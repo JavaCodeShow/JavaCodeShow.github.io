@@ -9,6 +9,8 @@ tags:
 	- kafka
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 ## 一 修改配置文件
 
 在kafka解压目录下下有一个config的文件夹，里面放置的是我们的配置文件　　

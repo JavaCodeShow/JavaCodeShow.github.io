@@ -10,6 +10,8 @@ tags:
 
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 ## 1. 创建告警规则配置文件
 
 创建告警规则配置文件first_rules.yml，建议放在与prometheus.yml同级目录

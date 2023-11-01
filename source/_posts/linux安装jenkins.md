@@ -9,6 +9,8 @@ tags:
 	- jenkins
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # linux安装jenkins部署SpringBoot应用
 
 ## 一、安装jdk和maven

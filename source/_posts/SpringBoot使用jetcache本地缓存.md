@@ -10,7 +10,7 @@ tags:
 
 ---
 
-
+<meta name="referrer" content="no-referrer" />
 
 # SpringBoot使用jetcache本地缓存
 

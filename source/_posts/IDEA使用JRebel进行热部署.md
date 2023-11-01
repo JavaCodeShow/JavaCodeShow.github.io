@@ -10,7 +10,7 @@ tags:
 
 ---
 
-
+<meta name="referrer" content="no-referrer" />
 
 # IDEA使用JRebel进行热部署教程
 

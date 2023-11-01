@@ -9,6 +9,8 @@ tags:
 	- seata
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # seata入门使用教程
 
 ## 1. 下载seata-server

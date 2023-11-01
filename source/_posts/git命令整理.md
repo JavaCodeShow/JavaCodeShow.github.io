@@ -9,6 +9,8 @@ tags:
 	- git
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # git命令整理
 
 ## 拉取当前分支的远程代码

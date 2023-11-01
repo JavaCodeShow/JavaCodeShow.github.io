@@ -12,7 +12,7 @@ tags:
 
 ---
 
-
+<meta name="referrer" content="no-referrer" />
 
 ## 1. 下载Alertmanager
 

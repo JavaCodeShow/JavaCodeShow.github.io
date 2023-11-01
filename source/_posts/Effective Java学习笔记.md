@@ -10,9 +10,7 @@ tags:
 	- 读书笔记
 ---
 
-
-
-
+<meta name="referrer" content="no-referrer" />
 
 ## 第一章：引言  
 

@@ -9,6 +9,8 @@ tags:
 	- arthas
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # arthas常用命令记录.md
 
 ## 下载arthas

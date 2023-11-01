@@ -9,6 +9,8 @@ tags:
 	- RocketMQ
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # 使用rocketmq-spring-boot-starter发送，消费消息的简单示例
 
 

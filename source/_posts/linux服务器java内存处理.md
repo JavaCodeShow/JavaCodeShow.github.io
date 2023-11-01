@@ -10,6 +10,8 @@ tags:
 	- java
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 # java服务器内存处理
 
 ## 查看服务器总内存占用

@@ -9,7 +9,7 @@ tags:
 	- SpringBoot
 ---
 
-
+<meta name="referrer" content="no-referrer" />
 
 1. @Controller	组合注解（组合了@Component注解），应用在MVC层（控制层）,DispatcherServlet会自动扫描注解了此注解的类，然后将web请求映射到注解了@RequestMapping的方法上。
 2. @Service	组合注解（组合了@Component注解），应用在service层（业务逻辑层）
