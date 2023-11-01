@@ -3,7 +3,9 @@
   <entry>
     <title>Effective Java学习笔记</title>
     <url>/2019/01/13/effective-java-xue-xi-bi-ji/</url>
-    <content><![CDATA[<h2 id="第一章：引言"><a href="#第一章：引言" class="headerlink" title="第一章：引言"></a>第一章：引言</h2><h2 id="第二章：创建和销毁对象"><a href="#第二章：创建和销毁对象" class="headerlink" title="第二章：创建和销毁对象"></a>第二章：创建和销毁对象</h2><ol>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="第一章：引言"><a href="#第一章：引言" class="headerlink" title="第一章：引言"></a>第一章：引言</h2><h2 id="第二章：创建和销毁对象"><a href="#第二章：创建和销毁对象" class="headerlink" title="第二章：创建和销毁对象"></a>第二章：创建和销毁对象</h2><ol>
 <li><p>产生对象时，切忌第一反应就是提供公有构造器,考虑使用静态工厂方法。</p>
 </li>
 <li><p>重叠构造器模式，就是当属性比较多时，提供多个构造器，构造器参数依次增加。但是可读性比较差</p>
@@ -183,6 +185,113 @@ List<?>则是一个通配符类型，表示只能包含某种未知对象类型�
       </tags>
   </entry>
   <entry>
+    <title>IDEA使用JRebel进行热部署</title>
+    <url>/2021/01/12/idea-shi-yong-jrebel-jin-xing-re-bu-shu/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="IDEA使用JRebel进行热部署教程"><a href="#IDEA使用JRebel进行热部署教程" class="headerlink" title="IDEA使用JRebel进行热部署教程"></a>IDEA使用JRebel进行热部署教程</h1><h2 id="1-安装JRebel插件"><a href="#1-安装JRebel插件" class="headerlink" title="1. 安装JRebel插件"></a>1. <strong>安装JRebel插件</strong></h2><pre><code>在IDEA-&gt;Settings-plugin下载Jrebel的插件，下载好了重启程序使插件生效</code></pre><p><img src="https://img-blog.csdnimg.cn/20210112115750158.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="2-激活"><a href="#2-激活" class="headerlink" title="2. 激活"></a>2. 激活</h2><ol>
+<li><p>直接进入到jrebel的配置项中，点击active now链接进入到激活界面，选择Team URL(connect to online licensing service)方式激活</p>
+<p><img src="https://img-blog.csdnimg.cn/20191127182857244.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpZXJrYW5n,size_16,color_FFFFFF,t_70" alt="img"></p>
+</li>
+<li><p>第一行输入： <a href="http://jrebel.qekang.com:80/{guid}" target="_blank" rel="noopener">http://jrebel.qekang.com:80/{guid}</a>  ， guid在<strong><a href="https://jrebel.qekang.com/" target="_blank" rel="noopener">https://jrebel.qekang.com/</a></strong> 这个网站获得<br><img src="https://img-blog.csdnimg.cn/202101121158311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</li>
+</ol>
+<p>   第二行的email输入任意一个符合个数的email地址即可</p>
+<h2 id="3-JRebel使用"><a href="#3-JRebel使用" class="headerlink" title="3. JRebel使用"></a>3. <strong>JRebel使用</strong></h2><ol>
+<li><p>设置IDEA自动编译项目，将Build project automatiacally这个选下勾选上。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/41635ebc0a734df2fdbb49908763ecd4.png" alt="img"></p>
+<p>   按住ctrl + shift + alt +/  这四个键,      点击registry,将compiler.automake.allow.when.app.running这个选项勾选上，如果已经勾选了，跳过此步骤即可。<br><img src="https://img-blog.csdnimg.cn/20210112115857366.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20210112115919912.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>设置JRebel Work online 和 Redeploy time</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20210112115938743.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<ol start="3">
+<li>勾选要使用JRebel的项目，这里会在每个项目下面生成一个rebel.xml文件。可通过设置git的.gitignore将这个文件忽略掉。</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20210112115956724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>在git项目的根目录下，创建一个.gitignore文件，将一下内容复制进去即可。git会自动读取文件将符合规则的文件隐藏掉。</p>
+<pre><code>*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+#*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# ---- Maven
+target/
+dependency-reduced-pom.xml
+
+# ---- IntelliJ IDEA
+*.iws
+*.iml
+*.ipr
+.idea/
+
+# ---- Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+
+# ---- Mac OS X
+.DS_Store?
+.DS_Store
+Icon?
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# ---- Windows
+# Windows image file caches
+Thumbs.db
+# Folder config file
+Desktop.ini
+
+.java-version
+#--compile
+bin/
+tmp/
+build/
+
+.gradle/
+.vscode/
+.tmp
+
+# --- JRebel
+/**/rebel.xml
+
+
+</code></pre><ol start="4">
+<li><p>启动项目</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/4bb53ef0ada2415e55f1b01ca4403e40.png" alt="img"></p>
+</li>
+<li><p>修改文件之后使文件热加载</p>
+<p>每个文件修改之后，鼠标右键点击文件，点击Compile And Reload File使文件生效</p>
+<p><img src="https://img-blog.csdnimg.cn/20210112120013832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</li>
+</ol>
+<p>至此，JRebel热部署的内容分享完毕，希望能够对大家有所帮助。</p>
+]]></content>
+      <categories>
+        <category>热部署</category>
+      </categories>
+      <tags>
+        <tag>热部署</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL45讲</title>
     <url>/2023/03/01/mysql45-jiang/</url>
     <content><![CDATA[<h1 id="MySQL45讲"><a href="#MySQL45讲" class="headerlink" title="MySQL45讲"></a>MySQL45讲</h1><h2 id="09讲普通索引和唯一索引"><a href="#09讲普通索引和唯一索引" class="headerlink" title="09讲普通索引和唯一索引"></a>09讲普通索引和唯一索引</h2><p>假设，执行查询的语句是 select id from T where k=5</p>
@@ -287,9 +396,214 @@ List<?>则是一个通配符类型，表示只能包含某种未知对象类型�
 ]]></content>
   </entry>
   <entry>
+    <title>RocketMQ生产消息，消费消息的几种案例</title>
+    <url>/2021/04/01/rocketmq-sheng-chan-xiao-xi-xiao-fei-xiao-xi-de-ji-chong-an-li/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="1-Producer发送消息的三种方式"><a href="#1-Producer发送消息的三种方式" class="headerlink" title="1. Producer发送消息的三种方式"></a>1. Producer发送消息的三种方式</h2><p>Producer 发送消息，RocketMQ 提供了三种模式。</p>
+<ul>
+<li>同步发送</li>
+<li>异步发送</li>
+<li>OneWay 发送</li>
+</ul>
+<p>示例代码如下：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 1、同步发送</span>
+SendResult sendResult <span class="token operator">=</span> producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//2、异步发送</span>
+producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SendCallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onSuccess</span><span class="token punctuation">(</span>SendResult sendResult<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onException</span><span class="token punctuation">(</span>Throwable e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//3、 Oneway发送</span>
+producer<span class="token punctuation">.</span><span class="token function">sendOneway</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<ul>
+<li><strong>1、同步发送</strong><br> Producer 向 broker 发送消息，阻塞当前线程等待 broker 响应 发送结果。</li>
+<li><strong>2、异步发送</strong><br> Producer 首先构建一个向 broker 发送消息的任务，把该任务提交给线程池，等执行完该任务时，回调用户自定义的回调函数，执行处理结果。</li>
+<li><strong>3、Oneway 发送</strong><br> Oneway 方式只负责发送请求，不等待应答，Producer 只负责把请求发出去，而不处理响应结果。</li>
+</ul>
+<h2 id="2-Consumer消费消息的两种方式"><a href="#2-Consumer消费消息的两种方式" class="headerlink" title="2. Consumer消费消息的两种方式"></a>2. Consumer消费消息的两种方式</h2><p>RocketMQ里面有消费者组的概念。</p>
+<p>先说下以下两个问题，方面后续的理解。</p>
+<p>问题1：一个消费者组里面为什么会有多个消费者？</p>
+<p>​    答：当一个服务有几个节点时，便会有多个消费者。而这些消费者里面应该只有一个消费者能够消费消息。</p>
+<p>问题2：为什么会有多个消费者组？</p>
+<p>​    答：微服务情况下。一个消息可能会被多个业务服务消费。比如商品服务。优惠券服务。这每个服务都是一个消费者组。</p>
+<h3 id="2-1-集群模式"><a href="#2-1-集群模式" class="headerlink" title="2.1 集群模式"></a>2.1 集群模式</h3><pre class=" language-java"><code class="language-java">consumer<span class="token punctuation">.</span><span class="token function">setMessageModel</span><span class="token punctuation">(</span>MessageModel<span class="token punctuation">.</span>CLUSTERING<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>在此模式下，当多个消费者在同一个消费者组时，这些消费者里面只会有一个消费者能够消费消息。</p>
+<p>也就是说存在多个消费者组时，每个消费者组里面只会有一个消费者能够消费消息。</p>
+<p><strong>故此：消费者组的名字一般是服务的名字。TOPIC的名字一般是哪个服务发出来的，就是哪个服务的名字。</strong></p>
+<p><strong>一般使用集群模式即可。</strong></p>
+<h3 id="2-2-广播模式"><a href="#2-2-广播模式" class="headerlink" title="2.2 广播模式"></a>2.2 广播模式</h3><pre class=" language-java"><code class="language-java">consumer<span class="token punctuation">.</span><span class="token function">setMessageModel</span><span class="token punctuation">(</span>MessageModel<span class="token punctuation">.</span>BROADCASTING<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>在此模式下。如果多个消费者处于同一个消费者组里面，这个消费者组里面的每个消费者都会消费消息。</p>
+<h2 id="3-顺序消息"><a href="#3-顺序消息" class="headerlink" title="3. 顺序消息"></a>3. 顺序消息</h2><p>消息有序指的是可以按照消息的发送顺序来消费(FIFO)。RocketMQ可以严格的保证消息有序，可以分为分区有序或者全局有序。</p>
+<p>顺序消费的原理解析，在默认的情况下消息发送会采取Round Robin轮询方式把消息发送到不同的queue(分区队列)；而消费消息的时候从多个queue上拉取消息，这种情况发送和消费是不能保证顺序。但是如果控制发送的顺序消息只依次发送到同一个queue中，消费的时候只从这个queue上依次拉取，则就保证了顺序。当发送和消费参与的queue只有一个，则是全局有序；如果多个queue参与，则为分区有序，即相对每个queue，消息都是有序的。</p>
+<h2 id="4-延时消息"><a href="#4-延时消息" class="headerlink" title="4. 延时消息"></a>4. 延时消息</h2><p>发送者代码示例：</p>
+<pre class=" language-java"><code class="language-java">Message message <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span><span class="token string">"topic1"</span><span class="token punctuation">,</span> <span class="token string">"tagA"</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">"Hello scheduled message "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+message<span class="token punctuation">.</span><span class="token function">setDelayTimeLevel</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+SendResult send <span class="token operator">=</span> producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>延时等级：</p>
+<pre class=" language-java"><code class="language-java"> <span class="token keyword">private</span> String messageDelayLevel <span class="token operator">=</span> <span class="token string">"1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h"</span><span class="token punctuation">;</span></code></pre>
+<ul>
+<li>level == 0，消息为非延迟消息</li>
+<li>1&lt;=level&lt;=maxLevel，消息延迟特定时间，例如level==1，延迟1s</li>
+<li>level &gt; maxLevel，则level== maxLevel，例如level==20，延迟2h</li>
+</ul>
+<h2 id="5-批量消息"><a href="#5-批量消息" class="headerlink" title="5. 批量消息"></a>5. 批量消息</h2><p>批量发送消息能显著提高传递小消息的性能。限制是这些批量消息应该有相同的topic，相同的waitStoreMsgOK，而且不能是延时消息。此外，这一批消息的总大小不应超过4MB。</p>
+<p>如果您每次只发送不超过4MB的消息，则很容易使用批处理，样例如下：</p>
+<pre class=" language-java"><code class="language-java">String topic <span class="token operator">=</span> <span class="token string">"BatchTest"</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>Message<span class="token operator">></span> messages <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+messages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span>topic<span class="token punctuation">,</span> <span class="token string">"TagA"</span><span class="token punctuation">,</span> <span class="token string">"OrderID001"</span><span class="token punctuation">,</span> <span class="token string">"Hello world 0"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+messages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span>topic<span class="token punctuation">,</span> <span class="token string">"TagA"</span><span class="token punctuation">,</span> <span class="token string">"OrderID002"</span><span class="token punctuation">,</span> <span class="token string">"Hello world 1"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+messages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span>topic<span class="token punctuation">,</span> <span class="token string">"TagA"</span><span class="token punctuation">,</span> <span class="token string">"OrderID003"</span><span class="token punctuation">,</span> <span class="token string">"Hello world 2"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+   producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>messages<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">//处理error</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="6-事务消息"><a href="#6-事务消息" class="headerlink" title="6. 事务消息"></a>6. 事务消息</h2><h3 id="6-1-事务消息执行流程"><a href="#6-1-事务消息执行流程" class="headerlink" title="6.1 事务消息执行流程"></a>6.1 事务消息执行流程</h3><p>流程图：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210401171744307.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70" alt="图片描述"></p>
+<p>上图说明了事务消息的大致方案，其中分为两个流程：正常事务消息的发送及提交、事务消息的补偿流程。</p>
+<h4 id="1）事务消息发送及提交"><a href="#1）事务消息发送及提交" class="headerlink" title="1）事务消息发送及提交"></a>1）事务消息发送及提交</h4><p>(1) 发送消息（half消息）。</p>
+<p>(2) 服务端响应消息写入结果。</p>
+<p>(3) 根据发送结果执行本地事务（如果写入失败，此时half消息对业务不可见，本地逻辑不执行）。</p>
+<p>(4) 根据本地事务状态执行Commit或者Rollback（Commit操作生成消息索引，消息对消费者可见）</p>
+<h4 id="2）事务补偿"><a href="#2）事务补偿" class="headerlink" title="2）事务补偿"></a>2）事务补偿</h4><p>(1) 对没有Commit/Rollback的事务消息（pending状态的消息），从服务端发起一次“回查”</p>
+<p>(2) Producer收到回查消息，检查回查消息对应的本地事务的状态</p>
+<p>(3) 根据本地事务状态，重新Commit或者Rollback</p>
+<p>其中，补偿阶段用于解决消息Commit或者Rollback发生超时或者失败的情况。</p>
+<h4 id="3）事务消息状态"><a href="#3）事务消息状态" class="headerlink" title="3）事务消息状态"></a>3）事务消息状态</h4><p>事务消息共有三种状态，提交状态、回滚状态、中间状态：</p>
+<ul>
+<li>TransactionStatus.CommitTransaction: 提交事务，它允许消费者消费此消息。</li>
+<li>TransactionStatus.RollbackTransaction: 回滚事务，它代表该消息将被删除，不允许被消费。</li>
+<li>TransactionStatus.Unknown: 中间状态，它代表需要检查消息队列来确定状态。</li>
+</ul>
+<h3 id="6-2-发送事务消息"><a href="#6-2-发送事务消息" class="headerlink" title="6.2 发送事务消息"></a>6.2 发送事务消息</h3><h4 id="1）-创建事务消息生产者"><a href="#1）-创建事务消息生产者" class="headerlink" title="1） 创建事务消息生产者"></a>1） 创建事务消息生产者</h4><p>使用 <code>TransactionMQProducer</code>类创建生产者，并指定唯一的 <code>ProducerGroup</code>，就可以设置自定义线程池来处理这些检查请求。执行本地事务后、需要根据执行结果对消息队列进行回复。回传的事务状态在请参考前一节。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TransactionProducer</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+            <span class="token keyword">throws</span> MQClientException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">// 创建事务监听器</span>
+        TransactionListener transactionListener <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TransactionListenerImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 创建消息生产者</span>
+        TransactionMQProducer producer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TransactionMQProducer</span><span class="token punctuation">(</span><span class="token string">"group6"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        producer<span class="token punctuation">.</span><span class="token function">setNamesrvAddr</span><span class="token punctuation">(</span><span class="token string">"139.224.103.236:9876"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 生产者这是监听器</span>
+        producer<span class="token punctuation">.</span><span class="token function">setTransactionListener</span><span class="token punctuation">(</span>transactionListener<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 启动消息生产者</span>
+        producer<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                Message msg <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span><span class="token string">"TransactionTopicTest"</span><span class="token punctuation">,</span>
+                        <span class="token string">"transactionTag"</span><span class="token punctuation">,</span> <span class="token string">"msg-"</span> <span class="token operator">+</span> i<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">"Hello RocketMQ "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span>
+                                <span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span>RemotingHelper<span class="token punctuation">.</span>DEFAULT_CHARSET<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                SendResult sendResult <span class="token operator">=</span> producer<span class="token punctuation">.</span><span class="token function">sendMessageInTransaction</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span>
+                        null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// System.out.printf("%s%n", sendResult);</span>
+                TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">MQClientException</span> <span class="token operator">|</span> UnsupportedEncodingException e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        producer<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="2）实现事务的监听接口"><a href="#2）实现事务的监听接口" class="headerlink" title="2）实现事务的监听接口"></a>2）实现事务的监听接口</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TransactionListenerImpl</span> <span class="token keyword">implements</span> <span class="token class-name">TransactionListener</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> AtomicInteger transactionIndex <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> AtomicInteger checkTimes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> ConcurrentHashMap<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span> localTrans <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 本地事务的执行逻辑
+     *
+     * @param msg
+     * @param arg
+     * @return
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> LocalTransactionState <span class="token function">executeLocalTransaction</span><span class="token punctuation">(</span>Message msg<span class="token punctuation">,</span>
+            Object arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        LocalTransactionState state<span class="token punctuation">;</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"执行本地事务"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"msg-4"</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            state <span class="token operator">=</span> LocalTransactionState<span class="token punctuation">.</span>COMMIT_MESSAGE<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"msg-5"</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            state <span class="token operator">=</span> LocalTransactionState<span class="token punctuation">.</span>ROLLBACK_MESSAGE<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            state <span class="token operator">=</span> LocalTransactionState<span class="token punctuation">.</span>UNKNOW<span class="token punctuation">;</span>
+            localTrans<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> transactionIndex<span class="token punctuation">.</span><span class="token function">incrementAndGet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"executeLocalTransaction: "</span> <span class="token operator">+</span> msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token operator">+</span> <span class="token string">",excute state: "</span> <span class="token operator">+</span> state <span class="token operator">+</span> <span class="token string">",current time: "</span>
+                <span class="token operator">+</span> DateUtils<span class="token punctuation">.</span><span class="token function">formatLocalDateTime</span><span class="token punctuation">(</span>LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 回查本地事务的代码实现
+     *
+     * @param msg
+     * @return
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> LocalTransactionState <span class="token function">checkLocalTransaction</span><span class="token punctuation">(</span>MessageExt msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"checkLocalTransaction message key: "</span> <span class="token operator">+</span> msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token operator">+</span> <span class="token string">",current time: "</span>
+                <span class="token operator">+</span> DateUtils<span class="token punctuation">.</span><span class="token function">formatLocalDateTime</span><span class="token punctuation">(</span>LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Integer index <span class="token operator">=</span> localTrans<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">!=</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">switch</span> <span class="token punctuation">(</span>index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
+                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"check result: unknow, 回查次数："</span>
+                            <span class="token operator">+</span> checkTimes<span class="token punctuation">.</span><span class="token function">incrementAndGet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">return</span> LocalTransactionState<span class="token punctuation">.</span>UNKNOW<span class="token punctuation">;</span>
+                <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
+                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"check result: commit message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">return</span> LocalTransactionState<span class="token punctuation">.</span>COMMIT_MESSAGE<span class="token punctuation">;</span>
+                <span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>
+                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"check result: rollback message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">return</span> LocalTransactionState<span class="token punctuation">.</span>ROLLBACK_MESSAGE<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> LocalTransactionState<span class="token punctuation">.</span>COMMIT_MESSAGE<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="3）事务消息执行结果"><a href="#3）事务消息执行结果" class="headerlink" title="3）事务消息执行结果"></a>3）事务消息执行结果</h4><p>msg-4执行本地事务成功</p>
+<p>msg-5执行本地事务失败，回滚事务</p>
+<p>msg-1执行本地事务失败，默认回查15次，每一次间隔60秒</p>
+<p>msg-2执行本地事务失败，回查1次，执行成功</p>
+<p>msg-3执行本地事务失败，回查1次，回滚事务</p>
+<h3 id="6-3-使用限制"><a href="#6-3-使用限制" class="headerlink" title="6.3 使用限制"></a>6.3 使用限制</h3><ol>
+<li>事务消息不支持延时消息和批量消息。</li>
+<li>为了避免单个消息被检查太多次而导致半队列消息累积，我们默认将单个消息的检查次数限制为 15 次，但是用户可以通过 Broker 配置文件的 <code>transactionCheckMax</code>参数来修改此限制。如果已经检查某条消息超过 N 次的话（ N = <code>transactionCheckMax</code> ） 则 Broker 将丢弃此消息，并在默认情况下同时打印错误日志。用户可以通过重写 <code>AbstractTransactionCheckListener</code> 类来修改这个行为。</li>
+<li>事务消息将在 Broker 配置文件中的参数 transactionMsgTimeout 这样的特定时间长度之后被检查。当发送事务消息时，用户还可以通过设置用户属性 CHECK_IMMUNITY_TIME_IN_SECONDS 来改变这个限制，该参数优先于 <code>transactionMsgTimeout</code> 参数。</li>
+<li>事务性消息可能不止一次被检查或消费。</li>
+<li>提交给用户的目标主题消息可能会失败，目前这依日志的记录而定。它的高可用性通过 RocketMQ 本身的高可用性机制来保证，如果希望确保事务消息不丢失、并且事务完整性得到保证，建议使用同步的双重写入机制。</li>
+<li>事务消息的生产者 ID 不能与其他类型消息的生产者 ID 共享。与其他类型的消息不同，事务消息允许反向查询、MQ服务器能通过它们的生产者 ID 查询到消费者。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>RocketMQ</category>
+      </categories>
+      <tags>
+        <tag>RocketMQ</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RocketMQ高级功能</title>
     <url>/2021/04/30/rocketmq-gao-ji-gong-neng/</url>
-    <content><![CDATA[<h1 id="RocketMQ高级功能"><a href="#RocketMQ高级功能" class="headerlink" title="RocketMQ高级功能"></a>RocketMQ高级功能</h1><h2 id="1-刷盘机制"><a href="#1-刷盘机制" class="headerlink" title="1. 刷盘机制"></a>1. 刷盘机制</h2><p>RocketMQ的消息是存储到磁盘上的，这样既能保证断电后恢复， 又可以让存储的消息量超出内存的限制。RocketMQ为了提高性能，会尽可能地保证磁盘的顺序写。消息在通过Producer写入RocketMQ的时 候，有两种写磁盘方式，分布式同步刷盘和异步刷盘。</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="RocketMQ高级功能"><a href="#RocketMQ高级功能" class="headerlink" title="RocketMQ高级功能"></a>RocketMQ高级功能</h1><h2 id="1-刷盘机制"><a href="#1-刷盘机制" class="headerlink" title="1. 刷盘机制"></a>1. 刷盘机制</h2><p>RocketMQ的消息是存储到磁盘上的，这样既能保证断电后恢复， 又可以让存储的消息量超出内存的限制。RocketMQ为了提高性能，会尽可能地保证磁盘的顺序写。消息在通过Producer写入RocketMQ的时 候，有两种写磁盘方式，分布式同步刷盘和异步刷盘。</p>
 <p><img src="https://img-blog.csdnimg.cn/20210430145056233.png" alt="图片描述"></p>
 <h3 id="1-1-同步刷盘"><a href="#1-1-同步刷盘" class="headerlink" title="1.1 同步刷盘"></a>1.1 同步刷盘</h3><p>在返回写成功状态时，消息已经被写入磁盘。具体流程是，消息写入内存的PAGECACHE后，立刻通知刷盘线程刷盘， 然后等待刷盘完成，刷盘线程执行完成后唤醒等待的线程，返回消息写 成功的状态。</p>
 <h3 id="1-2-异步刷盘"><a href="#1-2-异步刷盘" class="headerlink" title="1.2 异步刷盘"></a>1.2 异步刷盘</h3><p>在返回写成功状态时，消息可能只是被写入了内存的PAGECACHE，写操作的返回快，吞吐量大；当内存里的消息量积累到一定程度时，统一触发写磁盘动作，快速写入。（所以如果消息还没有刷入到磁盘里面，但是broker宕机了。那么消息就会丢失。）</p>
@@ -515,7 +829,9 @@ SendResult sendResult <span class="token operator">=</span> producer<span class=
   <entry>
     <title>SpringBoot使用jetcache本地缓存</title>
     <url>/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/</url>
-    <content><![CDATA[<h1 id="SpringBoot使用jetcache本地缓存"><a href="#SpringBoot使用jetcache本地缓存" class="headerlink" title="SpringBoot使用jetcache本地缓存"></a>SpringBoot使用jetcache本地缓存</h1><h2 id="引入mavne依赖"><a href="#引入mavne依赖" class="headerlink" title="引入mavne依赖"></a>引入mavne依赖</h2><pre><code>&lt;dependency&gt;
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="SpringBoot使用jetcache本地缓存"><a href="#SpringBoot使用jetcache本地缓存" class="headerlink" title="SpringBoot使用jetcache本地缓存"></a>SpringBoot使用jetcache本地缓存</h1><h2 id="引入mavne依赖"><a href="#引入mavne依赖" class="headerlink" title="引入mavne依赖"></a>引入mavne依赖</h2><pre><code>&lt;dependency&gt;
     &lt;groupId&gt;com.alicp.jetcache&lt;/groupId&gt;
     &lt;artifactId&gt;jetcache-starter-redis&lt;/artifactId&gt;
     &lt;version&gt;2.6.4&lt;/version&gt;
@@ -582,340 +898,11 @@ public class RedisSpringBootMain {
       </tags>
   </entry>
   <entry>
-    <title>IDEA使用JRebel进行热部署</title>
-    <url>/2021/01/12/idea-shi-yong-jrebel-jin-xing-re-bu-shu/</url>
-    <content><![CDATA[<h1 id="IDEA使用JRebel进行热部署教程"><a href="#IDEA使用JRebel进行热部署教程" class="headerlink" title="IDEA使用JRebel进行热部署教程"></a>IDEA使用JRebel进行热部署教程</h1><h2 id="1-安装JRebel插件"><a href="#1-安装JRebel插件" class="headerlink" title="1. 安装JRebel插件"></a>1. <strong>安装JRebel插件</strong></h2><pre><code>在IDEA-&gt;Settings-plugin下载Jrebel的插件，下载好了重启程序使插件生效</code></pre><p><img src="https://img-blog.csdnimg.cn/20210112115750158.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h2 id="2-激活"><a href="#2-激活" class="headerlink" title="2. 激活"></a>2. 激活</h2><ol>
-<li><p>直接进入到jrebel的配置项中，点击active now链接进入到激活界面，选择Team URL(connect to online licensing service)方式激活</p>
-<p><img src="https://img-blog.csdnimg.cn/20191127182857244.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpZXJrYW5n,size_16,color_FFFFFF,t_70" alt="img"></p>
-</li>
-<li><p>第一行输入： <a href="http://jrebel.qekang.com:80/{guid}" target="_blank" rel="noopener">http://jrebel.qekang.com:80/{guid}</a>  ， guid在<strong><a href="https://jrebel.qekang.com/" target="_blank" rel="noopener">https://jrebel.qekang.com/</a></strong> 这个网站获得<br><img src="https://img-blog.csdnimg.cn/202101121158311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-</li>
-</ol>
-<p>   第二行的email输入任意一个符合个数的email地址即可</p>
-<h2 id="3-JRebel使用"><a href="#3-JRebel使用" class="headerlink" title="3. JRebel使用"></a>3. <strong>JRebel使用</strong></h2><ol>
-<li><p>设置IDEA自动编译项目，将Build project automatiacally这个选下勾选上。</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/41635ebc0a734df2fdbb49908763ecd4.png" alt="img"></p>
-<p>   按住ctrl + shift + alt +/  这四个键,      点击registry,将compiler.automake.allow.when.app.running这个选项勾选上，如果已经勾选了，跳过此步骤即可。<br><img src="https://img-blog.csdnimg.cn/20210112115857366.png#pic_center" alt="在这里插入图片描述"></p>
-</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20210112115919912.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<ol start="2">
-<li>设置JRebel Work online 和 Redeploy time</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20210112115938743.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<ol start="3">
-<li>勾选要使用JRebel的项目，这里会在每个项目下面生成一个rebel.xml文件。可通过设置git的.gitignore将这个文件忽略掉。</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20210112115956724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<p>在git项目的根目录下，创建一个.gitignore文件，将一下内容复制进去即可。git会自动读取文件将符合规则的文件隐藏掉。</p>
-<pre><code>*.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-#*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-# ---- Maven
-target/
-dependency-reduced-pom.xml
-
-# ---- IntelliJ IDEA
-*.iws
-*.iml
-*.ipr
-.idea/
-
-# ---- Eclipse
-.classpath
-.project
-.settings/
-.metadata/
-
-# ---- Mac OS X
-.DS_Store?
-.DS_Store
-Icon?
-# Thumbnails
-._*
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-
-# ---- Windows
-# Windows image file caches
-Thumbs.db
-# Folder config file
-Desktop.ini
-
-.java-version
-#--compile
-bin/
-tmp/
-build/
-
-.gradle/
-.vscode/
-.tmp
-
-# --- JRebel
-/**/rebel.xml
-
-
-</code></pre><ol start="4">
-<li><p>启动项目</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/4bb53ef0ada2415e55f1b01ca4403e40.png" alt="img"></p>
-</li>
-<li><p>修改文件之后使文件热加载</p>
-<p>每个文件修改之后，鼠标右键点击文件，点击Compile And Reload File使文件生效</p>
-<p><img src="https://img-blog.csdnimg.cn/20210112120013832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-</li>
-</ol>
-<p>至此，JRebel热部署的内容分享完毕，希望能够对大家有所帮助。</p>
-]]></content>
-      <categories>
-        <category>热部署</category>
-      </categories>
-      <tags>
-        <tag>热部署</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RocketMQ生产消息，消费消息的几种案例</title>
-    <url>/2021/04/01/rocketmq-sheng-chan-xiao-xi-xiao-fei-xiao-xi-de-ji-chong-an-li/</url>
-    <content><![CDATA[<h2 id="1-Producer发送消息的三种方式"><a href="#1-Producer发送消息的三种方式" class="headerlink" title="1. Producer发送消息的三种方式"></a>1. Producer发送消息的三种方式</h2><p>Producer 发送消息，RocketMQ 提供了三种模式。</p>
-<ul>
-<li>同步发送</li>
-<li>异步发送</li>
-<li>OneWay 发送</li>
-</ul>
-<p>示例代码如下：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 1、同步发送</span>
-SendResult sendResult <span class="token operator">=</span> producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">//2、异步发送</span>
-producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SendCallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onSuccess</span><span class="token punctuation">(</span>SendResult sendResult<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onException</span><span class="token punctuation">(</span>Throwable e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">//3、 Oneway发送</span>
-producer<span class="token punctuation">.</span><span class="token function">sendOneway</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<ul>
-<li><strong>1、同步发送</strong><br> Producer 向 broker 发送消息，阻塞当前线程等待 broker 响应 发送结果。</li>
-<li><strong>2、异步发送</strong><br> Producer 首先构建一个向 broker 发送消息的任务，把该任务提交给线程池，等执行完该任务时，回调用户自定义的回调函数，执行处理结果。</li>
-<li><strong>3、Oneway 发送</strong><br> Oneway 方式只负责发送请求，不等待应答，Producer 只负责把请求发出去，而不处理响应结果。</li>
-</ul>
-<h2 id="2-Consumer消费消息的两种方式"><a href="#2-Consumer消费消息的两种方式" class="headerlink" title="2. Consumer消费消息的两种方式"></a>2. Consumer消费消息的两种方式</h2><p>RocketMQ里面有消费者组的概念。</p>
-<p>先说下以下两个问题，方面后续的理解。</p>
-<p>问题1：一个消费者组里面为什么会有多个消费者？</p>
-<p>​    答：当一个服务有几个节点时，便会有多个消费者。而这些消费者里面应该只有一个消费者能够消费消息。</p>
-<p>问题2：为什么会有多个消费者组？</p>
-<p>​    答：微服务情况下。一个消息可能会被多个业务服务消费。比如商品服务。优惠券服务。这每个服务都是一个消费者组。</p>
-<h3 id="2-1-集群模式"><a href="#2-1-集群模式" class="headerlink" title="2.1 集群模式"></a>2.1 集群模式</h3><pre class=" language-java"><code class="language-java">consumer<span class="token punctuation">.</span><span class="token function">setMessageModel</span><span class="token punctuation">(</span>MessageModel<span class="token punctuation">.</span>CLUSTERING<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>在此模式下，当多个消费者在同一个消费者组时，这些消费者里面只会有一个消费者能够消费消息。</p>
-<p>也就是说存在多个消费者组时，每个消费者组里面只会有一个消费者能够消费消息。</p>
-<p><strong>故此：消费者组的名字一般是服务的名字。TOPIC的名字一般是哪个服务发出来的，就是哪个服务的名字。</strong></p>
-<p><strong>一般使用集群模式即可。</strong></p>
-<h3 id="2-2-广播模式"><a href="#2-2-广播模式" class="headerlink" title="2.2 广播模式"></a>2.2 广播模式</h3><pre class=" language-java"><code class="language-java">consumer<span class="token punctuation">.</span><span class="token function">setMessageModel</span><span class="token punctuation">(</span>MessageModel<span class="token punctuation">.</span>BROADCASTING<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>在此模式下。如果多个消费者处于同一个消费者组里面，这个消费者组里面的每个消费者都会消费消息。</p>
-<h2 id="3-顺序消息"><a href="#3-顺序消息" class="headerlink" title="3. 顺序消息"></a>3. 顺序消息</h2><p>消息有序指的是可以按照消息的发送顺序来消费(FIFO)。RocketMQ可以严格的保证消息有序，可以分为分区有序或者全局有序。</p>
-<p>顺序消费的原理解析，在默认的情况下消息发送会采取Round Robin轮询方式把消息发送到不同的queue(分区队列)；而消费消息的时候从多个queue上拉取消息，这种情况发送和消费是不能保证顺序。但是如果控制发送的顺序消息只依次发送到同一个queue中，消费的时候只从这个queue上依次拉取，则就保证了顺序。当发送和消费参与的queue只有一个，则是全局有序；如果多个queue参与，则为分区有序，即相对每个queue，消息都是有序的。</p>
-<h2 id="4-延时消息"><a href="#4-延时消息" class="headerlink" title="4. 延时消息"></a>4. 延时消息</h2><p>发送者代码示例：</p>
-<pre class=" language-java"><code class="language-java">Message message <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span><span class="token string">"topic1"</span><span class="token punctuation">,</span> <span class="token string">"tagA"</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">"Hello scheduled message "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-message<span class="token punctuation">.</span><span class="token function">setDelayTimeLevel</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-SendResult send <span class="token operator">=</span> producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>延时等级：</p>
-<pre class=" language-java"><code class="language-java"> <span class="token keyword">private</span> String messageDelayLevel <span class="token operator">=</span> <span class="token string">"1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h"</span><span class="token punctuation">;</span></code></pre>
-<ul>
-<li>level == 0，消息为非延迟消息</li>
-<li>1&lt;=level&lt;=maxLevel，消息延迟特定时间，例如level==1，延迟1s</li>
-<li>level &gt; maxLevel，则level== maxLevel，例如level==20，延迟2h</li>
-</ul>
-<h2 id="5-批量消息"><a href="#5-批量消息" class="headerlink" title="5. 批量消息"></a>5. 批量消息</h2><p>批量发送消息能显著提高传递小消息的性能。限制是这些批量消息应该有相同的topic，相同的waitStoreMsgOK，而且不能是延时消息。此外，这一批消息的总大小不应超过4MB。</p>
-<p>如果您每次只发送不超过4MB的消息，则很容易使用批处理，样例如下：</p>
-<pre class=" language-java"><code class="language-java">String topic <span class="token operator">=</span> <span class="token string">"BatchTest"</span><span class="token punctuation">;</span>
-List<span class="token operator">&lt;</span>Message<span class="token operator">></span> messages <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-messages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span>topic<span class="token punctuation">,</span> <span class="token string">"TagA"</span><span class="token punctuation">,</span> <span class="token string">"OrderID001"</span><span class="token punctuation">,</span> <span class="token string">"Hello world 0"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-messages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span>topic<span class="token punctuation">,</span> <span class="token string">"TagA"</span><span class="token punctuation">,</span> <span class="token string">"OrderID002"</span><span class="token punctuation">,</span> <span class="token string">"Hello world 1"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-messages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span>topic<span class="token punctuation">,</span> <span class="token string">"TagA"</span><span class="token punctuation">,</span> <span class="token string">"OrderID003"</span><span class="token punctuation">,</span> <span class="token string">"Hello world 2"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">try</span> <span class="token punctuation">{</span>
-   producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>messages<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">//处理error</span>
-<span class="token punctuation">}</span></code></pre>
-<h2 id="6-事务消息"><a href="#6-事务消息" class="headerlink" title="6. 事务消息"></a>6. 事务消息</h2><h3 id="6-1-事务消息执行流程"><a href="#6-1-事务消息执行流程" class="headerlink" title="6.1 事务消息执行流程"></a>6.1 事务消息执行流程</h3><p>流程图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210401171744307.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70" alt="图片描述"></p>
-<p>上图说明了事务消息的大致方案，其中分为两个流程：正常事务消息的发送及提交、事务消息的补偿流程。</p>
-<h4 id="1）事务消息发送及提交"><a href="#1）事务消息发送及提交" class="headerlink" title="1）事务消息发送及提交"></a>1）事务消息发送及提交</h4><p>(1) 发送消息（half消息）。</p>
-<p>(2) 服务端响应消息写入结果。</p>
-<p>(3) 根据发送结果执行本地事务（如果写入失败，此时half消息对业务不可见，本地逻辑不执行）。</p>
-<p>(4) 根据本地事务状态执行Commit或者Rollback（Commit操作生成消息索引，消息对消费者可见）</p>
-<h4 id="2）事务补偿"><a href="#2）事务补偿" class="headerlink" title="2）事务补偿"></a>2）事务补偿</h4><p>(1) 对没有Commit/Rollback的事务消息（pending状态的消息），从服务端发起一次“回查”</p>
-<p>(2) Producer收到回查消息，检查回查消息对应的本地事务的状态</p>
-<p>(3) 根据本地事务状态，重新Commit或者Rollback</p>
-<p>其中，补偿阶段用于解决消息Commit或者Rollback发生超时或者失败的情况。</p>
-<h4 id="3）事务消息状态"><a href="#3）事务消息状态" class="headerlink" title="3）事务消息状态"></a>3）事务消息状态</h4><p>事务消息共有三种状态，提交状态、回滚状态、中间状态：</p>
-<ul>
-<li>TransactionStatus.CommitTransaction: 提交事务，它允许消费者消费此消息。</li>
-<li>TransactionStatus.RollbackTransaction: 回滚事务，它代表该消息将被删除，不允许被消费。</li>
-<li>TransactionStatus.Unknown: 中间状态，它代表需要检查消息队列来确定状态。</li>
-</ul>
-<h3 id="6-2-发送事务消息"><a href="#6-2-发送事务消息" class="headerlink" title="6.2 发送事务消息"></a>6.2 发送事务消息</h3><h4 id="1）-创建事务消息生产者"><a href="#1）-创建事务消息生产者" class="headerlink" title="1） 创建事务消息生产者"></a>1） 创建事务消息生产者</h4><p>使用 <code>TransactionMQProducer</code>类创建生产者，并指定唯一的 <code>ProducerGroup</code>，就可以设置自定义线程池来处理这些检查请求。执行本地事务后、需要根据执行结果对消息队列进行回复。回传的事务状态在请参考前一节。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TransactionProducer</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> MQClientException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
-
-        <span class="token comment" spellcheck="true">// 创建事务监听器</span>
-        TransactionListener transactionListener <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TransactionListenerImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 创建消息生产者</span>
-        TransactionMQProducer producer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TransactionMQProducer</span><span class="token punctuation">(</span><span class="token string">"group6"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        producer<span class="token punctuation">.</span><span class="token function">setNamesrvAddr</span><span class="token punctuation">(</span><span class="token string">"139.224.103.236:9876"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 生产者这是监听器</span>
-        producer<span class="token punctuation">.</span><span class="token function">setTransactionListener</span><span class="token punctuation">(</span>transactionListener<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 启动消息生产者</span>
-        producer<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">try</span> <span class="token punctuation">{</span>
-                Message msg <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Message</span><span class="token punctuation">(</span><span class="token string">"TransactionTopicTest"</span><span class="token punctuation">,</span>
-                        <span class="token string">"transactionTag"</span><span class="token punctuation">,</span> <span class="token string">"msg-"</span> <span class="token operator">+</span> i<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">"Hello RocketMQ "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span>
-                                <span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span>RemotingHelper<span class="token punctuation">.</span>DEFAULT_CHARSET<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                SendResult sendResult <span class="token operator">=</span> producer<span class="token punctuation">.</span><span class="token function">sendMessageInTransaction</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span>
-                        null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token comment" spellcheck="true">// System.out.printf("%s%n", sendResult);</span>
-                TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">MQClientException</span> <span class="token operator">|</span> UnsupportedEncodingException e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        producer<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="2）实现事务的监听接口"><a href="#2）实现事务的监听接口" class="headerlink" title="2）实现事务的监听接口"></a>2）实现事务的监听接口</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TransactionListenerImpl</span> <span class="token keyword">implements</span> <span class="token class-name">TransactionListener</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> AtomicInteger transactionIndex <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> AtomicInteger checkTimes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> ConcurrentHashMap<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span> localTrans <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment" spellcheck="true">/**
-     * 本地事务的执行逻辑
-     *
-     * @param msg
-     * @param arg
-     * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> LocalTransactionState <span class="token function">executeLocalTransaction</span><span class="token punctuation">(</span>Message msg<span class="token punctuation">,</span>
-            Object arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-        LocalTransactionState state<span class="token punctuation">;</span>
-
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"执行本地事务"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"msg-4"</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            state <span class="token operator">=</span> LocalTransactionState<span class="token punctuation">.</span>COMMIT_MESSAGE<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"msg-5"</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            state <span class="token operator">=</span> LocalTransactionState<span class="token punctuation">.</span>ROLLBACK_MESSAGE<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            state <span class="token operator">=</span> LocalTransactionState<span class="token punctuation">.</span>UNKNOW<span class="token punctuation">;</span>
-            localTrans<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> transactionIndex<span class="token punctuation">.</span><span class="token function">incrementAndGet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"executeLocalTransaction: "</span> <span class="token operator">+</span> msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token operator">+</span> <span class="token string">",excute state: "</span> <span class="token operator">+</span> state <span class="token operator">+</span> <span class="token string">",current time: "</span>
-                <span class="token operator">+</span> DateUtils<span class="token punctuation">.</span><span class="token function">formatLocalDateTime</span><span class="token punctuation">(</span>LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> state<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment" spellcheck="true">/**
-     * 回查本地事务的代码实现
-     *
-     * @param msg
-     * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> LocalTransactionState <span class="token function">checkLocalTransaction</span><span class="token punctuation">(</span>MessageExt msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"checkLocalTransaction message key: "</span> <span class="token operator">+</span> msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token operator">+</span> <span class="token string">",current time: "</span>
-                <span class="token operator">+</span> DateUtils<span class="token punctuation">.</span><span class="token function">formatLocalDateTime</span><span class="token punctuation">(</span>LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Integer index <span class="token operator">=</span> localTrans<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>msg<span class="token punctuation">.</span><span class="token function">getKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">!=</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">switch</span> <span class="token punctuation">(</span>index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
-                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"check result: unknow, 回查次数："</span>
-                            <span class="token operator">+</span> checkTimes<span class="token punctuation">.</span><span class="token function">incrementAndGet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token keyword">return</span> LocalTransactionState<span class="token punctuation">.</span>UNKNOW<span class="token punctuation">;</span>
-                <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
-                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"check result: commit message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token keyword">return</span> LocalTransactionState<span class="token punctuation">.</span>COMMIT_MESSAGE<span class="token punctuation">;</span>
-                <span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>
-                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"check result: rollback message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token keyword">return</span> LocalTransactionState<span class="token punctuation">.</span>ROLLBACK_MESSAGE<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> LocalTransactionState<span class="token punctuation">.</span>COMMIT_MESSAGE<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="3）事务消息执行结果"><a href="#3）事务消息执行结果" class="headerlink" title="3）事务消息执行结果"></a>3）事务消息执行结果</h4><p>msg-4执行本地事务成功</p>
-<p>msg-5执行本地事务失败，回滚事务</p>
-<p>msg-1执行本地事务失败，默认回查15次，每一次间隔60秒</p>
-<p>msg-2执行本地事务失败，回查1次，执行成功</p>
-<p>msg-3执行本地事务失败，回查1次，回滚事务</p>
-<h3 id="6-3-使用限制"><a href="#6-3-使用限制" class="headerlink" title="6.3 使用限制"></a>6.3 使用限制</h3><ol>
-<li>事务消息不支持延时消息和批量消息。</li>
-<li>为了避免单个消息被检查太多次而导致半队列消息累积，我们默认将单个消息的检查次数限制为 15 次，但是用户可以通过 Broker 配置文件的 <code>transactionCheckMax</code>参数来修改此限制。如果已经检查某条消息超过 N 次的话（ N = <code>transactionCheckMax</code> ） 则 Broker 将丢弃此消息，并在默认情况下同时打印错误日志。用户可以通过重写 <code>AbstractTransactionCheckListener</code> 类来修改这个行为。</li>
-<li>事务消息将在 Broker 配置文件中的参数 transactionMsgTimeout 这样的特定时间长度之后被检查。当发送事务消息时，用户还可以通过设置用户属性 CHECK_IMMUNITY_TIME_IN_SECONDS 来改变这个限制，该参数优先于 <code>transactionMsgTimeout</code> 参数。</li>
-<li>事务性消息可能不止一次被检查或消费。</li>
-<li>提交给用户的目标主题消息可能会失败，目前这依日志的记录而定。它的高可用性通过 RocketMQ 本身的高可用性机制来保证，如果希望确保事务消息不丢失、并且事务完整性得到保证，建议使用同步的双重写入机制。</li>
-<li>事务消息的生产者 ID 不能与其他类型消息的生产者 ID 共享。与其他类型的消息不同，事务消息允许反向查询、MQ服务器能通过它们的生产者 ID 查询到消费者。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>RocketMQ</category>
-      </categories>
-      <tags>
-        <tag>RocketMQ</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>alertmanager安装教程</title>
-    <url>/2020/07/01/alertmanager-an-zhuang/</url>
-    <content><![CDATA[<h2 id="1-下载Alertmanager"><a href="#1-下载Alertmanager" class="headerlink" title="1. 下载Alertmanager"></a>1. 下载Alertmanager</h2><p>alertmanager官方网站下载<br><a href="https://prometheus.io/download/#alertmanager" target="_blank" rel="noopener">https://prometheus.io/download/#alertmanager</a></p>
-<pre><code>wget https://github.com/prometheus/alertmanager/releases/download/v0.17.0/alertmanager-0.17.0.linux-amd64.tar.gz
-tar xvf alertmanager-0.17.0.linux-amd64.tar.gz
-mv alertmanager-0.17.0.linux-amd64 /usr/local/alertmanager</code></pre><h2 id="2-启动Alertmanager"><a href="#2-启动Alertmanager" class="headerlink" title="2. 启动Alertmanager"></a>2. 启动Alertmanager</h2><p>linux 中启动alertmanager命令<br>cd进入到alertmanager根目录</p>
-<pre><code>./alertmanager --config.file=alertmanager.yml</code></pre><h2 id="3-查看Alertmanager运行状态"><a href="#3-查看Alertmanager运行状态" class="headerlink" title="3. 查看Alertmanager运行状态"></a>3. 查看Alertmanager运行状态</h2><p>Alertmanager启动后可以通过9093端口访问，<a href="http://ip:9093" target="_blank" rel="noopener">http://ip:9093</a></p>
-<h2 id="4-Prometheus中配置Alertmanager"><a href="#4-Prometheus中配置Alertmanager" class="headerlink" title="4. Prometheus中配置Alertmanager"></a>4. Prometheus中配置Alertmanager</h2><p><strong>修改prometheus.yml</strong>,配置alertmanager的地址。</p>
-<pre><code>alerting:
- alertmanagers:
- - static_configs:
-   - targets: [&quot;localhost:9093&quot;] </code></pre><p>至此。prometheus产生告警后将会发送给prometheus。<br>注意点：</p>
-<ol>
-<li>需要配置告警规则。</li>
-<li>alertmanager配置文件需要配置收到告警后对告警的处理方式。<br>这个在本专栏的其他文章中讲解。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>prometheus</category>
-      </categories>
-      <tags>
-        <tag>prometheus</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>docker启动ElasticSearch</title>
     <url>/2022/08/03/docker-qi-dong-elasticsearch/</url>
-    <content><![CDATA[<h1 id="docker启动ElasticSearch"><a href="#docker启动ElasticSearch" class="headerlink" title="docker启动ElasticSearch"></a>docker启动ElasticSearch</h1><ol>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker启动ElasticSearch"><a href="#docker启动ElasticSearch" class="headerlink" title="docker启动ElasticSearch"></a>docker启动ElasticSearch</h1><ol>
 <li><p>查询ElasticSearch镜像</p>
 <pre><code>docker search elasticsearch</code></pre></li>
 <li><p>从docker hub拉取最新镜像</p>
@@ -978,9 +965,38 @@ mv alertmanager-0.17.0.linux-amd64 /usr/local/alertmanager</code></pre><h2 id="2
       </tags>
   </entry>
   <entry>
+    <title>alertmanager安装教程</title>
+    <url>/2020/07/01/alertmanager-an-zhuang/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="1-下载Alertmanager"><a href="#1-下载Alertmanager" class="headerlink" title="1. 下载Alertmanager"></a>1. 下载Alertmanager</h2><p>alertmanager官方网站下载<br><a href="https://prometheus.io/download/#alertmanager" target="_blank" rel="noopener">https://prometheus.io/download/#alertmanager</a></p>
+<pre><code>wget https://github.com/prometheus/alertmanager/releases/download/v0.17.0/alertmanager-0.17.0.linux-amd64.tar.gz
+tar xvf alertmanager-0.17.0.linux-amd64.tar.gz
+mv alertmanager-0.17.0.linux-amd64 /usr/local/alertmanager</code></pre><h2 id="2-启动Alertmanager"><a href="#2-启动Alertmanager" class="headerlink" title="2. 启动Alertmanager"></a>2. 启动Alertmanager</h2><p>linux 中启动alertmanager命令<br>cd进入到alertmanager根目录</p>
+<pre><code>./alertmanager --config.file=alertmanager.yml</code></pre><h2 id="3-查看Alertmanager运行状态"><a href="#3-查看Alertmanager运行状态" class="headerlink" title="3. 查看Alertmanager运行状态"></a>3. 查看Alertmanager运行状态</h2><p>Alertmanager启动后可以通过9093端口访问，<a href="http://ip:9093" target="_blank" rel="noopener">http://ip:9093</a></p>
+<h2 id="4-Prometheus中配置Alertmanager"><a href="#4-Prometheus中配置Alertmanager" class="headerlink" title="4. Prometheus中配置Alertmanager"></a>4. Prometheus中配置Alertmanager</h2><p><strong>修改prometheus.yml</strong>,配置alertmanager的地址。</p>
+<pre><code>alerting:
+ alertmanagers:
+ - static_configs:
+   - targets: [&quot;localhost:9093&quot;] </code></pre><p>至此。prometheus产生告警后将会发送给prometheus。<br>注意点：</p>
+<ol>
+<li>需要配置告警规则。</li>
+<li>alertmanager配置文件需要配置收到告警后对告警的处理方式。<br>这个在本专栏的其他文章中讲解。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>prometheus</category>
+      </categories>
+      <tags>
+        <tag>prometheus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>arthas常用命令记录</title>
     <url>/2022/09/05/arthas-chang-yong-ming-ling-ji-lu/</url>
-    <content><![CDATA[<h1 id="arthas常用命令记录-md"><a href="#arthas常用命令记录-md" class="headerlink" title="arthas常用命令记录.md"></a>arthas常用命令记录.md</h1><h2 id="下载arthas"><a href="#下载arthas" class="headerlink" title="下载arthas"></a>下载arthas</h2><pre><code>curl -O https://arthas.aliyun.com/arthas-boot.jar</code></pre><h2 id="启动arthas"><a href="#启动arthas" class="headerlink" title="启动arthas"></a>启动arthas</h2><pre><code>java -jar arthas-boot.jar</code></pre><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="arthas常用命令记录-md"><a href="#arthas常用命令记录-md" class="headerlink" title="arthas常用命令记录.md"></a>arthas常用命令记录.md</h1><h2 id="下载arthas"><a href="#下载arthas" class="headerlink" title="下载arthas"></a>下载arthas</h2><pre><code>curl -O https://arthas.aliyun.com/arthas-boot.jar</code></pre><h2 id="启动arthas"><a href="#启动arthas" class="headerlink" title="启动arthas"></a>启动arthas</h2><pre><code>java -jar arthas-boot.jar</code></pre><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
 <li><p><strong>arthas后台异步任务</strong></p>
 <ol>
 <li><p>arthas使用&amp;在后台异步执行任务</p>
@@ -1040,7 +1056,9 @@ mv alertmanager-0.17.0.linux-amd64 /usr/local/alertmanager</code></pre><h2 id="2
   <entry>
     <title>docker启动MySQL</title>
     <url>/2020/05/22/docker-qi-dong-mysql/</url>
-    <content><![CDATA[<h1 id="docker启动MySQL"><a href="#docker启动MySQL" class="headerlink" title="docker启动MySQL"></a>docker启动MySQL</h1><ol>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker启动MySQL"><a href="#docker启动MySQL" class="headerlink" title="docker启动MySQL"></a>docker启动MySQL</h1><ol>
 <li><p>查询mysql镜像</p>
 <pre><code>docker search mysql</code></pre></li>
 <li><p>从docker hub拉取镜像</p>
@@ -1113,7 +1131,9 @@ flush privileges;</code></pre></li>
   <entry>
     <title>docker启动Canal</title>
     <url>/2022/09/07/docker-qi-dong-canal/</url>
-    <content><![CDATA[<h1 id="docker启动Canal"><a href="#docker启动Canal" class="headerlink" title="docker启动Canal"></a>docker启动Canal</h1><p>备注：该文章暂时还有点问题，请勿阅读。</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker启动Canal"><a href="#docker启动Canal" class="headerlink" title="docker启动Canal"></a>docker启动Canal</h1><p>备注：该文章暂时还有点问题，请勿阅读。</p>
 <h2 id="一、安装MySQL："><a href="#一、安装MySQL：" class="headerlink" title="一、安装MySQL："></a>一、安装MySQL：</h2><p>参考文章：<a href="https://javacode.cc/2020/05/22/docker-qi-dong-mysql/" target="_blank" rel="noopener">https://javacode.cc/2020/05/22/docker-qi-dong-mysql/</a></p>
 <ol>
 <li><p>查看是否开启biglog</p>
@@ -1198,9 +1218,98 @@ canal/canal-server:v1.1.6</code></pre></li>
       </tags>
   </entry>
   <entry>
+    <title>docker启动nacos</title>
+    <url>/2020/05/12/docker-qi-dong-nacos/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker启动nacos"><a href="#docker启动nacos" class="headerlink" title="docker启动nacos"></a>docker启动nacos</h1><h2 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h2><ol>
+<li><p>查询nacos镜像</p>
+<pre><code>docker search nacos</code></pre></li>
+<li><p>从docker hub拉取最新镜像</p>
+<pre><code>docker pull nacos/nacos-server</code></pre></li>
+<li><p>查看nacos镜像</p>
+<pre><code>docker images  | grep nacos</code></pre></li>
+<li><p>使用docker运行nacos</p>
+<pre><code>docker run -d -p 8848:8848 --env MODE=standalone  -e JVM_XMS=128m -e JVM_XMX=128m  --name nacos   nacos/nacos-server</code></pre><p>命令解释说明：</p>
+<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
+<p>–name nacos 指定该容器名称，查看和进行操作都比较方便。</p>
+<p>-e JVM_XMS=128m -e JVM_XMX=128m  给nacos分配jvm的内存。内存够的话可以不加这一行</p>
+<p>–env MODE=standalone  单机模式启动</p>
+</li>
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep nacos</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker启动redis</title>
+    <url>/2020/05/12/docker-qi-dong-redis/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker启动redis"><a href="#docker启动redis" class="headerlink" title="docker启动redis"></a>docker启动redis</h1><ol>
+<li><p>查询redis镜像</p>
+<pre><code>docker search redis</code></pre></li>
+<li><p>从docker hub拉取最新镜像</p>
+<pre><code>docker pull redis:5.0</code></pre></li>
+<li><p>查看redis镜像</p>
+<pre><code>docker images | grep redis</code></pre></li>
+<li><p>创建文件挂载目录</p>
+<pre><code>mkdir /usr/java/docker/redis</code></pre><p>将默认的redis.conf配置放到这个目录下面。（该文件可以从网上找一下，下载下来）作为映射文件。注意下载对应版本的redis，解压将配置文件复制出来。</p>
+<pre><code>http://download.redis.io/releases/</code></pre></li>
+<li><p>修改redis.conf配置文件</p>
+<ol>
+<li><p>bind：默认情况bind=127.0.0.1，只能接受本机的访问请求，不写的情况下，无限制接受任何ip地址的访问，为了能够让除本机的其余服务器也能远程访问，将 bind 127.0.0.1 -::1注释掉</p>
+<pre><code>#bind 127.0.0.1</code></pre></li>
+<li><p>protected-mode：为了能够让除本机的其余服务器也能远程访问，将 protected-mode yes 修改为 protected-mode no</p>
+<pre><code>protected-mode no</code></pre></li>
+<li><p>daemonize：是否为后台进程，设置为no，守护进程，后台启动（docker里面需要设置为no）</p>
+<pre><code>daemonize no</code></pre></li>
+<li><p>appendonly：是否开启aof持久化，设置为yes</p>
+<pre><code>appendonly yes</code></pre></li>
+</ol>
+</li>
+<li><p>使用docker运行redis</p>
+<pre><code>docker run -p 6379:6379 --name redis \
+-v /usr/java/docker/redis/redis.conf:/etc/redis/redis.conf \
+-v /usr/java/docker/redis/data:/data \
+-d redis:5.0 redis-server /etc/redis/redis.conf</code></pre><p>命令解释说明：</p>
+<blockquote>
+<p>-p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。</p>
+<p>–name redis指定该容器名称，查看和进行操作都比较方便。</p>
+<p>-v 挂载目录，规则与端口映射相同。</p>
+<p>为什么需要挂载目录：个人认为docker是个沙箱隔离级别的容器，这个是它的特点及安全机制，不能随便访问外部（主机）资源目录，所以需要这个挂载目录机制。</p>
+<p>-d redis:6.0 表示后台启动redis</p>
+<p>redis-server /etc/redis/redis.conf  以配置文件启动redis，加载容器内的conf文件，最终找到的是挂载的目录/usr/local/docker/redis/redis.conf</p>
+</blockquote>
+</li>
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep redis</code></pre></li>
+<li><p>问题记录：</p>
+<p>解决WARNING overcommit_memory is set to 0 Background save may fail under low memory condition：<a href="https://blog.csdn.net/ET1131429439/article/details/126660323" target="_blank" rel="noopener">https://blog.csdn.net/ET1131429439/article/details/126660323</a></p>
+<p>redis客户端链接失败：<a href="https://blog.csdn.net/m0_67394006/article/details/126495657" target="_blank" rel="noopener">https://blog.csdn.net/m0_67394006/article/details/126495657</a></p>
+<p>解决redis启动时的三个警告：<a href="https://blog.csdn.net/a13568hki/article/details/107038136" target="_blank" rel="noopener">https://blog.csdn.net/a13568hki/article/details/107038136</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>docker启动kibana</title>
     <url>/2022/08/03/docker-qi-dong-kibana/</url>
-    <content><![CDATA[<h1 id="docker启动kibana"><a href="#docker启动kibana" class="headerlink" title="docker启动kibana"></a>docker启动kibana</h1><ol>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker启动kibana"><a href="#docker启动kibana" class="headerlink" title="docker启动kibana"></a>docker启动kibana</h1><ol>
 <li><p>查询kibana镜像</p>
 <pre><code>docker search kibana</code></pre></li>
 <li><p>从docker hub拉取最新镜像</p>
@@ -1254,184 +1363,11 @@ xpack.monitoring.ui.container.elasticsearch.enabled: true</code></pre><p>查看�
       </tags>
   </entry>
   <entry>
-    <title>docker启动nacos</title>
-    <url>/2020/05/12/docker-qi-dong-nacos/</url>
-    <content><![CDATA[<h1 id="docker启动nacos"><a href="#docker启动nacos" class="headerlink" title="docker启动nacos"></a>docker启动nacos</h1><h2 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h2><ol>
-<li><p>查询nacos镜像</p>
-<pre><code>docker search nacos</code></pre></li>
-<li><p>从docker hub拉取最新镜像</p>
-<pre><code>docker pull nacos/nacos-server</code></pre></li>
-<li><p>查看nacos镜像</p>
-<pre><code>docker images  | grep nacos</code></pre></li>
-<li><p>使用docker运行nacos</p>
-<pre><code>docker run -d -p 8848:8848 --env MODE=standalone  -e JVM_XMS=128m -e JVM_XMX=128m  --name nacos   nacos/nacos-server</code></pre><p>命令解释说明：</p>
-<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
-<p>–name nacos 指定该容器名称，查看和进行操作都比较方便。</p>
-<p>-e JVM_XMS=128m -e JVM_XMX=128m  给nacos分配jvm的内存。内存够的话可以不加这一行</p>
-<p>–env MODE=standalone  单机模式启动</p>
-</li>
-<li><p>查看是否运行成功</p>
-<pre><code>docker ps | grep nacos</code></pre></li>
-</ol>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>docker常用命令</title>
-    <url>/2020/05/12/docker-chang-yong-ming-ling/</url>
-    <content><![CDATA[<h1 id="docker常用命令"><a href="#docker常用命令" class="headerlink" title="docker常用命令"></a>docker常用命令</h1><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
-<li><p>搜索镜像</p>
-<pre><code>docker search xxx</code></pre></li>
-<li><p>下载镜像</p>
-<pre><code>docker pull xxx</code></pre></li>
-<li><p>查看镜像 </p>
-<p>查看所有镜像</p>
-<pre><code>docker images</code></pre><p> 查看指定镜像</p>
-<pre><code>docker images | grep 容器名字</code></pre></li>
-<li><p>删除镜像</p>
-<pre><code>docker rmi  镜像name/镜像id(会提示先停止使用中的容器) </code></pre></li>
-<li><p>查看所有容器</p>
-<pre><code> docker ps -a</code></pre></li>
-<li><p>查看容器运行日志</p>
-<pre><code>docker logs 容器名称/容器id
-
-#实时查看运行的日志
-docker logs 容器名称/容器id -f</code></pre></li>
-<li><p>停止容器运行</p>
-<pre><code>docker stop 容器name/容器id</code></pre></li>
-<li><p>终止容器后运行</p>
-<pre><code>docker start 容器name/容器id</code></pre></li>
-<li><p>容器重启</p>
-<pre><code> docker restart 容器name/容器id</code></pre></li>
-<li><p>删除容器</p>
-<ol>
-<li><p>删除没有运行的容器</p>
-<pre><code>docker rm 容器name/容器id</code></pre></li>
-<li><p>强制删除正在运行的容器</p>
-<pre><code>docker rm -f 容器name/容器id</code></pre></li>
-</ol>
-</li>
-<li><p>docker里面安装vim</p>
-<pre><code>1. apt-get update
-2. apt-get install vim</code></pre></li>
-<li><p>docker修改容器开机自启</p>
-<pre><code>docker update 容器id/名字 --restart=always</code></pre></li>
-<li><p>进入容器内部</p>
-<pre><code>docker exec -it 容器id/名字 bash</code></pre></li>
-<li><p>挂载卷到外部修改</p>
-<p>修改页面只需要去 主机的 /data/html</p>
-<p>-v 这个给命令就是将外部的目录和容器内部的目录映射起来</p>
-<pre><code>docker run --name=mynginx   \
--d  --restart=always \
--p  88:80 -v /data/html:/usr/share/nginx/html:ro  \
-nginx</code></pre></li>
-<li><p>复制文件</p>
-<p>把容器指定位置的东西复制出来</p>
-<pre><code> docker cp 5eff66eec7e1:/etc/nginx/nginx.conf  /data/conf/nginx.conf</code></pre><p>把外面的内容复制到容器里面</p>
-<pre><code>docker cp  /data/conf/nginx.conf  5eff66eec7e1:/etc/nginx/nginx.conf</code></pre></li>
-<li><p>限制容器内存</p>
-<pre><code>docker run -m 512m --name=nginx 省略xxx</code></pre></li>
-<li><p>查看容器占用内存、CPU等基本信息</p>
-<pre><code>docker stats</code></pre></li>
-</ol>
-<h2 id="打包为新的镜像"><a href="#打包为新的镜像" class="headerlink" title="打包为新的镜像"></a>打包为新的镜像</h2><ol>
-<li><p>提交改变：将修改后的容器打包成新的镜像，之后可以直接启动新的镜像。</p>
-<pre><code>docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
-
-docker commit -a &quot;jiangfeng&quot;  -m &quot;首页变化&quot; 容器id/容器名字 mynginx:1.0
-</code></pre></li>
-<li><p>镜像传输</p>
-<pre><code># 将自己创建的镜像保存成压缩包
-docker save -o abc.tar mynginx:1.0
-
-# 别的机器加载这个镜像
-docker load -i abc.tar</code></pre></li>
-</ol>
-<h2 id="推送远程仓库"><a href="#推送远程仓库" class="headerlink" title="推送远程仓库"></a>推送远程仓库</h2><ol>
-<li><p>基本命令</p>
-<pre><code>docker tag local-image:tagname new-repo:tagname
-docker push new-repo:tagname</code></pre></li>
-<li><p>把旧镜像的名字，改成仓库要求的新版名字</p>
-<pre><code>docker tag mynginx:1.0 1500041584/mynginx:1.0</code></pre></li>
-<li><p>登录以及推出docker hub</p>
-<pre><code>docker login </code></pre><pre><code>docker logout</code></pre></li>
-<li><p>推动到docket hub 私人仓库</p>
-<pre><code>docker push 1500041584/mynginx:1.0</code></pre></li>
-<li><p>下载新的镜像</p>
-<pre><code>docker pull 1500041584/mynginx:1.0</code></pre></li>
-</ol>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>docker启动redis</title>
-    <url>/2020/05/12/docker-qi-dong-redis/</url>
-    <content><![CDATA[<h1 id="docker启动redis"><a href="#docker启动redis" class="headerlink" title="docker启动redis"></a>docker启动redis</h1><ol>
-<li><p>查询redis镜像</p>
-<pre><code>docker search redis</code></pre></li>
-<li><p>从docker hub拉取最新镜像</p>
-<pre><code>docker pull redis:5.0</code></pre></li>
-<li><p>查看redis镜像</p>
-<pre><code>docker images | grep redis</code></pre></li>
-<li><p>创建文件挂载目录</p>
-<pre><code>mkdir /usr/java/docker/redis</code></pre><p>将默认的redis.conf配置放到这个目录下面。（该文件可以从网上找一下，下载下来）作为映射文件。注意下载对应版本的redis，解压将配置文件复制出来。</p>
-<pre><code>http://download.redis.io/releases/</code></pre></li>
-<li><p>修改redis.conf配置文件</p>
-<ol>
-<li><p>bind：默认情况bind=127.0.0.1，只能接受本机的访问请求，不写的情况下，无限制接受任何ip地址的访问，为了能够让除本机的其余服务器也能远程访问，将 bind 127.0.0.1 -::1注释掉</p>
-<pre><code>#bind 127.0.0.1</code></pre></li>
-<li><p>protected-mode：为了能够让除本机的其余服务器也能远程访问，将 protected-mode yes 修改为 protected-mode no</p>
-<pre><code>protected-mode no</code></pre></li>
-<li><p>daemonize：是否为后台进程，设置为no，守护进程，后台启动（docker里面需要设置为no）</p>
-<pre><code>daemonize no</code></pre></li>
-<li><p>appendonly：是否开启aof持久化，设置为yes</p>
-<pre><code>appendonly yes</code></pre></li>
-</ol>
-</li>
-<li><p>使用docker运行redis</p>
-<pre><code>docker run -p 6379:6379 --name redis \
--v /usr/java/docker/redis/redis.conf:/etc/redis/redis.conf \
--v /usr/java/docker/redis/data:/data \
--d redis:5.0 redis-server /etc/redis/redis.conf</code></pre><p>命令解释说明：</p>
-<blockquote>
-<p>-p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。</p>
-<p>–name redis指定该容器名称，查看和进行操作都比较方便。</p>
-<p>-v 挂载目录，规则与端口映射相同。</p>
-<p>为什么需要挂载目录：个人认为docker是个沙箱隔离级别的容器，这个是它的特点及安全机制，不能随便访问外部（主机）资源目录，所以需要这个挂载目录机制。</p>
-<p>-d redis:6.0 表示后台启动redis</p>
-<p>redis-server /etc/redis/redis.conf  以配置文件启动redis，加载容器内的conf文件，最终找到的是挂载的目录/usr/local/docker/redis/redis.conf</p>
-</blockquote>
-</li>
-<li><p>查看是否运行成功</p>
-<pre><code>docker ps | grep redis</code></pre></li>
-<li><p>问题记录：</p>
-<p>解决WARNING overcommit_memory is set to 0 Background save may fail under low memory condition：<a href="https://blog.csdn.net/ET1131429439/article/details/126660323" target="_blank" rel="noopener">https://blog.csdn.net/ET1131429439/article/details/126660323</a></p>
-<p>redis客户端链接失败：<a href="https://blog.csdn.net/m0_67394006/article/details/126495657" target="_blank" rel="noopener">https://blog.csdn.net/m0_67394006/article/details/126495657</a></p>
-<p>解决redis启动时的三个警告：<a href="https://blog.csdn.net/a13568hki/article/details/107038136" target="_blank" rel="noopener">https://blog.csdn.net/a13568hki/article/details/107038136</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>git命令整理</title>
     <url>/2020/05/11/git-ming-ling-zheng-li/</url>
-    <content><![CDATA[<h1 id="git命令整理"><a href="#git命令整理" class="headerlink" title="git命令整理"></a>git命令整理</h1><h2 id="拉取当前分支的远程代码"><a href="#拉取当前分支的远程代码" class="headerlink" title="拉取当前分支的远程代码"></a>拉取当前分支的远程代码</h2><p>git pull ：将当前分支远程上的更新拉取下来</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="git命令整理"><a href="#git命令整理" class="headerlink" title="git命令整理"></a>git命令整理</h1><h2 id="拉取当前分支的远程代码"><a href="#拉取当前分支的远程代码" class="headerlink" title="拉取当前分支的远程代码"></a>拉取当前分支的远程代码</h2><p>git pull ：将当前分支远程上的更新拉取下来</p>
 <h2 id="获取本地所有分支远程代码的更新"><a href="#获取本地所有分支远程代码的更新" class="headerlink" title="获取本地所有分支远程代码的更新"></a>获取本地所有分支远程代码的更新</h2><p>git fetch：将远程上的更新拉取下来。不包括当前分支的更新。（仅仅是远程分支的更新）</p>
 <h2 id="修改本地指向远程仓库的地址"><a href="#修改本地指向远程仓库的地址" class="headerlink" title="修改本地指向远程仓库的地址"></a>修改本地指向远程仓库的地址</h2><ol>
 <li><p>查看本地远程仓库地址</p>
@@ -1447,6 +1383,59 @@ docker push new-repo:tagname</code></pre></li>
       </categories>
       <tags>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jmeter入门教程</title>
+    <url>/2020/05/12/jmeter-ru-men-jiao-cheng/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="jmeter入门教程"><a href="#jmeter入门教程" class="headerlink" title="jmeter入门教程"></a>jmeter入门教程</h1><ol>
+<li><p>下载jmeter</p>
+<p>官网：<a href="https://jmeter.apache.org/" target="_blank" rel="noopener">https://jmeter.apache.org/</a></p>
+</li>
+<li><p>解压Jmeter包（解压后即可使用）</p>
+</li>
+<li><p>可修改语言为中文</p>
+<p><img src="https://img-blog.csdnimg.cn/c9ea2f2fae0e4806bebfdc3e7ecad347.png" alt="图片描述"></p>
+</li>
+<li><p>双击解压后的文件夹bin目录下的Jmeter.bat启动Jmeter</p>
+<p><img src="https://img-blog.csdnimg.cn/6a719791901e437590603276a6cedfb7.png#pic_center" alt="图片描述"></p>
+</li>
+<li><p>创建线程组</p>
+<p><img src="https://img-blog.csdnimg.cn/4380a774fbf3434c882fdb52761a6a4e.png" alt="图片描述"></p>
+</li>
+<li><p>设置线程参数：开启10个线程，同时启动，每个线程重复一次</p>
+<p><img src="https://img-blog.csdnimg.cn/ed9ae8dac6a84651b340353c22a3e413.png" alt="图片描述"></p>
+</li>
+<li><p>添加http请求</p>
+<p><img src="https://img-blog.csdnimg.cn/a2f0e74ab3434f17b44fc1ebba739e13.png" alt="图片描述"></p>
+</li>
+<li><p>发起get请求</p>
+<p><img src="https://img-blog.csdnimg.cn/165e4d0459984b65872369baa1221a6f.png" alt="图片描述"></p>
+</li>
+<li><p>发起post请求</p>
+<p><img src="https://img-blog.csdnimg.cn/656f2ec789af4612861a48217a1a78d5.png" alt="图片描述"></p>
+<p>​    注意：post请求需要设置content-type</p>
+<p><img src="https://img-blog.csdnimg.cn/d3e49a6bd7e14893a5f38d438bb8ff48.png" alt="图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/62028f9ed2f2439bb1c8d873a39a3d5f.png" alt="图片描述"></p>
+</li>
+<li><p>可以导入CURL</p>
+<p><img src="https://img-blog.csdnimg.cn/e0135ad476f64f8e91c4d5526755b755.png" alt="图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/0574069ddab74ebca284cd2785ea28a3.png" alt="图片描述"></p>
+</li>
+</ol>
+<p><strong>注意：这里需要把Add cookie header to Cookie Manager 勾上</strong></p>
+<ol start="10">
+<li>查看请求结果</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/694cb95c84e646d8b0888b27202fc59a.png#pic_center" alt="图片描述"></p>
+]]></content>
+      <categories>
+        <category>压测</category>
+      </categories>
+      <tags>
+        <tag>jmeter</tag>
       </tags>
   </entry>
   <entry>
@@ -1563,100 +1552,11 @@ thread -n 3
       </tags>
   </entry>
   <entry>
-    <title>kafka入门基本使用命令</title>
-    <url>/2020/05/07/kafka-ru-men-shi-yong-guan-jian-ming-ling/</url>
-    <content><![CDATA[<h2 id="一-修改配置文件"><a href="#一-修改配置文件" class="headerlink" title="一 修改配置文件"></a>一 修改配置文件</h2><p>在kafka解压目录下下有一个config的文件夹，里面放置的是我们的配置文件　　</p>
-<ol>
-<li>consumer.properites 消费者配置，此处我们使用默认的即可</li>
-<li>producer.properties 生产者配置，此处我们使用默认的即可</li>
-<li>server.properties kafka服务器的配置，此配置文件用来配置kafka服务器，</li>
-<li>broker.id 申明当前kafka服务器在集群中的唯一ID，需配置为integer,并且集群中的每一个kafka服务器的id都应是唯一的，我们这里采用默认配置即可</li>
-<li>listeners 申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址。如果是在远程服务器上运行则必须配置，例如：listeners=PLAINTEXT:// 192.168.180.128:9092。并确保服务器的9092端口能够访问，如果想外部电脑上的程序也能访问此kafka，就必须指定ip地址，不然java中会报key为null的错误。zookeeper.connect 申明kafka所连接的zookeeper的地址 ，需配置为zookeeper的地址，由于本次使用的是kafka高版本中自带zookeeper，使用默认配置即可zookeeper.connect=localhost:2181</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">修改server.properties
-本机使用：
-        listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092
-        advertised.listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092 
-远程使用
-         listeners<span class="token operator">=</span>PLAINTEXT://内网ip:9092
-        advertised.listeners<span class="token operator">=</span>PLAINTEXT://公网ip:9092 </code></pre>
-<h2 id="二-运行"><a href="#二-运行" class="headerlink" title="二 运行"></a>二 运行</h2><h3 id="2-1-启动zookeeper"><a href="#2-1-启动zookeeper" class="headerlink" title="2.1 启动zookeeper"></a>2.1 启动zookeeper</h3><p>cd进入kafka解压目录，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/zookeeper-server-start.sh config/zookeeper.properties</code></pre>
-<h3 id="2-2-启动kafka"><a href="#2-2-启动kafka" class="headerlink" title="2.2 启动kafka"></a>2.2 启动kafka</h3><p>cd进入kafka解压目录，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties</code></pre>
-<p><strong>kafka后台运行</strong></p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties <span class="token operator">&amp;</span></code></pre>
-<h3 id="2-3-创建topic"><a href="#2-3-创建topic" class="headerlink" title="2.3 创建topic"></a>2.3 创建topic</h3><p>创建一个名为test的topic　</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic <span class="token function">test</span>　</code></pre>
-<h3 id="2-4-查看topic"><a href="#2-4-查看topic" class="headerlink" title="2.4 查看topic"></a>2.4 查看topic</h3><pre><code>bin/kafka-topics.sh --list --zookeeper localhost:2181</code></pre><h3 id="2-5-创建消费者"><a href="#2-5-创建消费者" class="headerlink" title="2.5 创建消费者"></a>2.5 创建消费者</h3><p>可以创建一个用于消费topic为test的消费者，加上–from-beginning表示从开始所有的消息都显示出来</p>
-<p>在kafka解压目录打开终端，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class="token function">test</span> --from-beginning</code></pre>
-<h3 id="2-6-创建一个消息生产者"><a href="#2-6-创建一个消息生产者" class="headerlink" title="2.6 创建一个消息生产者"></a>2.6 创建一个消息生产者</h3><p>在kafka解压目录打开一个新的终端，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="token function">test</span></code></pre>
-<h3 id="2-7-删除topic"><a href="#2-7-删除topic" class="headerlink" title="2.7 删除topic"></a>2.7 删除topic</h3><pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic accreditNotify</code></pre>
-]]></content>
-      <categories>
-        <category>Kafka</category>
-      </categories>
-      <tags>
-        <tag>kafka</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>jmeter入门教程</title>
-    <url>/2020/05/12/jmeter-ru-men-jiao-cheng/</url>
-    <content><![CDATA[<h1 id="jmeter入门教程"><a href="#jmeter入门教程" class="headerlink" title="jmeter入门教程"></a>jmeter入门教程</h1><ol>
-<li><p>下载jmeter</p>
-<p>官网：<a href="https://jmeter.apache.org/" target="_blank" rel="noopener">https://jmeter.apache.org/</a></p>
-</li>
-<li><p>解压Jmeter包（解压后即可使用）</p>
-</li>
-<li><p>可修改语言为中文</p>
-<p><img src="https://img-blog.csdnimg.cn/c9ea2f2fae0e4806bebfdc3e7ecad347.png" alt="图片描述"></p>
-</li>
-<li><p>双击解压后的文件夹bin目录下的Jmeter.bat启动Jmeter</p>
-<p><img src="https://img-blog.csdnimg.cn/6a719791901e437590603276a6cedfb7.png#pic_center" alt="图片描述"></p>
-</li>
-<li><p>创建线程组</p>
-<p><img src="https://img-blog.csdnimg.cn/4380a774fbf3434c882fdb52761a6a4e.png" alt="图片描述"></p>
-</li>
-<li><p>设置线程参数：开启10个线程，同时启动，每个线程重复一次</p>
-<p><img src="https://img-blog.csdnimg.cn/ed9ae8dac6a84651b340353c22a3e413.png" alt="图片描述"></p>
-</li>
-<li><p>添加http请求</p>
-<p><img src="https://img-blog.csdnimg.cn/a2f0e74ab3434f17b44fc1ebba739e13.png" alt="图片描述"></p>
-</li>
-<li><p>发起get请求</p>
-<p><img src="https://img-blog.csdnimg.cn/165e4d0459984b65872369baa1221a6f.png" alt="图片描述"></p>
-</li>
-<li><p>发起post请求</p>
-<p><img src="https://img-blog.csdnimg.cn/656f2ec789af4612861a48217a1a78d5.png" alt="图片描述"></p>
-<p>​    注意：post请求需要设置content-type</p>
-<p><img src="https://img-blog.csdnimg.cn/d3e49a6bd7e14893a5f38d438bb8ff48.png" alt="图片描述"></p>
-<p><img src="https://img-blog.csdnimg.cn/62028f9ed2f2439bb1c8d873a39a3d5f.png" alt="图片描述"></p>
-</li>
-<li><p>可以导入CURL</p>
-<p><img src="https://img-blog.csdnimg.cn/e0135ad476f64f8e91c4d5526755b755.png" alt="图片描述"></p>
-<p><img src="https://img-blog.csdnimg.cn/0574069ddab74ebca284cd2785ea28a3.png" alt="图片描述"></p>
-</li>
-</ol>
-<p><strong>注意：这里需要把Add cookie header to Cookie Manager 勾上</strong></p>
-<ol start="10">
-<li>查看请求结果</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/694cb95c84e646d8b0888b27202fc59a.png#pic_center" alt="图片描述"></p>
-]]></content>
-      <categories>
-        <category>压测</category>
-      </categories>
-      <tags>
-        <tag>jmeter</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>linux安装RocketMQ</title>
     <url>/2021/03/31/linux-an-zhuang-rocketmq/</url>
-    <content><![CDATA[<h1 id="linux安装RocketMQ"><a href="#linux安装RocketMQ" class="headerlink" title="linux安装RocketMQ"></a>linux安装RocketMQ</h1><p>前提条件：RocketMQ是基于java语言开发的。运行RocketMQ需要java环境。JDK的版本应该 &gt;= 1.8。请确保安装了JDK。</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="linux安装RocketMQ"><a href="#linux安装RocketMQ" class="headerlink" title="linux安装RocketMQ"></a>linux安装RocketMQ</h1><p>前提条件：RocketMQ是基于java语言开发的。运行RocketMQ需要java环境。JDK的版本应该 &gt;= 1.8。请确保安装了JDK。</p>
 <p>查看方式：</p>
 <pre><code>[root@iZuf6j6c7vo33inl2830e3Z rocketmq]# java -version
 java version &quot;1.8.0_131&quot;
@@ -1891,9 +1791,86 @@ brokerIP1=公网ip</code></pre><p>rocketmq控制台也是如此。需要指定na
       </tags>
   </entry>
   <entry>
+    <title>kafka入门基本使用命令</title>
+    <url>/2020/05/07/kafka-ru-men-shi-yong-guan-jian-ming-ling/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="一-修改配置文件"><a href="#一-修改配置文件" class="headerlink" title="一 修改配置文件"></a>一 修改配置文件</h2><p>在kafka解压目录下下有一个config的文件夹，里面放置的是我们的配置文件　　</p>
+<ol>
+<li>consumer.properites 消费者配置，此处我们使用默认的即可</li>
+<li>producer.properties 生产者配置，此处我们使用默认的即可</li>
+<li>server.properties kafka服务器的配置，此配置文件用来配置kafka服务器，</li>
+<li>broker.id 申明当前kafka服务器在集群中的唯一ID，需配置为integer,并且集群中的每一个kafka服务器的id都应是唯一的，我们这里采用默认配置即可</li>
+<li>listeners 申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址。如果是在远程服务器上运行则必须配置，例如：listeners=PLAINTEXT:// 192.168.180.128:9092。并确保服务器的9092端口能够访问，如果想外部电脑上的程序也能访问此kafka，就必须指定ip地址，不然java中会报key为null的错误。zookeeper.connect 申明kafka所连接的zookeeper的地址 ，需配置为zookeeper的地址，由于本次使用的是kafka高版本中自带zookeeper，使用默认配置即可zookeeper.connect=localhost:2181</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">修改server.properties
+本机使用：
+        listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092
+        advertised.listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092 
+远程使用
+         listeners<span class="token operator">=</span>PLAINTEXT://内网ip:9092
+        advertised.listeners<span class="token operator">=</span>PLAINTEXT://公网ip:9092 </code></pre>
+<h2 id="二-运行"><a href="#二-运行" class="headerlink" title="二 运行"></a>二 运行</h2><h3 id="2-1-启动zookeeper"><a href="#2-1-启动zookeeper" class="headerlink" title="2.1 启动zookeeper"></a>2.1 启动zookeeper</h3><p>cd进入kafka解压目录，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/zookeeper-server-start.sh config/zookeeper.properties</code></pre>
+<h3 id="2-2-启动kafka"><a href="#2-2-启动kafka" class="headerlink" title="2.2 启动kafka"></a>2.2 启动kafka</h3><p>cd进入kafka解压目录，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties</code></pre>
+<p><strong>kafka后台运行</strong></p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties <span class="token operator">&amp;</span></code></pre>
+<h3 id="2-3-创建topic"><a href="#2-3-创建topic" class="headerlink" title="2.3 创建topic"></a>2.3 创建topic</h3><p>创建一个名为test的topic　</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic <span class="token function">test</span>　</code></pre>
+<h3 id="2-4-查看topic"><a href="#2-4-查看topic" class="headerlink" title="2.4 查看topic"></a>2.4 查看topic</h3><pre><code>bin/kafka-topics.sh --list --zookeeper localhost:2181</code></pre><h3 id="2-5-创建消费者"><a href="#2-5-创建消费者" class="headerlink" title="2.5 创建消费者"></a>2.5 创建消费者</h3><p>可以创建一个用于消费topic为test的消费者，加上–from-beginning表示从开始所有的消息都显示出来</p>
+<p>在kafka解压目录打开终端，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class="token function">test</span> --from-beginning</code></pre>
+<h3 id="2-6-创建一个消息生产者"><a href="#2-6-创建一个消息生产者" class="headerlink" title="2.6 创建一个消息生产者"></a>2.6 创建一个消息生产者</h3><p>在kafka解压目录打开一个新的终端，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="token function">test</span></code></pre>
+<h3 id="2-7-删除topic"><a href="#2-7-删除topic" class="headerlink" title="2.7 删除topic"></a>2.7 删除topic</h3><pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic accreditNotify</code></pre>
+]]></content>
+      <categories>
+        <category>Kafka</category>
+      </categories>
+      <tags>
+        <tag>kafka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux常用命令</title>
+    <url>/2021/03/26/linux-chang-yong-ming-ling/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="一、查看文本"><a href="#一、查看文本" class="headerlink" title="一、查看文本"></a>一、查看文本</h2><h2 id="二、搜索文本里面的内容"><a href="#二、搜索文本里面的内容" class="headerlink" title="二、搜索文本里面的内容"></a>二、搜索文本里面的内容</h2><h2 id="三、端口号"><a href="#三、端口号" class="headerlink" title="三、端口号"></a>三、端口号</h2><ol>
+<li><h3 id="查看端口号是否在使用："><a href="#查看端口号是否在使用：" class="headerlink" title="查看端口号是否在使用："></a>查看端口号是否在使用：</h3><p>lsof -i:8080</p>
+</li>
+</ol>
+<ol start="2">
+<li><h3 id="对外部开放端口号"><a href="#对外部开放端口号" class="headerlink" title="对外部开放端口号"></a>对外部开放端口号</h3><p><strong>查询指定端口是否已经开放</strong><br>firewall-cmd –query-port=3306/tcp<br>返回yes/no。此时也有可能返回firewalld is not running，此时需要打开防火墙在开放端口。</p>
+</li>
+</ol>
+<p>   <strong>添加指定需要开放的端口：</strong><br>   firewall-cmd –add-port=3306/tcp –permanent</p>
+<p>   <strong>载入添加的端口：</strong><br>   firewall-cmd –reload</p>
+<h2 id="四、防火墙"><a href="#四、防火墙" class="headerlink" title="四、防火墙"></a>四、防火墙</h2><ol>
+<li><p>查看防火墙状态 systemctl status firewalld</p>
+</li>
+<li><p>开启防火墙 systemctl start firewalld</p>
+</li>
+<li><p>关闭防火墙 systemctl stop firewalld</p>
+</li>
+</ol>
+<h2 id="五、内存"><a href="#五、内存" class="headerlink" title="五、内存"></a>五、内存</h2><p>​    free -h</p>
+<h2 id="六、磁盘"><a href="#六、磁盘" class="headerlink" title="六、磁盘"></a>六、磁盘</h2><p>​     df -h</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>linux安装jenkins部署SpringBoot应用</title>
     <url>/2021/03/30/linux-an-zhuang-jenkins/</url>
-    <content><![CDATA[<h1 id="linux安装jenkins部署SpringBoot应用"><a href="#linux安装jenkins部署SpringBoot应用" class="headerlink" title="linux安装jenkins部署SpringBoot应用"></a>linux安装jenkins部署SpringBoot应用</h1><h2 id="一、安装jdk和maven"><a href="#一、安装jdk和maven" class="headerlink" title="一、安装jdk和maven"></a>一、安装jdk和maven</h2><p>首先在安装jenkins之前。需要先安装jdk 和 maven。至于 jdk 和 maven 和安装教程，这里就不说了。</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="linux安装jenkins部署SpringBoot应用"><a href="#linux安装jenkins部署SpringBoot应用" class="headerlink" title="linux安装jenkins部署SpringBoot应用"></a>linux安装jenkins部署SpringBoot应用</h1><h2 id="一、安装jdk和maven"><a href="#一、安装jdk和maven" class="headerlink" title="一、安装jdk和maven"></a>一、安装jdk和maven</h2><p>首先在安装jenkins之前。需要先安装jdk 和 maven。至于 jdk 和 maven 和安装教程，这里就不说了。</p>
 <p><strong>查看jdk安装成功</strong>：java -version</p>
 <p>显示下面的信息说明安装成功</p>
 <pre><code>[root@iZuf6j6c7vo33inl2830e3Z ~]# java -version
@@ -2082,60 +2059,90 @@ echo &quot;shell脚本执行完毕&quot;
       </tags>
   </entry>
   <entry>
-    <title>linux常用命令</title>
-    <url>/2021/03/26/linux-chang-yong-ming-ling/</url>
-    <content><![CDATA[<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="一、查看文本"><a href="#一、查看文本" class="headerlink" title="一、查看文本"></a>一、查看文本</h2><h2 id="二、搜索文本里面的内容"><a href="#二、搜索文本里面的内容" class="headerlink" title="二、搜索文本里面的内容"></a>二、搜索文本里面的内容</h2><h2 id="三、端口号"><a href="#三、端口号" class="headerlink" title="三、端口号"></a>三、端口号</h2><ol>
-<li><h3 id="查看端口号是否在使用："><a href="#查看端口号是否在使用：" class="headerlink" title="查看端口号是否在使用："></a>查看端口号是否在使用：</h3><p>lsof -i:8080</p>
-</li>
+    <title>Spring注解介绍</title>
+    <url>/2020/07/01/spring-zhu-jie/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<ol>
+<li>@Controller    组合注解（组合了@Component注解），应用在MVC层（控制层）,DispatcherServlet会自动扫描注解了此注解的类，然后将web请求映射到注解了@RequestMapping的方法上。</li>
+<li>@Service    组合注解（组合了@Component注解），应用在service层（业务逻辑层）</li>
+<li>@Reponsitory    组合注解（组合了@Component注解），应用在dao层（数据访问层）</li>
+<li>@Component    表示一个带注释的类是一个“组件”，成为Spring管理的Bean。当使用基于注解的配置和类路径扫描时，这些类被视为自动检测的候选对象。同时@Component还是一个元注解。</li>
+<li>@Autowired    Spring提供的工具（由Spring的依赖注入工具（BeanPostProcessor、BeanFactoryPostProcessor）自动注入。）</li>
+<li>@Resource    JSR-250提供的注解</li>
+<li>@Inject    JSR-330提供的注解</li>
+<li>@Configuration    声明当前类是一个配置类（相当于一个Spring配置的xml文件）</li>
+<li>@ComponentScan    自动扫描指定包下所有使用</li>
+<li>@Service,@Component,@Controller,@Repository的类并注册</li>
+<li>@Bean    注解在方法上，声明当前方法的返回值为一个Bean。返回的Bean对应的类中可以定义init()方法和destroy()方法，然后@Bean(initMethod=“init”,destroyMethod=“destroy”)定义，在构造之后执行init，在销毁之前执行destroy。</li>
+<li>@Aspect    声明一个切面（就是说这是一个额外功能）</li>
+<li>@After    后置建言（advice），在原方法前执行。</li>
+<li>@Before    前置建言（advice），在原方法后执行。</li>
+<li>@Around    环绕建言（advice），在原方法执行前执行，在原方法执行后再执行（@Around可以实现其他两种advice）</li>
+<li>@PointCut    声明切点，即定义拦截规则，确定有哪些方法会被切入</li>
+<li>@Transactional    声明事务（一般默认配置即可满足要求，当然也可以自定义）</li>
+<li>@Cacheable    声明数据缓存</li>
+<li>@EnableAspectJAutoProxy    开启Spring对AspectJ的支持</li>
+<li>@Value    值得注入。经常与Sping EL表达式语言一起使用，注入普通字符，系统属性，表达式运算结果，其他Bean的属性，文件内容，网址请求内容，配</li>
+<li>文件属性值等等</li>
+<li>@PropertySource    指定文件地址。提供了一种方便的、声明性的机制，用于向Spring的环境添加PropertySource。与@configuration类一起使用。</li>
+<li>@PostConstruct    标注在方法上，该方法在构造函数执行完成之后执行。</li>
+<li>@PreDestroy    标注在方法上，该方法在对象销毁之前执行。@Profile    表示当一个或多个指定的文件是活动的时，一个组件是有资格注册的。使用@Profile注解类或者方法，达到在不同情况下选择实例化不同的Bean。</li>
+<li>@Profile(“dev”)表示为dev时实例化。</li>
+<li>@EnableAsync    开启异步任务支持。注解在配置类上。</li>
+<li>@Async    注解在方法上标示这是一个异步方法，在类上标示这个类所有的方法都是异步方法。</li>
+<li>@EnableScheduling    注解在配置类上，开启对计划任务的支持。</li>
+<li>@Scheduled    注解在方法上，声明该方法是计划任务。支持多种类型的计划任务：cron,fixDelay,fixRate</li>
+<li>@Conditional    根据满足某一特定条件创建特定的Bean</li>
+<li>@Enable*    通过简单的@Enable来开启一项功能的支持。所有@Enable注解都有一个@Import注解，@Import是用来导入配置类的，这也就意味着这些自动开启的实现其实是导入了一些自动配置的Bean(1.直接导入配置类2.依据条件选择配置类3.动态注册配置类)</li>
+<li>@RunWith    这个是Junit的注解，springboot集成了junit。一般在测试类里使用:@RunWith(SpringJUnit4ClassRunner.class) — SpringJUnit4ClassRunner在JUnit环境下提供Sprng TestContext Framework的功能</li>
+<li>@ContextConfiguration    用来加载配置ApplicationContext，其中classes属性用来加载配置类:@ContextConfiguration(classes = {TestConfig.class(自定义的一个配置类)})</li>
+<li>@ActiveProfiles    用来声明活动的profile–@ActiveProfiles(“prod”(这个prod定义在配置类中))</li>
+<li>@EnableWebMvc    用在配置类上，开启SpringMvc的Mvc的一些默认配置：如ViewResolver，MessageConverter等。同时在自己定制SpringMvc的相关配置时需要做到两点：1.配置类继承WebMvcConfigurerAdapter类2.就是必须使用这个@EnableWebMvc注解。</li>
+<li>@RequestMapping    用来映射web请求（访问路径和参数），处理类和方法的。可以注解在类和方法上，注解在方法上的@RequestMapping路径会继承注解在类上的路径。同时支持Serlvet的request和response作为参数，也支持对request和response的媒体类型进行配置。其中有value(路径)，produces(定义返回的媒体类型和字符集)，method(指定请求方式)等属性。</li>
+<li>@GetMapping    GET方式的@RequestMapping</li>
+<li>@PostMapping    POST方式的@RequestMapping</li>
+<li>@ResponseBody    将返回值放在response体内。返回的是数据而不是页面</li>
+<li>@RequestBody    允许request的参数在request体中，而不是在直接链接在地址的后面。此注解放置在参数前。</li>
+<li>@PathVariable    放置在参数前，用来接受路径参数。</li>
+<li>@RestController    组合注解，组合了@Controller和@ResponseBody,当我们只开发一个和页面交互数据的控制层的时候可以使用此注解。</li>
+<li>@ControllerAdvice    用在类上，声明一个控制器建言，它也组合了@Component注解，会自动注册为Spring的Bean。</li>
+<li>@ExceptionHandler    用在方法上定义全局处理，通过他的value属性可以过滤拦截的条件：@ExceptionHandler(value=Exception.class)–表示拦截所有Exception。</li>
+<li>@ModelAttribute    将键值对添加到全局，所有注解了@RequestMapping的方法可获得次键值对（就是在请求到达之前，往model里addAttribute一对name-value而已）。</li>
+<li>@InitBinder    通过@InitBinder注解定制WebDataBinder（用在方法上，方法有一个WebDataBinder作为参数，用WebDataBinder在方法内定制数据绑定，例如可以忽略request传过来的参数Id等）。</li>
+<li>@WebAppConfiguration    一般用在测试上，注解在类上，用来声明加载的ApplicationContext是一个WebApplicationContext。他的属性指定的是Web资源的位置，默认为src/main/webapp,我们可以修改为：@WebAppConfiguration(“src/main/resources”)。</li>
+<li>@EnableAutoConfiguration    此注释自动载入应用程序所需的所有Bean——这依赖于Spring Boot在类路径中的查找。该注解组合了@Import注解，@Import注解导入了EnableAutoCofigurationImportSelector类，它使用SpringFactoriesLoader.loaderFactoryNames方法来扫描具有META-INF/spring.factories文件的jar包。而spring.factories里声明了有哪些自动配置。</li>
+<li>@SpingBootApplication    SpringBoot的核心注解，主要目的是开启自动配置。它也是一个组合注解，主要组合了@Configurer，@EnableAutoConfiguration（核心）和@ComponentScan。可以通过@SpringBootApplication(exclude={想要关闭的自动配置的类名.class})来关闭特定的自动配置。</li>
+<li>@ImportResource    虽然Spring提倡零配置，但是还是提供了对xml文件的支持，这个注解就是用来加载xml配置的。例：@ImportResource({“classpath</li>
+<li>@ConfigurationProperties    将properties属性与一个Bean及其属性相关联，从而实现类型安全的配置。例：@ConfigurationProperties(prefix=“authot”，locations={“classpath</li>
+<li>@ConditionalOnBean    条件注解。当容器里有指定Bean的条件下。</li>
+<li>@ConditionalOnClass    条件注解。当类路径下有指定的类的条件下。</li>
+<li>@ConditionalOnExpression    条件注解。基于SpEL表达式作为判断条件。</li>
+<li>@ConditionalOnJava    条件注解。基于JVM版本作为判断条件。</li>
+<li>@ConditionalOnJndi    条件注解。在JNDI存在的条件下查找指定的位置。</li>
+<li>@ConditionalOnMissingBean    条件注解。当容器里没有指定Bean的情况下。</li>
+<li>@ConditionalOnMissingClass    条件注解。当类路径下没有指定的类的情况下。</li>
+<li>@ConditionalOnNotWebApplication    条件注解。当前项目不是web项目的条件下。</li>
+<li>@ConditionalOnResource    条件注解。类路径是否有指定的值。</li>
+<li>@ConditionalOnSingleCandidate    条件注解。当指定Bean在容器中只有一个，后者虽然有多个但是指定首选的Bean。</li>
+<li>@ConditionalOnWebApplication    条件注解。当前项目是web项目的情况下。</li>
+<li>@EnableConfigurationProperties    注解在类上，声明开启属性注入，使用@Autowired注入。例：@EnableConfigurationProperties(HttpEncodingProperties.class)。</li>
+<li>@AutoConfigureAfter    在指定的自动配置类之后再配置。例：@AutoConfigureAfter(WebMvcAutoConfiguration.class)</li>
 </ol>
-<ol start="2">
-<li><h3 id="对外部开放端口号"><a href="#对外部开放端口号" class="headerlink" title="对外部开放端口号"></a>对外部开放端口号</h3><p><strong>查询指定端口是否已经开放</strong><br>firewall-cmd –query-port=3306/tcp<br>返回yes/no。此时也有可能返回firewalld is not running，此时需要打开防火墙在开放端口。</p>
-</li>
-</ol>
-<p>   <strong>添加指定需要开放的端口：</strong><br>   firewall-cmd –add-port=3306/tcp –permanent</p>
-<p>   <strong>载入添加的端口：</strong><br>   firewall-cmd –reload</p>
-<h2 id="四、防火墙"><a href="#四、防火墙" class="headerlink" title="四、防火墙"></a>四、防火墙</h2><ol>
-<li><p>查看防火墙状态 systemctl status firewalld</p>
-</li>
-<li><p>开启防火墙 systemctl start firewalld</p>
-</li>
-<li><p>关闭防火墙 systemctl stop firewalld</p>
-</li>
-</ol>
-<h2 id="五、内存"><a href="#五、内存" class="headerlink" title="五、内存"></a>五、内存</h2><p>​    free -h</p>
-<h2 id="六、磁盘"><a href="#六、磁盘" class="headerlink" title="六、磁盘"></a>六、磁盘</h2><p>​     df -h</p>
 ]]></content>
       <categories>
-        <category>linux</category>
+        <category>SpringBoot</category>
       </categories>
       <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用hexo写博客</title>
-    <url>/2022/06/11/shi-yong-hexo-xie-bo-ke/</url>
-    <content><![CDATA[<h1 id="使用hexo写博客"><a href="#使用hexo写博客" class="headerlink" title="使用hexo写博客"></a>使用hexo写博客</h1><h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>node的版本号一定要正确，不然可能会出现版本不适配等一系列问题。这里node使用12.18.3版本</p>
-<p>node下载：<a href="https://nodejs.org/download/release/v12.18.3/" target="_blank" rel="noopener">https://nodejs.org/download/release/v12.18.3/</a></p>
-<p>下载文件为：node-v12.18.3-x64.msi </p>
-<pre><code>git version
-node -v
-npm -v</code></pre><h2 id="npm缓存清除"><a href="#npm缓存清除" class="headerlink" title="npm缓存清除"></a>npm缓存清除</h2><pre><code>npm cache clean --force</code></pre><h2 id="npm镜像"><a href="#npm镜像" class="headerlink" title="npm镜像"></a>npm镜像</h2><p>国内npm比较慢，安装cnpm淘宝镜像</p>
-<pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="重新生成node-modules"><a href="#重新生成node-modules" class="headerlink" title="重新生成node_modules"></a>重新生成node_modules</h2><pre><code>rm -rf node_modules &amp;&amp; npm install --force</code></pre><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install -g hexo-cli</code></pre><h2 id="部署插件"><a href="#部署插件" class="headerlink" title="部署插件"></a>部署插件</h2><pre><code>npm install hexo-deployer-git --save</code></pre><h2 id="使用以及部署"><a href="#使用以及部署" class="headerlink" title="使用以及部署"></a>使用以及部署</h2><pre><code>hexo clean #清理各种缓存和旧文件
-hexo g     #生成静态文件
-hexo s     #开启服务器预览
-hexo d     #部署到git服务器上</code></pre>]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
+        <tag>SpringBoot</tag>
       </tags>
   </entry>
   <entry>
     <title>java应用服务器内存处理</title>
     <url>/2022/06/10/linux-fu-wu-qi-java-nei-cun-chu-li/</url>
-    <content><![CDATA[<h1 id="java服务器内存处理"><a href="#java服务器内存处理" class="headerlink" title="java服务器内存处理"></a>java服务器内存处理</h1><h2 id="查看服务器总内存占用"><a href="#查看服务器总内存占用" class="headerlink" title="查看服务器总内存占用"></a>查看服务器总内存占用</h2><pre><code>free -h</code></pre><p>显示如下：</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="java服务器内存处理"><a href="#java服务器内存处理" class="headerlink" title="java服务器内存处理"></a>java服务器内存处理</h1><h2 id="查看服务器总内存占用"><a href="#查看服务器总内存占用" class="headerlink" title="查看服务器总内存占用"></a>查看服务器总内存占用</h2><pre><code>free -h</code></pre><p>显示如下：</p>
 <pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# free -h
               total        used        free      shared  buff/cache   available
 Mem:           1.8G        1.4G        170M        3.7M        259M        284M
@@ -2167,9 +2174,213 @@ lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href
       </tags>
   </entry>
   <entry>
+    <title>prometheus告警规则配置</title>
+    <url>/2020/07/01/prometheus-gao-jing-gui-ze-pei-zhi/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="1-创建告警规则配置文件"><a href="#1-创建告警规则配置文件" class="headerlink" title="1. 创建告警规则配置文件"></a>1. 创建告警规则配置文件</h2><p>创建告警规则配置文件first_rules.yml，建议放在与prometheus.yml同级目录</p>
+<h2 id="2-修改prometheus配置文件"><a href="#2-修改prometheus配置文件" class="headerlink" title="2. 修改prometheus配置文件"></a>2. 修改prometheus配置文件</h2><p>修改配置文件prometheus.yml，将告警规则配置文件添加到prometheus.yml。注意路径。</p>
+<pre><code>global:
+  scrape_interval:     15s   # 这个是每次数据手机的频率
+  evaluation_interval: 15s   # 评估告警规则的频率。
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+       - &#39;localhost:9093&#39;
+
+rule_files:
+    - &quot;first_rules.yml&quot;
+  # - &quot;second_rules.yml&quot;
+
+scrape_configs:               # 通过这里的配置控制prometheus监控的资源
+  - job_name: prometheus      # prometheus自身默认的
+    static_configs:
+      - targets: [&#39;localhost:9090&#39;]  # 默认暴露的是9090端口服务</code></pre><h2 id="3-配置告警规则文件"><a href="#3-配置告警规则文件" class="headerlink" title="3. 配置告警规则文件"></a>3. 配置告警规则文件</h2><blockquote>
+<p>在告警规则文件中，我们可以将一组相关的规则设置定义在一个group下。在每一个group中我们可以定义多个告警规则(rule)。一条告警规则主要由以下几部分组成：<br><strong>alert</strong>：告警规则的名称。<br><strong>expr</strong>：基于PromQL表达式告警触发条件，用于计算是否有时间序列满足该条件。<br><strong>for</strong>：评估等待时间，可选参数。用于表示只有当触发条件持续一段时间后才发送告警。在等待期间新产生告警的状态为pending。<br><strong>labels</strong>：自定义标签，允许用户指定要附加到告警上的一组附加标签。<br><strong>annotations</strong>：用于指定一组附加信息，比如用于描述告警详细信息的文字等，annotations的内容在告警产生时会一同作为参数发送到Alertmanager。summary描述告警的概要信息，description用于描述告警的详细信息。同时Alertmanager的UI也会根据这两个标签值，显示告警信息。</p>
+</blockquote>
+<p>这里配置中的acs-ms为应用名字。也就是job的名字</p>
+<h3 id="监控应用是否宕机，"><a href="#监控应用是否宕机，" class="headerlink" title="监控应用是否宕机，"></a>监控应用是否宕机，</h3><pre><code>alert: serverDown
+expr: up{job=&quot;acs-ms&quot;}  ==  0
+for: 1m
+labels:
+  severity: critical
+annotations:
+  description: 实例：{{ $labels.instance }} 宕机了
+  summary: Instance {{ $labels.instance }} down</code></pre><h3 id="监控接口发生异常"><a href="#监控接口发生异常" class="headerlink" title="监控接口发生异常"></a>监控接口发生异常</h3><pre><code>alert: interface_request_exception
+expr: increase(http_server_requests_seconds_count{exception!=&quot;None&quot;,exception!=&quot;ServiceException&quot;,job=&quot;acs-ms&quot;}[1m])
+  &gt; 0
+for: 1s
+labels:
+  severity: page
+annotations:
+  description: &#39;实例：{{ $labels.instance }}的{{$labels.uri}}的接口发生了{{ $labels.exception
+    }}异常 &#39;
+  summary: 监控一定时间内接口请求异常的数量</code></pre><blockquote>
+<p><strong>exception!=”ServiceException”</strong> 是将一些手动抛出的自定义异常给排除掉。</p>
+</blockquote>
+<h3 id="监控接口请求时长"><a href="#监控接口请求时长" class="headerlink" title="监控接口请求时长"></a>监控接口请求时长</h3><pre><code>alert: interface_request_duration
+expr: increase(http_server_requests_seconds_sum{exception=&quot;None&quot;,job=&quot;acs-ms&quot;,uri!~&quot;.*Excel.*&quot;}[1m])
+  / increase(http_server_requests_seconds_count{exception=&quot;None&quot;,job=&quot;acs-ms&quot;,uri!~&quot;.*Excel.*&quot;}[1m])
+  &gt; 5
+for: 5s
+labels:
+  severity: page
+annotations:
+  description: &#39;实例：{{ $labels.instance }} 的{{$labels.uri}}接口请求时长超过了设置的阈值：5s，当前值{{
+    $value }}s &#39;
+  summary: 监控一定时间内的接口请求时长</code></pre><blockquote>
+<p><strong>uri!~”.<em>Excel.</em>“</strong> 是将一些接口给排除掉。这个是将包含Excel的接口排除掉。</p>
+</blockquote>
+<h3 id="监测系统CPU使用的百分比"><a href="#监测系统CPU使用的百分比" class="headerlink" title="监测系统CPU使用的百分比"></a>监测系统CPU使用的百分比</h3><pre><code>alert: CPUTooHeight
+expr: process_cpu_usage{job=&quot;acs-ms&quot;} &gt; 0.3
+for: 15s
+labels:
+  severity: page
+annotations:
+  description: &#39;实例：{{ $labels.instance }} 的cpu超过了设置的阈值：30%，当前值{{ $value }} &#39;
+  summary: 监测系统CPU使用的百分比</code></pre><h3 id="监控tomcat活动线程占总线程的比例"><a href="#监控tomcat活动线程占总线程的比例" class="headerlink" title="监控tomcat活动线程占总线程的比例"></a>监控tomcat活动线程占总线程的比例</h3><pre><code>alert: tomcat_thread_height
+expr: tomcat_threads_busy_threads{job=&quot;acs-ms&quot;}
+  / tomcat_threads_config_max_threads{job=&quot;acs-ms&quot;} &gt; 0.5
+for: 15s
+labels:
+  severity: page
+annotations:
+  description: &#39;实例：{{ $labels.instance }} 的tomcat活动线程占总线程的比例超过了设置的阈值：50%，当前值{{ $value
+    }} &#39;
+  summary: 监控tomcat活动线程占总线程的比例</code></pre><h2 id="4-启动Prometheus使配置生效"><a href="#4-启动Prometheus使配置生效" class="headerlink" title="4. 启动Prometheus使配置生效"></a>4. 启动Prometheus使配置生效</h2><pre><code>./prometheus --config.file=prometheus.yml</code></pre><h2 id="5-查看告警规则配置"><a href="#5-查看告警规则配置" class="headerlink" title="5. 查看告警规则配置"></a>5. 查看告警规则配置</h2><p> 访问：<strong><a href="http://ip:port:9090/rules">http://ip:port:9090/rules</a></strong></p>
+]]></content>
+      <categories>
+        <category>prometheus</category>
+      </categories>
+      <tags>
+        <tag>prometheus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker常用命令</title>
+    <url>/2020/05/12/docker-chang-yong-ming-ling/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker常用命令"><a href="#docker常用命令" class="headerlink" title="docker常用命令"></a>docker常用命令</h1><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
+<li><p>搜索镜像</p>
+<pre><code>docker search xxx</code></pre></li>
+<li><p>下载镜像</p>
+<pre><code>docker pull xxx</code></pre></li>
+<li><p>查看镜像 </p>
+<p>查看所有镜像</p>
+<pre><code>docker images</code></pre><p> 查看指定镜像</p>
+<pre><code>docker images | grep 容器名字</code></pre></li>
+<li><p>删除镜像</p>
+<pre><code>docker rmi  镜像name/镜像id(会提示先停止使用中的容器) </code></pre></li>
+<li><p>查看所有容器</p>
+<pre><code> docker ps -a</code></pre></li>
+<li><p>查看容器运行日志</p>
+<pre><code>docker logs 容器名称/容器id
+
+#实时查看运行的日志
+docker logs 容器名称/容器id -f</code></pre></li>
+<li><p>停止容器运行</p>
+<pre><code>docker stop 容器name/容器id</code></pre></li>
+<li><p>终止容器后运行</p>
+<pre><code>docker start 容器name/容器id</code></pre></li>
+<li><p>容器重启</p>
+<pre><code> docker restart 容器name/容器id</code></pre></li>
+<li><p>删除容器</p>
+<ol>
+<li><p>删除没有运行的容器</p>
+<pre><code>docker rm 容器name/容器id</code></pre></li>
+<li><p>强制删除正在运行的容器</p>
+<pre><code>docker rm -f 容器name/容器id</code></pre></li>
+</ol>
+</li>
+<li><p>docker里面安装vim</p>
+<pre><code>1. apt-get update
+2. apt-get install vim</code></pre></li>
+<li><p>docker修改容器开机自启</p>
+<pre><code>docker update 容器id/名字 --restart=always</code></pre></li>
+<li><p>进入容器内部</p>
+<pre><code>docker exec -it 容器id/名字 bash</code></pre></li>
+<li><p>挂载卷到外部修改</p>
+<p>修改页面只需要去 主机的 /data/html</p>
+<p>-v 这个给命令就是将外部的目录和容器内部的目录映射起来</p>
+<pre><code>docker run --name=mynginx   \
+-d  --restart=always \
+-p  88:80 -v /data/html:/usr/share/nginx/html:ro  \
+nginx</code></pre></li>
+<li><p>复制文件</p>
+<p>把容器指定位置的东西复制出来</p>
+<pre><code> docker cp 5eff66eec7e1:/etc/nginx/nginx.conf  /data/conf/nginx.conf</code></pre><p>把外面的内容复制到容器里面</p>
+<pre><code>docker cp  /data/conf/nginx.conf  5eff66eec7e1:/etc/nginx/nginx.conf</code></pre></li>
+<li><p>限制容器内存</p>
+<pre><code>docker run -m 512m --name=nginx 省略xxx</code></pre></li>
+<li><p>查看容器占用内存、CPU等基本信息</p>
+<pre><code>docker stats</code></pre></li>
+</ol>
+<h2 id="打包为新的镜像"><a href="#打包为新的镜像" class="headerlink" title="打包为新的镜像"></a>打包为新的镜像</h2><ol>
+<li><p>提交改变：将修改后的容器打包成新的镜像，之后可以直接启动新的镜像。</p>
+<pre><code>docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+
+docker commit -a &quot;jiangfeng&quot;  -m &quot;首页变化&quot; 容器id/容器名字 mynginx:1.0
+</code></pre></li>
+<li><p>镜像传输</p>
+<pre><code># 将自己创建的镜像保存成压缩包
+docker save -o abc.tar mynginx:1.0
+
+# 别的机器加载这个镜像
+docker load -i abc.tar</code></pre></li>
+</ol>
+<h2 id="推送远程仓库"><a href="#推送远程仓库" class="headerlink" title="推送远程仓库"></a>推送远程仓库</h2><ol>
+<li><p>基本命令</p>
+<pre><code>docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname</code></pre></li>
+<li><p>把旧镜像的名字，改成仓库要求的新版名字</p>
+<pre><code>docker tag mynginx:1.0 1500041584/mynginx:1.0</code></pre></li>
+<li><p>登录以及推出docker hub</p>
+<pre><code>docker login </code></pre><pre><code>docker logout</code></pre></li>
+<li><p>推动到docket hub 私人仓库</p>
+<pre><code>docker push 1500041584/mynginx:1.0</code></pre></li>
+<li><p>下载新的镜像</p>
+<pre><code>docker pull 1500041584/mynginx:1.0</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用hexo写博客</title>
+    <url>/2022/06/11/shi-yong-hexo-xie-bo-ke/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="使用hexo写博客"><a href="#使用hexo写博客" class="headerlink" title="使用hexo写博客"></a>使用hexo写博客</h1><h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>node的版本号一定要正确，不然可能会出现版本不适配等一系列问题。这里node使用12.18.3版本</p>
+<p>node下载：<a href="https://nodejs.org/download/release/v12.18.3/" target="_blank" rel="noopener">https://nodejs.org/download/release/v12.18.3/</a></p>
+<p>下载文件为：node-v12.18.3-x64.msi </p>
+<pre><code>git version
+node -v
+npm -v</code></pre><h2 id="npm缓存清除"><a href="#npm缓存清除" class="headerlink" title="npm缓存清除"></a>npm缓存清除</h2><pre><code>npm cache clean --force</code></pre><h2 id="npm镜像"><a href="#npm镜像" class="headerlink" title="npm镜像"></a>npm镜像</h2><p>国内npm比较慢，安装cnpm淘宝镜像</p>
+<pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="重新生成node-modules"><a href="#重新生成node-modules" class="headerlink" title="重新生成node_modules"></a>重新生成node_modules</h2><pre><code>rm -rf node_modules &amp;&amp; npm install --force</code></pre><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install -g hexo-cli</code></pre><h2 id="部署插件"><a href="#部署插件" class="headerlink" title="部署插件"></a>部署插件</h2><pre><code>npm install hexo-deployer-git --save</code></pre><h2 id="使用以及部署"><a href="#使用以及部署" class="headerlink" title="使用以及部署"></a>使用以及部署</h2><pre><code>hexo clean #清理各种缓存和旧文件
+hexo g     #生成静态文件
+hexo s     #开启服务器预览
+hexo d     #部署到git服务器上</code></pre>]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>seata入门使用教程</title>
     <url>/2023/03/10/seate-ru-men-shi-yong/</url>
-    <content><![CDATA[<h1 id="seata入门使用教程"><a href="#seata入门使用教程" class="headerlink" title="seata入门使用教程"></a>seata入门使用教程</h1><h2 id="1-下载seata-server"><a href="#1-下载seata-server" class="headerlink" title="1. 下载seata-server"></a>1. 下载seata-server</h2><p>我这里选择的是1.5.2版本，大家最好选择一样的版本号，版本不一致可能会引发未知的问题。</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="seata入门使用教程"><a href="#seata入门使用教程" class="headerlink" title="seata入门使用教程"></a>seata入门使用教程</h1><h2 id="1-下载seata-server"><a href="#1-下载seata-server" class="headerlink" title="1. 下载seata-server"></a>1. 下载seata-server</h2><p>我这里选择的是1.5.2版本，大家最好选择一样的版本号，版本不一致可能会引发未知的问题。</p>
 <p>下载页面： <a href="http://seata.io/zh-cn/blog/download.html" target="_blank" rel="noopener">http://seata.io/zh-cn/blog/download.html</a><br>目前最新版本1.5.2，点击下载，或者直接点击链接：<a href="https://github.com/seata/seata/releases/download/v1.5.2/seata-server-1.5.2.zip" target="_blank" rel="noopener">下载链接</a></p>
 <h2 id="2-修改配置"><a href="#2-修改配置" class="headerlink" title="2. 修改配置"></a>2. 修改配置</h2><p>需要修改conf目录下面的application.yml，下面是修改后的application.yml，然后启动seata-server，启动命令再bin目录下面。</p>
 <pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">server</span><span class="token punctuation">:</span>
@@ -2571,9 +2782,69 @@ lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href
       </tags>
   </entry>
   <entry>
+    <title>使用prometheus监控SpringBoot项目</title>
+    <url>/2020/07/01/cai-yong-prometheus-jian-kong-springboot-xiang-mu/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="1-springboot项目中配置prometheus"><a href="#1-springboot项目中配置prometheus" class="headerlink" title="1. springboot项目中配置prometheus"></a>1. springboot项目中配置prometheus</h2><p> 对于springboot应用，需要以下几个步骤<br>springboot应用开启endpoint，添加actuator的依赖和promethus的依赖</p>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;io.micrometer&lt;/groupId&gt;
+  &lt;artifactId&gt;micrometer-registry-prometheus&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre><p>在yml文件或者properties文件中，加入以下配置：</p>
+<pre><code># 监控相关配置
+# 开启监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: &quot;*&quot;  </code></pre><p>这里需要注意是，”*”号是需要加双引号的。<br>启动项目：访问：<a href="http://ip:port/actuator/prometheus">http://ip:port/actuator/prometheus</a><br>如果有数据展示说明配置成功。要是项目配置了context-path。需要加上context-path的路径。<br>项目里面不建议配置context-path</p>
+<h2 id="2-下载prometheus"><a href="#2-下载prometheus" class="headerlink" title="2. 下载prometheus"></a>2. 下载prometheus</h2><p>配置prometheus<br>首先要在官网 <a href="https://prometheus.io/" target="_blank" rel="noopener">https://prometheus.io/</a><br>在下载页面，选择何时的版本下载，推荐下载tar.gz包。下载好后，进行解压。在合适的路径下即可。<br>这里介绍下prometheus的目录和文件：<br>1、prometheus采用的都是yml文件的配置方式。<br>2、在根目录下，有个prometheus.yml配置文件，文件初始化的内容如下： </p>
+<pre><code>global:
+  scrape_interval:     15s   # 这个是每次数据手机的频率
+  evaluation_interval: 15s   # 评估告警规则的频率。
+
+rule_files:
+  # - &quot;first.rules&quot;
+  # - &quot;second.rules&quot;
+
+scrape_configs:               # 通过这里的配置控制prometheus监控的资源
+  - job_name: prometheus      # prometheus自身默认的
+    static_configs:
+      - targets: [&#39;localhost:9090&#39;]  # 默认暴露的是9090端口服务</code></pre><p>global是全局配置。具体见上面的注释说明。</p>
+<h2 id="3-prometheus配置文件修改"><a href="#3-prometheus配置文件修改" class="headerlink" title="3. prometheus配置文件修改"></a>3. prometheus配置文件修改</h2><p>添加我们的应用，对springboot进行监控</p>
+<pre><code>- job_name: &#39;spring-sample&#39;
+    metrics_path: &#39;actuator/prometheus&#39;    # 这里我们springboot暴露出来的endpoint
+    scrape_interval: 5s                    # 信息收集时间是间隔5秒
+    static_configs:
+    - targets: [&#39;localhost:8778&#39;]          # 这里是springboot暴露出来的地址和端口</code></pre><h2 id="4-启动prometheus"><a href="#4-启动prometheus" class="headerlink" title="4. 启动prometheus"></a>4. 启动prometheus</h2><p>这些配置完成后，可以启动prometheus，<br>cd进到prometheus的根目录<br><strong>linux中prometheus启动命令</strong></p>
+<pre><code>./prometheus --config.file=prometheus.yml</code></pre><p><strong>windows中prometheus启动命令</strong></p>
+<p>添加：–web.enable-lifecycle<br>这种启动方法使Prometheus支持reload 配置文件**</p>
+<pre><code>prometheus.exe --web.enable-lifecycle</code></pre><p><strong>reload地址</strong></p>
+<pre><code>http://localhost:9090/-/reload</code></pre><h2 id="5-配置grafana"><a href="#5-配置grafana" class="headerlink" title="5. 配置grafana"></a>5. 配置grafana</h2><p>下载grafana，直接启动即可。</p>
+<ol>
+<li>启动命令参见官网：./grafana-server web</li>
+<li>配置datasource，选择prometheus。这个里面有个很重要的注意点，我看网上很多人在转如何用prometheus监控springboot应用，估计自己没去实际搭建，在interval这个时间上，默认是数字，比如15,代表是15秒。在添加dashboard的时候，会发现监控图标左上角是个红点，报错：Invalid interval string, expecting a number followed by one of “Mwdhmsy” ，这个错的解决方案就是在这些时间间隔后面加个”s”。问题解决。</li>
+<li>选择dashboard，import的里输入一个模板，可以去dashboards去找你对应的模板，我们这里选用jvm的4701模板，然后就能看到你的springboot的监控信息了。到此，整个搭建完成。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>prometheus</category>
+      </categories>
+      <tags>
+        <tag>prometheus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</title>
     <url>/2021/04/02/shi-yong-rocketmq-spring-boot-starter-fa-song-xiao-fei-xiao-xi-de-jian-dan-shi-li/</url>
-    <content><![CDATA[<h1 id="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"><a href="#使用rocketmq-spring-boot-starter发送，消费消息的简单示例" class="headerlink" title="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"></a>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</h1><h2 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1. 引入依赖"></a>1. 引入依赖</h2><pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> rokcetmq starter  <span class="token operator">--</span><span class="token operator">></span>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"><a href="#使用rocketmq-spring-boot-starter发送，消费消息的简单示例" class="headerlink" title="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"></a>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</h1><h2 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1. 引入依赖"></a>1. 引入依赖</h2><pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> rokcetmq starter  <span class="token operator">--</span><span class="token operator">></span>
 <span class="token operator">&lt;</span>dependency<span class="token operator">></span>
     <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>rocketmq<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
     <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>rocketmq<span class="token operator">-</span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
@@ -2616,7 +2887,9 @@ rocketMQTemplate<span class="token punctuation">.</span><span class="token funct
   <entry>
     <title>《高性能MySQL》读书笔记</title>
     <url>/2018/11/10/gao-xing-neng-mysql-du-shu-bi-ji/</url>
-    <content><![CDATA[<p>不求甚解的读书和不读有何区别<br>                                             —— 江峰</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<p>不求甚解的读书和不读有何区别<br>                                             —— 江峰</p>
 <h2 id="第1章-MySQL架构与历史"><a href="#第1章-MySQL架构与历史" class="headerlink" title="第1章 MySQL架构与历史"></a>第1章 MySQL架构与历史</h2><p>下载sakila数据库结构文件和数据文件：<a href="https://dev.mysql.com/doc/index-other.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/index-other.html</a></p>
 <h3 id="1-1-MySQL逻辑架构"><a href="#1-1-MySQL逻辑架构" class="headerlink" title="1.1 MySQL逻辑架构"></a>1.1 MySQL逻辑架构</h3><p><strong>查询缓存</strong></p>
 <p>对于select语句，在解析查询之前，服务器会先检查缓存，如果能够在其中找到对应的查询，服务器就不必再执行查询解析、优化和执行的整个过程，而是直接返回查询缓存中的结果集。</p>
@@ -3141,223 +3414,6 @@ rocketMQTemplate<span class="token punctuation">.</span><span class="token funct
       </categories>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用prometheus监控SpringBoot项目</title>
-    <url>/2020/07/01/cai-yong-prometheus-jian-kong-springboot-xiang-mu/</url>
-    <content><![CDATA[<h2 id="1-springboot项目中配置prometheus"><a href="#1-springboot项目中配置prometheus" class="headerlink" title="1. springboot项目中配置prometheus"></a>1. springboot项目中配置prometheus</h2><p> 对于springboot应用，需要以下几个步骤<br>springboot应用开启endpoint，添加actuator的依赖和promethus的依赖</p>
-<pre><code>&lt;dependency&gt;
-  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-  &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-&lt;/dependency&gt;
-
-&lt;dependency&gt;
-  &lt;groupId&gt;io.micrometer&lt;/groupId&gt;
-  &lt;artifactId&gt;micrometer-registry-prometheus&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre><p>在yml文件或者properties文件中，加入以下配置：</p>
-<pre><code># 监控相关配置
-# 开启监控
-management:
-  endpoints:
-    web:
-      exposure:
-        include: &quot;*&quot;  </code></pre><p>这里需要注意是，”*”号是需要加双引号的。<br>启动项目：访问：<a href="http://ip:port/actuator/prometheus">http://ip:port/actuator/prometheus</a><br>如果有数据展示说明配置成功。要是项目配置了context-path。需要加上context-path的路径。<br>项目里面不建议配置context-path</p>
-<h2 id="2-下载prometheus"><a href="#2-下载prometheus" class="headerlink" title="2. 下载prometheus"></a>2. 下载prometheus</h2><p>配置prometheus<br>首先要在官网 <a href="https://prometheus.io/" target="_blank" rel="noopener">https://prometheus.io/</a><br>在下载页面，选择何时的版本下载，推荐下载tar.gz包。下载好后，进行解压。在合适的路径下即可。<br>这里介绍下prometheus的目录和文件：<br>1、prometheus采用的都是yml文件的配置方式。<br>2、在根目录下，有个prometheus.yml配置文件，文件初始化的内容如下： </p>
-<pre><code>global:
-  scrape_interval:     15s   # 这个是每次数据手机的频率
-  evaluation_interval: 15s   # 评估告警规则的频率。
-
-rule_files:
-  # - &quot;first.rules&quot;
-  # - &quot;second.rules&quot;
-
-scrape_configs:               # 通过这里的配置控制prometheus监控的资源
-  - job_name: prometheus      # prometheus自身默认的
-    static_configs:
-      - targets: [&#39;localhost:9090&#39;]  # 默认暴露的是9090端口服务</code></pre><p>global是全局配置。具体见上面的注释说明。</p>
-<h2 id="3-prometheus配置文件修改"><a href="#3-prometheus配置文件修改" class="headerlink" title="3. prometheus配置文件修改"></a>3. prometheus配置文件修改</h2><p>添加我们的应用，对springboot进行监控</p>
-<pre><code>- job_name: &#39;spring-sample&#39;
-    metrics_path: &#39;actuator/prometheus&#39;    # 这里我们springboot暴露出来的endpoint
-    scrape_interval: 5s                    # 信息收集时间是间隔5秒
-    static_configs:
-    - targets: [&#39;localhost:8778&#39;]          # 这里是springboot暴露出来的地址和端口</code></pre><h2 id="4-启动prometheus"><a href="#4-启动prometheus" class="headerlink" title="4. 启动prometheus"></a>4. 启动prometheus</h2><p>这些配置完成后，可以启动prometheus，<br>cd进到prometheus的根目录<br><strong>linux中prometheus启动命令</strong></p>
-<pre><code>./prometheus --config.file=prometheus.yml</code></pre><p><strong>windows中prometheus启动命令</strong></p>
-<p>添加：–web.enable-lifecycle<br>这种启动方法使Prometheus支持reload 配置文件**</p>
-<pre><code>prometheus.exe --web.enable-lifecycle</code></pre><p><strong>reload地址</strong></p>
-<pre><code>http://localhost:9090/-/reload</code></pre><h2 id="5-配置grafana"><a href="#5-配置grafana" class="headerlink" title="5. 配置grafana"></a>5. 配置grafana</h2><p>下载grafana，直接启动即可。</p>
-<ol>
-<li>启动命令参见官网：./grafana-server web</li>
-<li>配置datasource，选择prometheus。这个里面有个很重要的注意点，我看网上很多人在转如何用prometheus监控springboot应用，估计自己没去实际搭建，在interval这个时间上，默认是数字，比如15,代表是15秒。在添加dashboard的时候，会发现监控图标左上角是个红点，报错：Invalid interval string, expecting a number followed by one of “Mwdhmsy” ，这个错的解决方案就是在这些时间间隔后面加个”s”。问题解决。</li>
-<li>选择dashboard，import的里输入一个模板，可以去dashboards去找你对应的模板，我们这里选用jvm的4701模板，然后就能看到你的springboot的监控信息了。到此，整个搭建完成。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>prometheus</category>
-      </categories>
-      <tags>
-        <tag>prometheus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring注解介绍</title>
-    <url>/2020/07/01/spring-zhu-jie/</url>
-    <content><![CDATA[<ol>
-<li>@Controller    组合注解（组合了@Component注解），应用在MVC层（控制层）,DispatcherServlet会自动扫描注解了此注解的类，然后将web请求映射到注解了@RequestMapping的方法上。</li>
-<li>@Service    组合注解（组合了@Component注解），应用在service层（业务逻辑层）</li>
-<li>@Reponsitory    组合注解（组合了@Component注解），应用在dao层（数据访问层）</li>
-<li>@Component    表示一个带注释的类是一个“组件”，成为Spring管理的Bean。当使用基于注解的配置和类路径扫描时，这些类被视为自动检测的候选对象。同时@Component还是一个元注解。</li>
-<li>@Autowired    Spring提供的工具（由Spring的依赖注入工具（BeanPostProcessor、BeanFactoryPostProcessor）自动注入。）</li>
-<li>@Resource    JSR-250提供的注解</li>
-<li>@Inject    JSR-330提供的注解</li>
-<li>@Configuration    声明当前类是一个配置类（相当于一个Spring配置的xml文件）</li>
-<li>@ComponentScan    自动扫描指定包下所有使用</li>
-<li>@Service,@Component,@Controller,@Repository的类并注册</li>
-<li>@Bean    注解在方法上，声明当前方法的返回值为一个Bean。返回的Bean对应的类中可以定义init()方法和destroy()方法，然后@Bean(initMethod=“init”,destroyMethod=“destroy”)定义，在构造之后执行init，在销毁之前执行destroy。</li>
-<li>@Aspect    声明一个切面（就是说这是一个额外功能）</li>
-<li>@After    后置建言（advice），在原方法前执行。</li>
-<li>@Before    前置建言（advice），在原方法后执行。</li>
-<li>@Around    环绕建言（advice），在原方法执行前执行，在原方法执行后再执行（@Around可以实现其他两种advice）</li>
-<li>@PointCut    声明切点，即定义拦截规则，确定有哪些方法会被切入</li>
-<li>@Transactional    声明事务（一般默认配置即可满足要求，当然也可以自定义）</li>
-<li>@Cacheable    声明数据缓存</li>
-<li>@EnableAspectJAutoProxy    开启Spring对AspectJ的支持</li>
-<li>@Value    值得注入。经常与Sping EL表达式语言一起使用，注入普通字符，系统属性，表达式运算结果，其他Bean的属性，文件内容，网址请求内容，配</li>
-<li>文件属性值等等</li>
-<li>@PropertySource    指定文件地址。提供了一种方便的、声明性的机制，用于向Spring的环境添加PropertySource。与@configuration类一起使用。</li>
-<li>@PostConstruct    标注在方法上，该方法在构造函数执行完成之后执行。</li>
-<li>@PreDestroy    标注在方法上，该方法在对象销毁之前执行。@Profile    表示当一个或多个指定的文件是活动的时，一个组件是有资格注册的。使用@Profile注解类或者方法，达到在不同情况下选择实例化不同的Bean。</li>
-<li>@Profile(“dev”)表示为dev时实例化。</li>
-<li>@EnableAsync    开启异步任务支持。注解在配置类上。</li>
-<li>@Async    注解在方法上标示这是一个异步方法，在类上标示这个类所有的方法都是异步方法。</li>
-<li>@EnableScheduling    注解在配置类上，开启对计划任务的支持。</li>
-<li>@Scheduled    注解在方法上，声明该方法是计划任务。支持多种类型的计划任务：cron,fixDelay,fixRate</li>
-<li>@Conditional    根据满足某一特定条件创建特定的Bean</li>
-<li>@Enable*    通过简单的@Enable来开启一项功能的支持。所有@Enable注解都有一个@Import注解，@Import是用来导入配置类的，这也就意味着这些自动开启的实现其实是导入了一些自动配置的Bean(1.直接导入配置类2.依据条件选择配置类3.动态注册配置类)</li>
-<li>@RunWith    这个是Junit的注解，springboot集成了junit。一般在测试类里使用:@RunWith(SpringJUnit4ClassRunner.class) — SpringJUnit4ClassRunner在JUnit环境下提供Sprng TestContext Framework的功能</li>
-<li>@ContextConfiguration    用来加载配置ApplicationContext，其中classes属性用来加载配置类:@ContextConfiguration(classes = {TestConfig.class(自定义的一个配置类)})</li>
-<li>@ActiveProfiles    用来声明活动的profile–@ActiveProfiles(“prod”(这个prod定义在配置类中))</li>
-<li>@EnableWebMvc    用在配置类上，开启SpringMvc的Mvc的一些默认配置：如ViewResolver，MessageConverter等。同时在自己定制SpringMvc的相关配置时需要做到两点：1.配置类继承WebMvcConfigurerAdapter类2.就是必须使用这个@EnableWebMvc注解。</li>
-<li>@RequestMapping    用来映射web请求（访问路径和参数），处理类和方法的。可以注解在类和方法上，注解在方法上的@RequestMapping路径会继承注解在类上的路径。同时支持Serlvet的request和response作为参数，也支持对request和response的媒体类型进行配置。其中有value(路径)，produces(定义返回的媒体类型和字符集)，method(指定请求方式)等属性。</li>
-<li>@GetMapping    GET方式的@RequestMapping</li>
-<li>@PostMapping    POST方式的@RequestMapping</li>
-<li>@ResponseBody    将返回值放在response体内。返回的是数据而不是页面</li>
-<li>@RequestBody    允许request的参数在request体中，而不是在直接链接在地址的后面。此注解放置在参数前。</li>
-<li>@PathVariable    放置在参数前，用来接受路径参数。</li>
-<li>@RestController    组合注解，组合了@Controller和@ResponseBody,当我们只开发一个和页面交互数据的控制层的时候可以使用此注解。</li>
-<li>@ControllerAdvice    用在类上，声明一个控制器建言，它也组合了@Component注解，会自动注册为Spring的Bean。</li>
-<li>@ExceptionHandler    用在方法上定义全局处理，通过他的value属性可以过滤拦截的条件：@ExceptionHandler(value=Exception.class)–表示拦截所有Exception。</li>
-<li>@ModelAttribute    将键值对添加到全局，所有注解了@RequestMapping的方法可获得次键值对（就是在请求到达之前，往model里addAttribute一对name-value而已）。</li>
-<li>@InitBinder    通过@InitBinder注解定制WebDataBinder（用在方法上，方法有一个WebDataBinder作为参数，用WebDataBinder在方法内定制数据绑定，例如可以忽略request传过来的参数Id等）。</li>
-<li>@WebAppConfiguration    一般用在测试上，注解在类上，用来声明加载的ApplicationContext是一个WebApplicationContext。他的属性指定的是Web资源的位置，默认为src/main/webapp,我们可以修改为：@WebAppConfiguration(“src/main/resources”)。</li>
-<li>@EnableAutoConfiguration    此注释自动载入应用程序所需的所有Bean——这依赖于Spring Boot在类路径中的查找。该注解组合了@Import注解，@Import注解导入了EnableAutoCofigurationImportSelector类，它使用SpringFactoriesLoader.loaderFactoryNames方法来扫描具有META-INF/spring.factories文件的jar包。而spring.factories里声明了有哪些自动配置。</li>
-<li>@SpingBootApplication    SpringBoot的核心注解，主要目的是开启自动配置。它也是一个组合注解，主要组合了@Configurer，@EnableAutoConfiguration（核心）和@ComponentScan。可以通过@SpringBootApplication(exclude={想要关闭的自动配置的类名.class})来关闭特定的自动配置。</li>
-<li>@ImportResource    虽然Spring提倡零配置，但是还是提供了对xml文件的支持，这个注解就是用来加载xml配置的。例：@ImportResource({“classpath</li>
-<li>@ConfigurationProperties    将properties属性与一个Bean及其属性相关联，从而实现类型安全的配置。例：@ConfigurationProperties(prefix=“authot”，locations={“classpath</li>
-<li>@ConditionalOnBean    条件注解。当容器里有指定Bean的条件下。</li>
-<li>@ConditionalOnClass    条件注解。当类路径下有指定的类的条件下。</li>
-<li>@ConditionalOnExpression    条件注解。基于SpEL表达式作为判断条件。</li>
-<li>@ConditionalOnJava    条件注解。基于JVM版本作为判断条件。</li>
-<li>@ConditionalOnJndi    条件注解。在JNDI存在的条件下查找指定的位置。</li>
-<li>@ConditionalOnMissingBean    条件注解。当容器里没有指定Bean的情况下。</li>
-<li>@ConditionalOnMissingClass    条件注解。当类路径下没有指定的类的情况下。</li>
-<li>@ConditionalOnNotWebApplication    条件注解。当前项目不是web项目的条件下。</li>
-<li>@ConditionalOnResource    条件注解。类路径是否有指定的值。</li>
-<li>@ConditionalOnSingleCandidate    条件注解。当指定Bean在容器中只有一个，后者虽然有多个但是指定首选的Bean。</li>
-<li>@ConditionalOnWebApplication    条件注解。当前项目是web项目的情况下。</li>
-<li>@EnableConfigurationProperties    注解在类上，声明开启属性注入，使用@Autowired注入。例：@EnableConfigurationProperties(HttpEncodingProperties.class)。</li>
-<li>@AutoConfigureAfter    在指定的自动配置类之后再配置。例：@AutoConfigureAfter(WebMvcAutoConfiguration.class)</li>
-</ol>
-]]></content>
-      <categories>
-        <category>SpringBoot</category>
-      </categories>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>prometheus告警规则配置</title>
-    <url>/2020/07/01/prometheus-gao-jing-gui-ze-pei-zhi/</url>
-    <content><![CDATA[<h2 id="1-创建告警规则配置文件"><a href="#1-创建告警规则配置文件" class="headerlink" title="1. 创建告警规则配置文件"></a>1. 创建告警规则配置文件</h2><p>创建告警规则配置文件first_rules.yml，建议放在与prometheus.yml同级目录</p>
-<h2 id="2-修改prometheus配置文件"><a href="#2-修改prometheus配置文件" class="headerlink" title="2. 修改prometheus配置文件"></a>2. 修改prometheus配置文件</h2><p>修改配置文件prometheus.yml，将告警规则配置文件添加到prometheus.yml。注意路径。</p>
-<pre><code>global:
-  scrape_interval:     15s   # 这个是每次数据手机的频率
-  evaluation_interval: 15s   # 评估告警规则的频率。
-
-# Alertmanager configuration
-alerting:
-  alertmanagers:
-  - static_configs:
-    - targets:
-       - &#39;localhost:9093&#39;
-
-rule_files:
-    - &quot;first_rules.yml&quot;
-  # - &quot;second_rules.yml&quot;
-
-scrape_configs:               # 通过这里的配置控制prometheus监控的资源
-  - job_name: prometheus      # prometheus自身默认的
-    static_configs:
-      - targets: [&#39;localhost:9090&#39;]  # 默认暴露的是9090端口服务</code></pre><h2 id="3-配置告警规则文件"><a href="#3-配置告警规则文件" class="headerlink" title="3. 配置告警规则文件"></a>3. 配置告警规则文件</h2><blockquote>
-<p>在告警规则文件中，我们可以将一组相关的规则设置定义在一个group下。在每一个group中我们可以定义多个告警规则(rule)。一条告警规则主要由以下几部分组成：<br><strong>alert</strong>：告警规则的名称。<br><strong>expr</strong>：基于PromQL表达式告警触发条件，用于计算是否有时间序列满足该条件。<br><strong>for</strong>：评估等待时间，可选参数。用于表示只有当触发条件持续一段时间后才发送告警。在等待期间新产生告警的状态为pending。<br><strong>labels</strong>：自定义标签，允许用户指定要附加到告警上的一组附加标签。<br><strong>annotations</strong>：用于指定一组附加信息，比如用于描述告警详细信息的文字等，annotations的内容在告警产生时会一同作为参数发送到Alertmanager。summary描述告警的概要信息，description用于描述告警的详细信息。同时Alertmanager的UI也会根据这两个标签值，显示告警信息。</p>
-</blockquote>
-<p>这里配置中的acs-ms为应用名字。也就是job的名字</p>
-<h3 id="监控应用是否宕机，"><a href="#监控应用是否宕机，" class="headerlink" title="监控应用是否宕机，"></a>监控应用是否宕机，</h3><pre><code>alert: serverDown
-expr: up{job=&quot;acs-ms&quot;}  ==  0
-for: 1m
-labels:
-  severity: critical
-annotations:
-  description: 实例：{{ $labels.instance }} 宕机了
-  summary: Instance {{ $labels.instance }} down</code></pre><h3 id="监控接口发生异常"><a href="#监控接口发生异常" class="headerlink" title="监控接口发生异常"></a>监控接口发生异常</h3><pre><code>alert: interface_request_exception
-expr: increase(http_server_requests_seconds_count{exception!=&quot;None&quot;,exception!=&quot;ServiceException&quot;,job=&quot;acs-ms&quot;}[1m])
-  &gt; 0
-for: 1s
-labels:
-  severity: page
-annotations:
-  description: &#39;实例：{{ $labels.instance }}的{{$labels.uri}}的接口发生了{{ $labels.exception
-    }}异常 &#39;
-  summary: 监控一定时间内接口请求异常的数量</code></pre><blockquote>
-<p><strong>exception!=”ServiceException”</strong> 是将一些手动抛出的自定义异常给排除掉。</p>
-</blockquote>
-<h3 id="监控接口请求时长"><a href="#监控接口请求时长" class="headerlink" title="监控接口请求时长"></a>监控接口请求时长</h3><pre><code>alert: interface_request_duration
-expr: increase(http_server_requests_seconds_sum{exception=&quot;None&quot;,job=&quot;acs-ms&quot;,uri!~&quot;.*Excel.*&quot;}[1m])
-  / increase(http_server_requests_seconds_count{exception=&quot;None&quot;,job=&quot;acs-ms&quot;,uri!~&quot;.*Excel.*&quot;}[1m])
-  &gt; 5
-for: 5s
-labels:
-  severity: page
-annotations:
-  description: &#39;实例：{{ $labels.instance }} 的{{$labels.uri}}接口请求时长超过了设置的阈值：5s，当前值{{
-    $value }}s &#39;
-  summary: 监控一定时间内的接口请求时长</code></pre><blockquote>
-<p><strong>uri!~”.<em>Excel.</em>“</strong> 是将一些接口给排除掉。这个是将包含Excel的接口排除掉。</p>
-</blockquote>
-<h3 id="监测系统CPU使用的百分比"><a href="#监测系统CPU使用的百分比" class="headerlink" title="监测系统CPU使用的百分比"></a>监测系统CPU使用的百分比</h3><pre><code>alert: CPUTooHeight
-expr: process_cpu_usage{job=&quot;acs-ms&quot;} &gt; 0.3
-for: 15s
-labels:
-  severity: page
-annotations:
-  description: &#39;实例：{{ $labels.instance }} 的cpu超过了设置的阈值：30%，当前值{{ $value }} &#39;
-  summary: 监测系统CPU使用的百分比</code></pre><h3 id="监控tomcat活动线程占总线程的比例"><a href="#监控tomcat活动线程占总线程的比例" class="headerlink" title="监控tomcat活动线程占总线程的比例"></a>监控tomcat活动线程占总线程的比例</h3><pre><code>alert: tomcat_thread_height
-expr: tomcat_threads_busy_threads{job=&quot;acs-ms&quot;}
-  / tomcat_threads_config_max_threads{job=&quot;acs-ms&quot;} &gt; 0.5
-for: 15s
-labels:
-  severity: page
-annotations:
-  description: &#39;实例：{{ $labels.instance }} 的tomcat活动线程占总线程的比例超过了设置的阈值：50%，当前值{{ $value
-    }} &#39;
-  summary: 监控tomcat活动线程占总线程的比例</code></pre><h2 id="4-启动Prometheus使配置生效"><a href="#4-启动Prometheus使配置生效" class="headerlink" title="4. 启动Prometheus使配置生效"></a>4. 启动Prometheus使配置生效</h2><pre><code>./prometheus --config.file=prometheus.yml</code></pre><h2 id="5-查看告警规则配置"><a href="#5-查看告警规则配置" class="headerlink" title="5. 查看告警规则配置"></a>5. 查看告警规则配置</h2><p> 访问：<strong><a href="http://ip:port:9090/rules">http://ip:port:9090/rules</a></strong></p>
-]]></content>
-      <categories>
-        <category>prometheus</category>
-      </categories>
-      <tags>
-        <tag>prometheus</tag>
       </tags>
   </entry>
 </search>
