@@ -15,7 +15,7 @@ tags:
 
 RocketMQ的消息是存储到磁盘上的，这样既能保证断电后恢复， 又可以让存储的消息量超出内存的限制。RocketMQ为了提高性能，会尽可能地保证磁盘的顺序写。消息在通过Producer写入RocketMQ的时 候，有两种写磁盘方式，分布式同步刷盘和异步刷盘。
 
-![](https://img-blog.csdnimg.cn/20210430145056233.png)
+![图片描述](https://img-blog.csdnimg.cn/20210430145056233.png)
 
 ### 1.1 同步刷盘
 
@@ -33,7 +33,7 @@ RocketMQ的消息是存储到磁盘上的，这样既能保证断电后恢复，
 
 ## 2. 高可用机制
 
-![](https://img-blog.csdnimg.cn/20210430145158597.jpg)
+![图片描述](https://img-blog.csdnimg.cn/20210430145158597.jpg)
 
 
 
@@ -51,7 +51,7 @@ Master角色的Broker支持读和写，Slave角色的Broker仅支持读，也就
 
 在创建Topic的时候，把Topic的多个Message Queue创建在多个Broker组上（相同Broker名称，不同 brokerId的机器组成一个Broker组），这样当一个Broker组的Master不可 用后，其他组的Master仍然可用，Producer仍然可以发送消息。 RocketMQ目前还不支持把Slave自动转成Master，如果机器资源不足， 需要把Slave转成Master，则要手动停止Slave角色的Broker，更改配置文 件，用新的配置文件启动Broker。
 
-![](https://img-blog.csdnimg.cn/2021043014534273.jpg)
+![图片描述](https://img-blog.csdnimg.cn/2021043014534273.jpg)
 
 
 
@@ -87,7 +87,7 @@ Master角色的Broker支持读和写，Slave角色的Broker仅支持读，也就
 
 Producer端，每个实例在发消息的时候，默认会轮询所有的message queue发送，以达到让消息平均落在不同的queue上。而由于queue可以散落在不同的broker，所以消息就发送到不同的broker下，如下图：
 
-![](https://img-blog.csdnimg.cn/20210507160454111.png)
+![图片描述](https://img-blog.csdnimg.cn/20210507160454111.png)
 
 图中箭头线条上的标号代表顺序，发布方会把第一条消息发送至 Queue 0，然后第二条消息发送至 Queue 1，以此类推。
 
@@ -101,11 +101,11 @@ Producer端，每个实例在发消息的时候，默认会轮询所有的messag
 
 默认的分配算法是AllocateMessageQueueAveragely，如下图：
 
-![](https://img-blog.csdnimg.cn/20210430145518345.png)
+![图片描述](https://img-blog.csdnimg.cn/20210430145518345.png)
 
 还有另外一种平均的算法是AllocateMessageQueueAveragelyByCircle，也是平均分摊每一条queue，只是以环状轮流分queue的形式，如下图：
 
-![](https://img-blog.csdnimg.cn/20210430145541347.png)
+![图片描述](https://img-blog.csdnimg.cn/20210430145541347.png)
 
 需要注意的是，集群模式下，queue都是只允许分配只一个实例，这是由于如果多个实例同时消费一个queue的消息，由于拉取哪些消息是consumer主动控制的，那样会导致同一个消息在不同的实例下被消费多次，所以算法上都是一个queue只分给一个consumer实例，一个consumer实例可以允许同时分到不同的queue。
 
@@ -119,7 +119,7 @@ Producer端，每个实例在发消息的时候，默认会轮询所有的messag
 
 在实现上，其中一个不同就是在consumer分配queue的时候，所有consumer都分到所有的queue。
 
-![](https://img-blog.csdnimg.cn/20210430145602786.png)
+![图片描述](https://img-blog.csdnimg.cn/20210430145602786.png)
 
 
 

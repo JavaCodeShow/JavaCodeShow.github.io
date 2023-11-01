@@ -219,7 +219,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 安装插件，直接安装默认提供的插件即可。
 
-![](6907580-d2ae24d404f8d137.png)
+![图片描述](6907580-d2ae24d404f8d137.png)
 
 
 
@@ -244,7 +244,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![](Snipaste_2021-03-30_14-06-03.png)
+![图片描述](Snipaste_2021-03-30_14-06-03.png)
 
 ​		
 
@@ -256,11 +256,11 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![](20200524113201698.png)
+![图片描述](20200524113201698.png)
 
 
 
-![](20200524113301937.png)
+![图片描述](20200524113301937.png)
 
 
 
@@ -271,13 +271,13 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 ​	填好之后在点击高级配置密码和端口
 
-![](Snipaste_2021-03-29_23-38-06.png)
+![图片描述](Snipaste_2021-03-29_23-38-06.png)
 
 
 
 
 
-![](Snipaste_2021-03-29_23-39-26.png)
+![图片描述](Snipaste_2021-03-29_23-39-26.png)
 
 ​	测试一下，能连接上即可。
 
@@ -287,19 +287,19 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 **maven配置**
 
-![](Snipaste_2021-03-29_22-03-22.png)
+![图片描述](Snipaste_2021-03-29_22-03-22.png)
 
 ​		**JDK安装**
 
 
 
-![](Snipaste_2021-03-29_22-04-56.png)
+![图片描述](Snipaste_2021-03-29_22-04-56.png)
 
 ​	**git安装**
 
 
 
-![](Snipaste_2021-03-29_22-05-59.png)
+![图片描述](Snipaste_2021-03-29_22-05-59.png)
 
 
 
@@ -307,7 +307,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![](Snipaste_2021-03-29_22-06-54.png)
+![图片描述](Snipaste_2021-03-29_22-06-54.png)
 
 
 
@@ -317,7 +317,7 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 
 
-![](20191019135659465.png)
+![图片描述](20191019135659465.png)
 
 保存后，点击启动代理配置，查看日志是否成功
 
@@ -327,39 +327,39 @@ cat /root/.jenkins/secrets/initialAdminPassword
 
 接下来可以新建一个任务执行了
 
-![](Snipaste_2021-03-30_14-09-30.png)
+![图片描述](Snipaste_2021-03-30_14-09-30.png)
 
 
 
-![](Snipaste_2021-03-30_14-11-34.png)
+![图片描述](Snipaste_2021-03-30_14-11-34.png)
 
 
 
 
 
-![](Snipaste_2021-03-30_14-13-18.png)
+![图片描述](Snipaste_2021-03-30_14-13-18.png)
 
 
 
-![](Snipaste_2021-03-30_14-17-03.png)
+![图片描述](Snipaste_2021-03-30_14-17-03.png)
 
 
 
 配置项目构建完成后进行的操作。这里可以配置通过ssh连接远程其他服务器执行，或者本机直接执行等。
 
-![](Snipaste_2021-03-30_15-43-54.png)
+![图片描述](Snipaste_2021-03-30_15-43-54.png)
 
 
 
 本机运行shell命令
 
-![](Snipaste_2021-03-30_14-19-12.png)
+![图片描述](Snipaste_2021-03-30_14-19-12.png)
 
 
 
 远程服务器上运行shell命令。这个服务器就是在前面通过publish and ssh配置的服务器。
 
-![](Snipaste_2021-03-30_00-03-14.png)
+![图片描述](Snipaste_2021-03-30_00-03-14.png)
 
 术语解释：
 
@@ -438,7 +438,7 @@ echo "shell脚本执行完毕"
 
 最后，保存一下。构建项目即可。根据构建日志分析项目构建情况。
 
-![](Snipaste_2021-03-30_16-28-53.png)
+![图片描述](Snipaste_2021-03-30_16-28-53.png)
 
 至此：使用Jenkins运行SpringBoot项目到此结束。
 

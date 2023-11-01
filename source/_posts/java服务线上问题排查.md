@@ -98,11 +98,11 @@ tags:
 
    目录位置：%JAVA_HOME%\bin,如果不确定JAVA_HOME的位置，可以在cmd命令行中输入：echo %JAVA_HOME%  确定位置
 
-   ![](https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center)
+   ![图片描述](https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center)
 
 2. 从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，而其他的对象占用内存并不大，那么罪魁祸首久事这个UserDTO对象，我们点击进去继续查看。
 
-   ![](https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center)
+   ![图片描述](https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center)
 
    > 如果出现内存不足，可以将%JAVA_HOME%\lib\visualvm\etc目录里面的visualvm.conf的堆内存修改一下。
    >
@@ -115,11 +115,11 @@ tags:
 
    从下面图片可以看到左边是这个UserDTO对象的所有实例，右上是对象的具体信息，包含对象里面的字段，右下是这个对象的被引用信息，在这个图里面也可以看到这个对象有8720756个，查看引用看到这个对象是在一个List里面，我们点击这个list继续往下看。
 
-   ![](https://img-blog.csdnimg.cn/9992d046bf414e4aa18ddbdb83a59c94.png#pic_center)
+   ![图片描述](https://img-blog.csdnimg.cn/9992d046bf414e4aa18ddbdb83a59c94.png#pic_center)
 
 4. 点开这个list会发现，这个list的大小是8720756万个，这个list的泛型是UserDTO对象，那么这个list中有8720756万个UsetDTO对象，那么OOM的原因也就水落石出了。从引用中可以看到这个list对象是在HelloService这个类里面，那么接下来结合代码不难发现是哪一处的代码出现问题，然后去改就ok了。
 
-   ![](https://img-blog.csdnimg.cn/7b86abe6a783434b82c233b9b9645df1.png#pic_center)
+   ![图片描述](https://img-blog.csdnimg.cn/7b86abe6a783434b82c233b9b9645df1.png#pic_center)
 
 
 
