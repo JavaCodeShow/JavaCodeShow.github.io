@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    539
+                    548
                 </div>
                 
 
@@ -484,7 +484,7 @@ show binary logs;
 #查看主库状态
 show master status;</code></pre></li>
 <li><p>canal默认用户名和密码都是canal,给canal服务创建账号，并分配读的权限。</p>
-<pre><code>#创建canal账号
+<pre><code>#创建canal账号,用户命和密码都是canal
 CREATE USER canal IDENTIFIED BY &#39;canal&#39;;    
 GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &#39;canal&#39;@&#39;%&#39;;  
 -- GRANT ALL PRIVILEGES ON *.* TO &#39;canal&#39;@&#39;%&#39; ;  

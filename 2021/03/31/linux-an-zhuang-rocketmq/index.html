@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    2.7k
                 </div>
                 
 
@@ -576,7 +576,7 @@ firewall-cmd --remove-port<span class="token operator">=</span>10911/tcp --perma
 firewall-cmd --remove-port<span class="token operator">=</span>11011/tcp --permanent 
 <span class="token comment" spellcheck="true"># 重启防火墙</span>
 firewall-cmd --reload</code></pre>
-<h3 id="3-3-单Master模式"><a href="#3-3-单Master模式" class="headerlink" title="3.3 单Master模式"></a>3.3 单Master模式</h3><h4 id="3-3-1-创建消息存储路径"><a href="#3-3-1-创建消息存储路径" class="headerlink" title="3.3.1 创建消息存储路径"></a>3.3.1 创建消息存储路径</h4><p>系统根目录执行一下命令</p>
+<h3 id="3-3-单Master模式"><a href="#3-3-单Master模式" class="headerlink" title="3.3 单Master模式"></a>3.3 单Master模式</h3><h4 id="3-3-1-创建消息存储路径"><a href="#3-3-1-创建消息存储路径" class="headerlink" title="3.3.1 创建消息存储路径"></a>3.3.1 创建消息存储路径</h4><p>系统根目录执行一下命令，<strong>如果使用默认的存储路径，这个可以忽略不进行配置</strong></p>
 <pre><code>cd /
 mkdir -p /data/rocketmq/single-master/broker-a/store
 mkdir -p /data/rocketmq/single-master/broker-a/store/commitlog
@@ -590,9 +590,9 @@ brokerName=broker-a
 #0 表示 Master，&gt;0 表示 Slave
 brokerId=0
 #nameServer地址，分号分割
-namesrvAddr=公网ip:9876
+namesrvAddr=公网IP:9876
 # 你的公网IP
-brokerIP1=公网ip
+brokerIP1=公网IP.249
 #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
 defaultTopicQueueNums=4
 #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
@@ -613,18 +613,6 @@ mapedFileSizeConsumeQueue=300000
 #redeleteHangedFileInterval=120000
 #检测物理文件磁盘空间
 diskMaxUsedSpaceRatio=88
-#存储路径
-storePathRootDir=/data/rocketmq/single-master/broker-a/store
-#commitLog 存储路径
-storePathCommitLog=/data/rocketmq/single-master/broker-a/store/commitlog
-#消费队列存储路径存储路径
-storePathConsumeQueue=/data/rocketmq/single-master/broker-a/store/consumequeue
-#消息索引存储路径
-storePathIndex=/data/rocketmq/single-master/broker-a/store/index
-#checkpoint 文件存储路径
-storeCheckpoint=/data/rocketmq/single-master/broker-a/store/checkpoint
-#abort 文件存储路径
-abortFile=/data/rocketmq/single-master/broker-a/store/abort
 #限制的消息大小
 maxMessageSize=65536
 #flushCommitLogLeastPages=4
@@ -652,7 +640,7 @@ pullMessageThreadPoolNums=18</code></pre><h4 id="3-3-3-启动"><a href="#3-3-3-�
 <li><p>启动broker</p>
 <pre><code>nohup sh bin/mqbroker -c conf/broker.conf &gt;/dev/null &amp;</code></pre></li>
 <li><p>查看Broker启动日志</p>
-<pre><code>tail -500f ~/logs/rocketmqlogs/broker.log </code></pre></li>
+<pre><code>tail -500f ~/logs/rocketmqlogs/broker.log</code></pre></li>
 <li><p>关闭NameServer</p>
 <pre><code>sh bin/mqshutdown namesrv</code></pre></li>
 <li><p>关闭Broker</p>
