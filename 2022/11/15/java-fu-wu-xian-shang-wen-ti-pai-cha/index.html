@@ -462,7 +462,9 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="java服务线上问题排查"><a href="#java服务线上问题排查" class="headerlink" title="java服务线上问题排查"></a>java服务线上问题排查</h1><h2 id="1、内存"><a href="#1、内存" class="headerlink" title="1、内存"></a>1、内存</h2><h3 id="1-1、-查看服务占用内存"><a href="#1-1、-查看服务占用内存" class="headerlink" title="1.1、 查看服务占用内存"></a>1.1、 查看服务占用内存</h3><ol>
+                <meta name="referrer" content="no-referrer">
+
+<h1 id="java服务线上问题排查"><a href="#java服务线上问题排查" class="headerlink" title="java服务线上问题排查"></a>java服务线上问题排查</h1><h2 id="1、内存"><a href="#1、内存" class="headerlink" title="1、内存"></a>1、内存</h2><h3 id="1-1、-查看服务占用内存"><a href="#1-1、-查看服务占用内存" class="headerlink" title="1.1、 查看服务占用内存"></a>1.1、 查看服务占用内存</h3><ol>
 <li><p>可以通过prometheus查看，此处不做过多说明。</p>
 </li>
 <li><p>通过arthas的memory命令查看</p>
@@ -513,12 +515,10 @@ jps -l</code></pre></li>
 <h4 id="1-2-3、分析dump文件"><a href="#1-2-3、分析dump文件" class="headerlink" title="1.2.3、分析dump文件"></a>1.2.3、分析dump文件</h4><ol>
 <li><p>如果是 <strong>Windows</strong> 系统我们也可以直接使用JDK自带的 <strong>jvisualvm</strong> 工具（在 <strong>JDK</strong> 的 <strong>bin</strong> 目录下：jvisualvm.exe）</p>
 <p>目录位置：%JAVA_HOME%\bin,如果不确定JAVA_HOME的位置，可以在cmd命令行中输入：echo %JAVA_HOME%  确定位置</p>
+<p><img src="https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center" alt="图片描述"></p>
 </li>
-</ol>
-<p>   <img src="https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center" alt="图片"></p>
-<ol start="2">
 <li><p>从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，而其他的对象占用内存并不大，那么罪魁祸首久事这个UserDTO对象，我们点击进去继续查看。</p>
-<p><img src="https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center" alt></p>
+<p><img src="https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center" alt="图片描述"></p>
 <blockquote>
 <p>如果出现内存不足，可以将%JAVA_HOME%\lib\visualvm\etc目录里面的visualvm.conf的堆内存修改一下。</p>
 <pre><code>-Xms4096m -J-Xmx4096m
@@ -526,10 +526,10 @@ visualvm_default_options=&quot;-J-client -J-Xms4096m -J-Xmx4096m ***</code></pre
 </li>
 <li><p>分析对象</p>
 <p>从下面图片可以看到左边是这个UserDTO对象的所有实例，右上是对象的具体信息，包含对象里面的字段，右下是这个对象的被引用信息，在这个图里面也可以看到这个对象有8720756个，查看引用看到这个对象是在一个List里面，我们点击这个list继续往下看。</p>
-<p><img src="https://img-blog.csdnimg.cn/9992d046bf414e4aa18ddbdb83a59c94.png#pic_center" alt></p>
+<p><img src="https://img-blog.csdnimg.cn/9992d046bf414e4aa18ddbdb83a59c94.png#pic_center" alt="图片描述"></p>
 </li>
 <li><p>点开这个list会发现，这个list的大小是8720756万个，这个list的泛型是UserDTO对象，那么这个list中有8720756万个UsetDTO对象，那么OOM的原因也就水落石出了。从引用中可以看到这个list对象是在HelloService这个类里面，那么接下来结合代码不难发现是哪一处的代码出现问题，然后去改就ok了。</p>
-<p><img src="https://img-blog.csdnimg.cn/7b86abe6a783434b82c233b9b9645df1.png#pic_center" alt></p>
+<p><img src="https://img-blog.csdnimg.cn/7b86abe6a783434b82c233b9b9645df1.png#pic_center" alt="图片描述"></p>
 </li>
 </ol>
 <h2 id="2、CPU"><a href="#2、CPU" class="headerlink" title="2、CPU"></a>2、CPU</h2><h3 id="2-1、查看系统CPU"><a href="#2-1、查看系统CPU" class="headerlink" title="2.1、查看系统CPU"></a>2.1、查看系统CPU</h3><p>linux服务器里面输入top命令，显示如下：</p>

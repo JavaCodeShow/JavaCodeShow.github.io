@@ -529,7 +529,7 @@ messages<span class="token punctuation">.</span><span class="token function">add
    <span class="token comment" spellcheck="true">//处理error</span>
 <span class="token punctuation">}</span></code></pre>
 <h2 id="6-事务消息"><a href="#6-事务消息" class="headerlink" title="6. 事务消息"></a>6. 事务消息</h2><h3 id="6-1-事务消息执行流程"><a href="#6-1-事务消息执行流程" class="headerlink" title="6.1 事务消息执行流程"></a>6.1 事务消息执行流程</h3><p>流程图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210401171744307.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70" alt></p>
+<p><img src="https://img-blog.csdnimg.cn/20210401171744307.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70" alt="图片描述"></p>
 <p>上图说明了事务消息的大致方案，其中分为两个流程：正常事务消息的发送及提交、事务消息的补偿流程。</p>
 <h4 id="1）事务消息发送及提交"><a href="#1）事务消息发送及提交" class="headerlink" title="1）事务消息发送及提交"></a>1）事务消息发送及提交</h4><p>(1) 发送消息（half消息）。</p>
 <p>(2) 服务端响应消息写入结果。</p>

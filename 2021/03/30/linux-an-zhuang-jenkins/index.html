@@ -533,7 +533,7 @@ Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: jenkins.service failed.
 <p>输入下面的命令，即可获取密码</p>
 <pre class=" language-undefined"><code class="language-undefined">cat /root/.jenkins/secrets/initialAdminPassword  </code></pre>
 <p>安装插件，直接安装默认提供的插件即可。</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/6907580-d2ae24d404f8d137.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/6907580-d2ae24d404f8d137.png" alt="图片描述"></p>
 <p>创建管理员账号</p>
 <p><img src="/2021/03/30/linux-an-zhuang-jenkins/6907580-ce4cf9c7eb5b435f.png" alt="6907580-ce4cf9c7eb5b435f"></p>
 <h2 id="四、jenkins基本配置"><a href="#四、jenkins基本配置" class="headerlink" title="四、jenkins基本配置"></a>四、jenkins基本配置</h2><blockquote>
@@ -542,40 +542,40 @@ Mar 29 15:07:28 iZuf6j6c7vo33inl2830e3Z systemd[1]: jenkins.service failed.
 <h3 id="4-1-插件安装"><a href="#4-1-插件安装" class="headerlink" title="4.1 插件安装"></a>4.1 插件安装</h3><p><strong>安装Publish over SSH插件并配置</strong></p>
 <p>系统管理==》插件管理</p>
 <p>搜索Publish over SSH下载安装成功后后重新登陆jenkins</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-06-03.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-06-03.png" alt="图片描述"></p>
 <p>​        </p>
 <h3 id="4-2-系统配置"><a href="#4-2-系统配置" class="headerlink" title="4.2 系统配置"></a>4.2 系统配置</h3><p><strong>系统配置里面有一些实用的功能可以进行配置。需要的话可以自行配置。</strong></p>
 <p>拉到最后面找到Publish over SSH，点击新增</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20200524113201698.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20200524113301937.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20200524113201698.png" alt="图片描述"></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20200524113301937.png" alt="图片描述"></p>
 <p>​    name：随便填<br>​    Hostname：服务器IP（这个就是要把打包好的jar包发送并运行的目标主机）<br>​    Username：root<br>​    Remote Directory：要发送到的远程主机的目录，这里我们填 / 根目录就行，因为后面这个路径我们还要配置</p>
 <p>​    填好之后在点击高级配置密码和端口</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_23-38-06.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_23-39-26.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_23-38-06.png" alt="图片描述"></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_23-39-26.png" alt="图片描述"></p>
 <p>​    测试一下，能连接上即可。</p>
 <h3 id="4-3-全局工具配置"><a href="#4-3-全局工具配置" class="headerlink" title="4.3 全局工具配置"></a>4.3 全局工具配置</h3><p>在这里配置jdk，git，maven的位置</p>
 <p><strong>maven配置</strong></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-03-22.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-03-22.png" alt="图片描述"></p>
 <p>​        <strong>JDK安装</strong></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-04-56.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-04-56.png" alt="图片描述"></p>
 <p>​    <strong>git安装</strong></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-05-59.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-05-59.png" alt="图片描述"></p>
 <p>​    <strong>maven安装</strong></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-06-54.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-29_22-06-54.png" alt="图片描述"></p>
 <h3 id="4-4-节点配置"><a href="#4-4-节点配置" class="headerlink" title="4.4 节点配置"></a>4.4 节点配置</h3><p>在Jenkins中依次点击：系统管理 -&gt; 节点管理 -&gt; 新建节点</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20191019135659465.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/20191019135659465.png" alt="图片描述"></p>
 <p>保存后，点击启动代理配置，查看日志是否成功</p>
 <h2 id="五、构建maven项目"><a href="#五、构建maven项目" class="headerlink" title="五、构建maven项目"></a>五、构建maven项目</h2><p>接下来可以新建一个任务执行了</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-09-30.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-11-34.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-13-18.png" alt></p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-17-03.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-09-30.png" alt="图片描述"></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-11-34.png" alt="图片描述"></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-13-18.png" alt="图片描述"></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-17-03.png" alt="图片描述"></p>
 <p>配置项目构建完成后进行的操作。这里可以配置通过ssh连接远程其他服务器执行，或者本机直接执行等。</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_15-43-54.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_15-43-54.png" alt="图片描述"></p>
 <p>本机运行shell命令</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-19-12.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_14-19-12.png" alt="图片描述"></p>
 <p>远程服务器上运行shell命令。这个服务器就是在前面通过publish and ssh配置的服务器。</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_00-03-14.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_00-03-14.png" alt="图片描述"></p>
 <p>术语解释：</p>
 <blockquote>
 <p><strong>Source files</strong>：Source files的目录是基于当前项目的目录(可以从jenkins的安装目录下找到)：例如当前项目名称为distribute-id-ms，则对于root用户，Source files中的目录是相对于/usr/lib/jenkins/workspace/distribute-id-ms目录下的，因此，如果我们要发送distribute-id-ms下的target目录下的distribute-id-ms-1.0.jar包，所以这里需要填写：target/distribute-id-ms-1.0.jar</p>
@@ -636,7 +636,7 @@ echo &quot;shell脚本执行完毕&quot;
 
 </code></pre><p><strong>注意事项：上面的目录是我自身配置的目录。实际目录根据自身情况检查一下。以免出现不必要的错误。这个可以在服务器上面创建一个脚本执行检查一下。</strong></p>
 <p>最后，保存一下。构建项目即可。根据构建日志分析项目构建情况。</p>
-<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_16-28-53.png" alt></p>
+<p><img src="/2021/03/30/linux-an-zhuang-jenkins/Snipaste_2021-03-30_16-28-53.png" alt="图片描述"></p>
 <p>至此：使用Jenkins运行SpringBoot项目到此结束。</p>
 <h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>通过实际部署Jenkins，并构建SpringBoot + maven项目，大大加深了对jenkins的熟悉。看到最后的build success</p>
 <p>，内心还是有点小激动的。实际部署操作一遍，并且写这篇博客共花了两天的时间。期间，也参考了其他人的博客，非常感谢！</p>
