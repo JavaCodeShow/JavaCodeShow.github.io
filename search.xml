@@ -1317,8 +1317,10 @@ jps -l</code></pre></li>
 <h4 id="1-2-3、分析dump文件"><a href="#1-2-3、分析dump文件" class="headerlink" title="1.2.3、分析dump文件"></a>1.2.3、分析dump文件</h4><ol>
 <li><p>如果是 <strong>Windows</strong> 系统我们也可以直接使用JDK自带的 <strong>jvisualvm</strong> 工具（在 <strong>JDK</strong> 的 <strong>bin</strong> 目录下：jvisualvm.exe）</p>
 <p>目录位置：%JAVA_HOME%\bin,如果不确定JAVA_HOME的位置，可以在cmd命令行中输入：echo %JAVA_HOME%  确定位置</p>
-<p><img src="https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center" alt></p>
 </li>
+</ol>
+<p>   <img src="https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center" alt="图片"></p>
+<ol start="2">
 <li><p>从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，而其他的对象占用内存并不大，那么罪魁祸首久事这个UserDTO对象，我们点击进去继续查看。</p>
 <p><img src="https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center" alt></p>
 <blockquote>
