@@ -100,18 +100,20 @@ tags:
 
    目录位置：%JAVA_HOME%\bin,如果不确定JAVA_HOME的位置，可以在cmd命令行中输入：echo %JAVA_HOME%  确定位置
 
-   ![图片描述](https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center)
-
-2. 从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，而其他的对象占用内存并不大，那么罪魁祸首久事这个UserDTO对象，我们点击进去继续查看。
-
-   ![图片描述](https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center)
-
    > 如果出现内存不足，可以将%JAVA_HOME%\lib\visualvm\etc目录里面的visualvm.conf的堆内存修改一下。
    >
    > ```
    > -Xms4096m -J-Xmx4096m
    > visualvm_default_options="-J-client -J-Xms4096m -J-Xmx4096m ***
    > ```
+
+   或者在网页上下载最新版的visualvm：https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。
+
+   ![图片描述](https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center)
+
+2. 从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，而其他的对象占用内存并不大，那么罪魁祸首就是这个UserDTO对象，我们点击进去继续查看。
+
+   ![图片描述](https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center)
 
 3. 分析对象
 
@@ -124,6 +126,18 @@ tags:
    ![图片描述](https://img-blog.csdnimg.cn/7b86abe6a783434b82c233b9b9645df1.png#pic_center)
 
 
+
+5. 查看这个对象在哪个地方被引用了，以及GC Root链
+
+   ![图片](https://img-blog.csdnimg.cn/36703789a65c42968d41fb4661d71503.png#pic_center)
+
+6. 查看对象当前的线程堆栈信息
+
+   ![图片](https://img-blog.csdnimg.cn/a3f83d6b1b6e4b529be5e9edbff3b92c.png#pic_center)
+
+   ![图片](https://img-blog.csdnimg.cn/dda0c81faf374dfd92523be61b6d013d.png#pic_center)
+
+这样子具体有问题的代码位置就找到了。
 
 ## 2、CPU
 
