@@ -289,6 +289,175 @@ List<?>则是一个通配符类型，表示只能包含某种未知对象类型�
 ]]></content>
   </entry>
   <entry>
+    <title>IDEA使用JRebel进行热部署</title>
+    <url>/2021/01/12/idea-shi-yong-jrebel-jin-xing-re-bu-shu/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="IDEA使用JRebel进行热部署教程"><a href="#IDEA使用JRebel进行热部署教程" class="headerlink" title="IDEA使用JRebel进行热部署教程"></a>IDEA使用JRebel进行热部署教程</h1><h2 id="1-安装JRebel插件"><a href="#1-安装JRebel插件" class="headerlink" title="1. 安装JRebel插件"></a>1. <strong>安装JRebel插件</strong></h2><pre><code>在IDEA-&gt;Settings-plugin下载Jrebel的插件，下载好了重启程序使插件生效</code></pre><p><img src="https://img-blog.csdnimg.cn/20210112115750158.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="2-激活"><a href="#2-激活" class="headerlink" title="2. 激活"></a>2. 激活</h2><ol>
+<li><p>直接进入到jrebel的配置项中，点击active now链接进入到激活界面，选择Team URL(connect to online licensing service)方式激活</p>
+<p><img src="https://img-blog.csdnimg.cn/20191127182857244.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpZXJrYW5n,size_16,color_FFFFFF,t_70" alt="img"></p>
+</li>
+<li><p>第一行输入： <a href="http://jrebel.qekang.com:80/{guid}" target="_blank" rel="noopener">http://jrebel.qekang.com:80/{guid}</a>  ， guid在<strong><a href="https://jrebel.qekang.com/" target="_blank" rel="noopener">https://jrebel.qekang.com/</a></strong> 这个网站获得<br><img src="https://img-blog.csdnimg.cn/202101121158311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</li>
+</ol>
+<p>   第二行的email输入任意一个符合个数的email地址即可</p>
+<h2 id="3-JRebel使用"><a href="#3-JRebel使用" class="headerlink" title="3. JRebel使用"></a>3. <strong>JRebel使用</strong></h2><ol>
+<li><p>设置IDEA自动编译项目，将Build project automatiacally这个选下勾选上。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/41635ebc0a734df2fdbb49908763ecd4.png" alt="img"></p>
+<p>   按住ctrl + shift + alt +/  这四个键,      点击registry,将compiler.automake.allow.when.app.running这个选项勾选上，如果已经勾选了，跳过此步骤即可。<br><img src="https://img-blog.csdnimg.cn/20210112115857366.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20210112115919912.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>设置JRebel Work online 和 Redeploy time</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20210112115938743.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<ol start="3">
+<li>勾选要使用JRebel的项目，这里会在每个项目下面生成一个rebel.xml文件。可通过设置git的.gitignore将这个文件忽略掉。</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20210112115956724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>在git项目的根目录下，创建一个.gitignore文件，将一下内容复制进去即可。git会自动读取文件将符合规则的文件隐藏掉。</p>
+<pre><code>*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+#*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# ---- Maven
+target/
+dependency-reduced-pom.xml
+
+# ---- IntelliJ IDEA
+*.iws
+*.iml
+*.ipr
+.idea/
+
+# ---- Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+
+# ---- Mac OS X
+.DS_Store?
+.DS_Store
+Icon?
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# ---- Windows
+# Windows image file caches
+Thumbs.db
+# Folder config file
+Desktop.ini
+
+.java-version
+#--compile
+bin/
+tmp/
+build/
+
+.gradle/
+.vscode/
+.tmp
+
+# --- JRebel
+/**/rebel.xml
+
+
+</code></pre><ol start="4">
+<li><p>启动项目</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/4bb53ef0ada2415e55f1b01ca4403e40.png" alt="img"></p>
+</li>
+<li><p>修改文件之后使文件热加载</p>
+<p>每个文件修改之后，鼠标右键点击文件，点击Compile And Reload File使文件生效</p>
+<p><img src="https://img-blog.csdnimg.cn/20210112120013832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</li>
+</ol>
+<p>至此，JRebel热部署的内容分享完毕，希望能够对大家有所帮助。</p>
+]]></content>
+      <categories>
+        <category>热部署</category>
+      </categories>
+      <tags>
+        <tag>热部署</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>arthas常用命令记录</title>
+    <url>/2022/09/05/arthas-chang-yong-ming-ling-ji-lu/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="arthas常用命令记录-md"><a href="#arthas常用命令记录-md" class="headerlink" title="arthas常用命令记录.md"></a>arthas常用命令记录.md</h1><h2 id="下载arthas"><a href="#下载arthas" class="headerlink" title="下载arthas"></a>下载arthas</h2><pre><code>curl -O https://arthas.aliyun.com/arthas-boot.jar</code></pre><h2 id="启动arthas"><a href="#启动arthas" class="headerlink" title="启动arthas"></a>启动arthas</h2><pre><code>java -jar arthas-boot.jar</code></pre><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
+<li><p><strong>arthas后台异步任务</strong></p>
+<ol>
+<li><p>arthas使用&amp;在后台异步执行任务</p>
+<pre><code>trace Test t &amp;</code></pre></li>
+<li><p>通过jobs查看后台异步任务</p>
+<pre><code>jobs</code></pre></li>
+</ol>
+</li>
+<li><p><strong>dashboard：查看当前系统的实时数据面板</strong></p>
+<pre class=" language-text"><code class="language-text">dashboard</code></pre>
+</li>
+<li><p><strong>memory：查看 JVM 内存信息。</strong></p>
+<pre><code>memory</code></pre></li>
+<li><p><strong>sysenv查看当前JVM的环境属性（System Environment Variables），支持通过<code>TAB</code>键自动补全</strong></p>
+<pre><code>sysenv</code></pre></li>
+<li><p><strong>sysprop查看当前 JVM 的系统属性(System Property)，支持通过<code>TAB</code>键自动补全</strong></p>
+<p><strong>此命令可以查看配置文件的信息</strong></p>
+<pre><code>sysprop</code></pre></li>
+<li><p><strong>thread：查看当前线程信息，查看线程的堆栈</strong></p>
+<ol>
+<li><p>查看当前最忙的前 N 个线程并打印堆栈</p>
+<pre><code>thread -n 3</code></pre></li>
+<li><p>thread id, 显示指定线程的运行堆栈</p>
+<pre><code>thread 1</code></pre></li>
+<li><p>thread -b, 找出当前阻塞其他线程的线程</p>
+<pre><code>thread -b</code></pre></li>
+</ol>
+</li>
+<li><p><strong>jad：反编译指定已加载类的源码</strong></p>
+<pre><code>jad --source-only java.lang.String</code></pre></li>
+<li><p><strong>monitor：方法执行监控</strong></p>
+<pre><code>monitor com.jf.redisstudy.controller.HelloController getName  -n 10  --cycle 10 &amp;</code></pre></li>
+<li><p><strong>stack：输出当前方法被调用的调用路径</strong></p>
+<pre><code>stack com.jf.redisstudy.controller.HelloController hello  -n 5 </code></pre></li>
+<li><p><strong>trace：方法内部调用路径，并输出方法路径上的每个节点上耗时</strong></p>
+<pre><code>trace com.jf.redisstudy.controller.HelloController hello  -n 5 --skipJDKMethod false &amp;</code></pre></li>
+<li><p><strong>tt：方法执行数据的时空隧道，记录下指定方法每次调用的入参和返回信息，并能对这些不同的时间下调用进行观测</strong></p>
+<p>tt命令可以用在类上，也可以用在方法上</p>
+<p>用法方法上：</p>
+<pre><code>tt -t com.jf.redisstudy.controller.HelloController hello -n 5 &amp;</code></pre><p>当你用 tt 记录了一大片的时间片段之后，你希望能从中筛选出自己需要的时间片段，这个时候你就需要对现有记录进行检索。</p>
+<pre><code>tt -l</code></pre><p>查看调用信息</p>
+<pre><code>tt -i 索引id</code></pre><p>重做一次调用</p>
+<pre><code>tt -i 索引id -p</code></pre></li>
+<li><p><strong>watch：方法执行出入参查看</strong></p>
+<pre><code>watch com.jf.redisstudy.controller.HelloController hello &#39;{params,returnObj,throwExp}&#39;  -n 5  -x 3 &amp;</code></pre></li>
+<li><p><strong>json格式查看结果</strong></p>
+<pre><code>options json-format true</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>arthas</category>
+      </categories>
+      <tags>
+        <tag>arthas</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RocketMQ高级功能</title>
     <url>/2021/04/30/rocketmq-gao-ji-gong-neng/</url>
     <content><![CDATA[<meta name="referrer" content="no-referrer">
@@ -544,71 +713,134 @@ mv alertmanager-0.17.0.linux-amd64 /usr/local/alertmanager</code></pre><h2 id="2
       </tags>
   </entry>
   <entry>
-    <title>docker启动MySQL</title>
-    <url>/2020/05/22/docker-qi-dong-mysql/</url>
+    <title>SpringBoot使用jetcache本地缓存</title>
+    <url>/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/</url>
     <content><![CDATA[<meta name="referrer" content="no-referrer">
 
-<h1 id="docker启动MySQL"><a href="#docker启动MySQL" class="headerlink" title="docker启动MySQL"></a>docker启动MySQL</h1><ol>
-<li><p>查询mysql镜像</p>
-<pre><code>docker search mysql</code></pre></li>
-<li><p>从docker hub拉取镜像</p>
-<pre><code>docker pull mysql:8.0.28</code></pre></li>
-<li><p>查看mysql镜像</p>
-<pre><code>docker images  | grep mysql</code></pre></li>
-<li><p>复制文件</p>
-<pre><code>#创建目录
-mkdir -p /usr/java/docker/mysql/conf &amp;&amp; mkdir -p /usr/java/docker/mysql/data &amp;&amp; mkdir -p /usr/java/docker/mysql/logs
+<h1 id="SpringBoot使用jetcache本地缓存"><a href="#SpringBoot使用jetcache本地缓存" class="headerlink" title="SpringBoot使用jetcache本地缓存"></a>SpringBoot使用jetcache本地缓存</h1><h2 id="引入mavne依赖"><a href="#引入mavne依赖" class="headerlink" title="引入mavne依赖"></a>引入mavne依赖</h2><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.alicp.jetcache&lt;/groupId&gt;
+    &lt;artifactId&gt;jetcache-starter-redis&lt;/artifactId&gt;
+    &lt;version&gt;2.6.4&lt;/version&gt;
+&lt;/dependency&gt;</code></pre><h2 id="添加配置文件"><a href="#添加配置文件" class="headerlink" title="添加配置文件"></a>添加配置文件</h2><pre><code># cache 状态监控刷新时间
+jetcache.statIntervalMinutes=1
+jetcache.areaInCacheName=false
+# 进程内的并发访问保护默认开关
+jetcache.penetrationProtect=true
+jetcache.local.default.type=caffeine
+jetcache.local.default.keyConvertor=fastjson
+# 默认单个 method cache 支持数量100个，需要具体看服务情况调整
+jetcache.local.default.limit=100
+# 缓存失效时间，全局默认10s
+jetcache.local.default.expireAfterWriteInMillis=10000
+</code></pre><h2 id="开启缓存"><a href="#开启缓存" class="headerlink" title="开启缓存"></a>开启缓存</h2><p>在启动类上添加@EnableMethodCache注解，扫描指定包下面的@Cached注解，使缓存生效。</p>
+<p>注意：jetcache是基于AOP的，所以需要放在public方法上，并且不能是本类方法调用。</p>
+<pre><code>@SpringBootApplication
+@EnableMethodCache(basePackages = &quot;xxx.xxx&quot;)
+public class RedisSpringBootMain {
+    public static void main(String[] args) {
+        SpringApplication.run(RedisSpringBootMain.class, args);
+    }
+}</code></pre><h2 id="缓存名称删除规则"><a href="#缓存名称删除规则" class="headerlink" title="缓存名称删除规则"></a>缓存名称删除规则</h2><p>AreaName+cacheName, cacheName 如果未指定，则通过类签名+函数签名+参数签名实现</p>
+<h2 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h2><p>key支持spel表达式，可自定义key的生成规则。不指定key，则使用默认规则</p>
+<pre><code>   /**
+     * 单个key
+     */
+    @PostMapping(&quot;/jetCacheGet&quot;)
+    @Cached(cacheType = CacheType.LOCAL, expire = 6)
+    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet(@RequestBody String bizShowId) {
+        log.info(&quot;从数据库获得数据&quot;);
+        return BaseResult.success(UserDTO.getUserList());
+    }</code></pre><pre><code>     /**
+     * 对象
+     */
+    @PostMapping(&quot;/jetCacheGet2&quot;)
+    @Cached(cacheType = CacheType.LOCAL, expire = 6)
+    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet2(@RequestBody UserDTO userDTO) {
+        log.info(&quot;从数据库获得数据&quot;);
+        return BaseResult.success(UserDTO.getUserList());
+    }
+</code></pre><pre><code>    /**
+     * 集合排序
+     */
+    @PostMapping(&quot;/jetCacheGet3&quot;)
+    @Cached(cacheType = CacheType.LOCAL, key = &quot;T(com.jf.common.utils.jetcache.JetCacheUtils).sorted(#bizShowIdList)&quot;, expire = 6)
+    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet3(@RequestBody List&lt;String&gt; bizShowIdList) {
+        log.info(&quot;从数据库获得数据&quot;);
+        return BaseResult.success(UserDTO.getUserList());
+    }</code></pre><pre><code>    /**
+     * 集合对象排序
+     */
+    @PostMapping(&quot;/jetCacheGet4&quot;)
+    @Cached(cacheType = CacheType.LOCAL, key = &quot;T(com.jf.common.utils.jetcache.JetCacheUtils).sorted(#UserDTO)&quot;, expire = 6)
+    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet4(@RequestBody List&lt;UserDTO&gt; userDTOList) {
+        log.info(&quot;从数据库获得数据&quot;);
+        return BaseResult.success(UserDTO.getUserList());
+    }</code></pre>]]></content>
+      <categories>
+        <category>高性能缓存</category>
+      </categories>
+      <tags>
+        <tag>jetcache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker启动ElasticSearch</title>
+    <url>/2022/08/03/docker-qi-dong-elasticsearch/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
 
-#启动容器，为了复制文件
-docker run -p 3306:3306 --name mysql -d -e MYSQL_ROOT_PASSWORD=“123456” mysql:8.0.28
-
-#复制文件
-docker cp mysql:/etc/mysql/my.cnf /usr/java/docker/mysql/conf
-
-#删除容器
-docker rm -f mysql</code></pre></li>
-<li><p>使用docker运行mysql</p>
-<pre><code>docker run -p 3306:3306 --name mysql \
--v /usr/java/docker/mysql/logs:/var/log/mysql \
--v /usr/java/docker/mysql/data:/var/lib/mysql \
--v /usr/java/docker/mysql/conf:/etc/mysql/conf.d \
--e MYSQL_ROOT_PASSWORD=123456 \
---restart=always \
---privileged=true \
--v /etc/localtime:/etc/localtime \
--d \
-mysql:8.0.28</code></pre><p>命令解释说明：</p>
-<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
-<p>–name mysql  指定该容器名称，查看和进行操作都比较方便。</p>
-<p>-e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码</p>
-<p>-v /etc/localtime:/etc/localtime：共享主机的 localtime</p>
-<p>-d mysql:8.0.28   在后台运行mysql镜像产生的容器</p>
-</li>
+<h1 id="docker启动ElasticSearch"><a href="#docker启动ElasticSearch" class="headerlink" title="docker启动ElasticSearch"></a>docker启动ElasticSearch</h1><ol>
+<li><p>查询ElasticSearch镜像</p>
+<pre><code>docker search elasticsearch</code></pre></li>
+<li><p>从docker hub拉取最新镜像</p>
+<pre><code>docker pull elasticsearch:7.6.0 </code></pre></li>
+<li><p>查看ElasticSearch镜像</p>
+<pre><code>docker images | grep elasticsearch</code></pre></li>
+<li><p>配置文件</p>
+<p>在/usr/java/docker文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置</p>
+<pre><code>mkdir -p /usr/java/docker/elasticsearch/config</code></pre><p>在/usr/java/docker文件夹下创建es的data文件夹</p>
+<pre><code>mkdir -p /usr/java/docker/elasticsearch/data</code></pre><p>[http.host:0.0.0.0]允许任何远程机器访问es，并将其写入es的配置文件中</p>
+<pre><code>echo &quot;http.host: 0.0.0.0&quot; &gt;&gt; /usr/java/docker/elasticsearch/config/elasticsearch.yml</code></pre><p>查看配置文件</p>
+<pre><code>cat /usr/java/docker/elasticsearch/config/elasticsearch.yml</code></pre><p>保证权限问题</p>
+<pre><code>chmod -R 777 /usr/java/docker/elasticsearch</code></pre></li>
 </ol>
-<ol start="6">
+<ol start="5">
+<li><p>使用docker运行ElasticSearch</p>
+<pre><code>docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+-e &quot;discovery.type=single-node&quot; \
+-e ES_JAVA_OPTS=&quot;-Xms64m -Xmx128m&quot; \
+-v /usr/java/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /usr/java/docker/elasticsearch/data:/usr/share/elasticsearch/data \
+-v /usr/java/docker/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-d elasticsearch:7.6.0</code></pre><blockquote>
+<p>命令解释说明：</p>
+<p>docker run –name elasticsearch 创建一个es容器并起一个名字<br>-p 9200:9200 将linux的9200端口映射到docker容器的9200端口，用来给es发送http请求<br>-p 9300:9300 9300是es在分布式集群状态下节点之间的通信端口<br>-e 指定jvm内存，当前es以单节点模式运行<br>-v 挂载命令，将虚拟机中的路径和docker中的路径进行关联<br>-d 后台启动服务</p>
+</blockquote>
+<blockquote>
+<p>注意：ES_JAVA_OPTS非常重要，指定开发时es运行时的最小和最大内存占用为64M和128M，否则就    会占用全部可用内存</p>
+</blockquote>
+</li>
 <li><p>查看是否运行成功</p>
-<pre><code>docker ps | grep mysql</code></pre></li>
-</ol>
-<ol start="7">
-<li><p>通过navicat连接mysql出现2059的问题</p>
-<p><strong>原因</strong>：8.0之后mysql更改了密码的加密规则，只要在命令窗口把加密方法改回去即可。</p>
-<p><strong>解决办法</strong>：</p>
-<ol>
-<li><p>进入到docker容器里面的mysql</p>
-<pre><code>docker exec -it mysql bash</code></pre></li>
-<li><p>进去之后不用切换目录。直接输入下面的命令登录MySQL</p>
-<pre><code>mysql -uroot -p123456</code></pre></li>
-<li><p>然后运行以下SQL</p>
-<pre><code>alter user &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; password expire never;
-alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;123456&#39;;
-flush privileges;</code></pre></li>
-<li><p>重新启动docker里面的mysql容器</p>
-<pre><code>docker restart mysql</code></pre></li>
-</ol>
-</li>
-</ol>
-<ol start="8">
-<li>通过navicat客户端重新连接即可</li>
+<pre><code>docker ps | grep elasticsearch</code></pre></li>
+<li><p>查看启动日志</p>
+<pre><code>docker logs elasticsearch</code></pre></li>
+<li><p>在浏览器地址栏访问<a href="http://ip:9200/，可以看到" target="_blank" rel="noopener">http://ip:9200/，可以看到</a> es 启动成功后返回类似下面的数据</p>
+<pre><code>{
+  &quot;name&quot;: &quot;3717e262d33f&quot;,
+  &quot;cluster_name&quot;: &quot;elasticsearch&quot;,
+  &quot;cluster_uuid&quot;: &quot;njGUk4ruRDSQHT4xZTzB3A&quot;,
+  &quot;version&quot;: {
+    &quot;number&quot;: &quot;7.6.0&quot;,
+    &quot;build_flavor&quot;: &quot;default&quot;,
+    &quot;build_type&quot;: &quot;docker&quot;,
+    &quot;build_hash&quot;: &quot;7f634e9f44834fbc12724506cc1da681b0c3b1e3&quot;,
+    &quot;build_date&quot;: &quot;2020-02-06T00:09:00.449973Z&quot;,
+    &quot;build_snapshot&quot;: false,
+    &quot;lucene_version&quot;: &quot;8.4.0&quot;,
+    &quot;minimum_wire_compatibility_version&quot;: &quot;6.8.0&quot;,
+    &quot;minimum_index_compatibility_version&quot;: &quot;6.0.0-beta1&quot;
+  },
+  &quot;tagline&quot;: &quot;You Know, for Search&quot;
+}</code></pre></li>
 </ol>
 ]]></content>
       <categories>
@@ -822,68 +1054,6 @@ messages<span class="token punctuation">.</span><span class="token function">add
       </tags>
   </entry>
   <entry>
-    <title>arthas常用命令记录</title>
-    <url>/2022/09/05/arthas-chang-yong-ming-ling-ji-lu/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h1 id="arthas常用命令记录-md"><a href="#arthas常用命令记录-md" class="headerlink" title="arthas常用命令记录.md"></a>arthas常用命令记录.md</h1><h2 id="下载arthas"><a href="#下载arthas" class="headerlink" title="下载arthas"></a>下载arthas</h2><pre><code>curl -O https://arthas.aliyun.com/arthas-boot.jar</code></pre><h2 id="启动arthas"><a href="#启动arthas" class="headerlink" title="启动arthas"></a>启动arthas</h2><pre><code>java -jar arthas-boot.jar</code></pre><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
-<li><p><strong>arthas后台异步任务</strong></p>
-<ol>
-<li><p>arthas使用&amp;在后台异步执行任务</p>
-<pre><code>trace Test t &amp;</code></pre></li>
-<li><p>通过jobs查看后台异步任务</p>
-<pre><code>jobs</code></pre></li>
-</ol>
-</li>
-<li><p><strong>dashboard：查看当前系统的实时数据面板</strong></p>
-<pre class=" language-text"><code class="language-text">dashboard</code></pre>
-</li>
-<li><p><strong>memory：查看 JVM 内存信息。</strong></p>
-<pre><code>memory</code></pre></li>
-<li><p><strong>sysenv查看当前JVM的环境属性（System Environment Variables），支持通过<code>TAB</code>键自动补全</strong></p>
-<pre><code>sysenv</code></pre></li>
-<li><p><strong>sysprop查看当前 JVM 的系统属性(System Property)，支持通过<code>TAB</code>键自动补全</strong></p>
-<p><strong>此命令可以查看配置文件的信息</strong></p>
-<pre><code>sysprop</code></pre></li>
-<li><p><strong>thread：查看当前线程信息，查看线程的堆栈</strong></p>
-<ol>
-<li><p>查看当前最忙的前 N 个线程并打印堆栈</p>
-<pre><code>thread -n 3</code></pre></li>
-<li><p>thread id, 显示指定线程的运行堆栈</p>
-<pre><code>thread 1</code></pre></li>
-<li><p>thread -b, 找出当前阻塞其他线程的线程</p>
-<pre><code>thread -b</code></pre></li>
-</ol>
-</li>
-<li><p><strong>jad：反编译指定已加载类的源码</strong></p>
-<pre><code>jad --source-only java.lang.String</code></pre></li>
-<li><p><strong>monitor：方法执行监控</strong></p>
-<pre><code>monitor com.jf.redisstudy.controller.HelloController getName  -n 10  --cycle 10 &amp;</code></pre></li>
-<li><p><strong>stack：输出当前方法被调用的调用路径</strong></p>
-<pre><code>stack com.jf.redisstudy.controller.HelloController hello  -n 5 </code></pre></li>
-<li><p><strong>trace：方法内部调用路径，并输出方法路径上的每个节点上耗时</strong></p>
-<pre><code>trace com.jf.redisstudy.controller.HelloController hello  -n 5 --skipJDKMethod false &amp;</code></pre></li>
-<li><p><strong>tt：方法执行数据的时空隧道，记录下指定方法每次调用的入参和返回信息，并能对这些不同的时间下调用进行观测</strong></p>
-<p>tt命令可以用在类上，也可以用在方法上</p>
-<p>用法方法上：</p>
-<pre><code>tt -t com.jf.redisstudy.controller.HelloController hello -n 5 &amp;</code></pre><p>当你用 tt 记录了一大片的时间片段之后，你希望能从中筛选出自己需要的时间片段，这个时候你就需要对现有记录进行检索。</p>
-<pre><code>tt -l</code></pre><p>查看调用信息</p>
-<pre><code>tt -i 索引id</code></pre><p>重做一次调用</p>
-<pre><code>tt -i 索引id -p</code></pre></li>
-<li><p><strong>watch：方法执行出入参查看</strong></p>
-<pre><code>watch com.jf.redisstudy.controller.HelloController hello &#39;{params,returnObj,throwExp}&#39;  -n 5  -x 3 &amp;</code></pre></li>
-<li><p><strong>json格式查看结果</strong></p>
-<pre><code>options json-format true</code></pre></li>
-</ol>
-]]></content>
-      <categories>
-        <category>arthas</category>
-      </categories>
-      <tags>
-        <tag>arthas</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>docker启动kibana</title>
     <url>/2022/08/03/docker-qi-dong-kibana/</url>
     <content><![CDATA[<meta name="referrer" content="no-referrer">
@@ -932,6 +1102,81 @@ xpack.monitoring.ui.container.elasticsearch.enabled: true</code></pre><p>查看�
 <pre><code>docker logs kibana</code></pre></li>
 <li><p>在浏览器地址栏访问 <a href="http://ip:5601" target="_blank" rel="noopener">http://ip:5601</a> ，进入到kibana的控制台</p>
 </li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker启动MySQL</title>
+    <url>/2020/05/22/docker-qi-dong-mysql/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker启动MySQL"><a href="#docker启动MySQL" class="headerlink" title="docker启动MySQL"></a>docker启动MySQL</h1><ol>
+<li><p>查询mysql镜像</p>
+<pre><code>docker search mysql</code></pre></li>
+<li><p>从docker hub拉取镜像</p>
+<pre><code>docker pull mysql:8.0.28</code></pre></li>
+<li><p>查看mysql镜像</p>
+<pre><code>docker images  | grep mysql</code></pre></li>
+<li><p>复制文件</p>
+<pre><code>#创建目录
+mkdir -p /usr/java/docker/mysql/conf &amp;&amp; mkdir -p /usr/java/docker/mysql/data &amp;&amp; mkdir -p /usr/java/docker/mysql/logs
+
+#启动容器，为了复制文件
+docker run -p 3306:3306 --name mysql -d -e MYSQL_ROOT_PASSWORD=“123456” mysql:8.0.28
+
+#复制文件
+docker cp mysql:/etc/mysql/my.cnf /usr/java/docker/mysql/conf
+
+#删除容器
+docker rm -f mysql</code></pre></li>
+<li><p>使用docker运行mysql</p>
+<pre><code>docker run -p 3306:3306 --name mysql \
+-v /usr/java/docker/mysql/logs:/var/log/mysql \
+-v /usr/java/docker/mysql/data:/var/lib/mysql \
+-v /usr/java/docker/mysql/conf:/etc/mysql/conf.d \
+-e MYSQL_ROOT_PASSWORD=123456 \
+--restart=always \
+--privileged=true \
+-v /etc/localtime:/etc/localtime \
+-d \
+mysql:8.0.28</code></pre><p>命令解释说明：</p>
+<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
+<p>–name mysql  指定该容器名称，查看和进行操作都比较方便。</p>
+<p>-e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码</p>
+<p>-v /etc/localtime:/etc/localtime：共享主机的 localtime</p>
+<p>-d mysql:8.0.28   在后台运行mysql镜像产生的容器</p>
+</li>
+</ol>
+<ol start="6">
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep mysql</code></pre></li>
+</ol>
+<ol start="7">
+<li><p>通过navicat连接mysql出现2059的问题</p>
+<p><strong>原因</strong>：8.0之后mysql更改了密码的加密规则，只要在命令窗口把加密方法改回去即可。</p>
+<p><strong>解决办法</strong>：</p>
+<ol>
+<li><p>进入到docker容器里面的mysql</p>
+<pre><code>docker exec -it mysql bash</code></pre></li>
+<li><p>进去之后不用切换目录。直接输入下面的命令登录MySQL</p>
+<pre><code>mysql -uroot -p123456</code></pre></li>
+<li><p>然后运行以下SQL</p>
+<pre><code>alter user &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; password expire never;
+alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;123456&#39;;
+flush privileges;</code></pre></li>
+<li><p>重新启动docker里面的mysql容器</p>
+<pre><code>docker restart mysql</code></pre></li>
+</ol>
+</li>
+</ol>
+<ol start="8">
+<li>通过navicat客户端重新连接即可</li>
 </ol>
 ]]></content>
       <categories>
@@ -1061,70 +1306,127 @@ canal/canal-server:v1.1.6</code></pre></li>
       </tags>
   </entry>
   <entry>
-    <title>docker启动ElasticSearch</title>
-    <url>/2022/08/03/docker-qi-dong-elasticsearch/</url>
+    <title>java服务线上问题排查</title>
+    <url>/2022/11/15/java-fu-wu-xian-shang-wen-ti-pai-cha/</url>
     <content><![CDATA[<meta name="referrer" content="no-referrer">
 
-<h1 id="docker启动ElasticSearch"><a href="#docker启动ElasticSearch" class="headerlink" title="docker启动ElasticSearch"></a>docker启动ElasticSearch</h1><ol>
-<li><p>查询ElasticSearch镜像</p>
-<pre><code>docker search elasticsearch</code></pre></li>
-<li><p>从docker hub拉取最新镜像</p>
-<pre><code>docker pull elasticsearch:7.6.0 </code></pre></li>
-<li><p>查看ElasticSearch镜像</p>
-<pre><code>docker images | grep elasticsearch</code></pre></li>
-<li><p>配置文件</p>
-<p>在/usr/java/docker文件夹下创建es的config文件夹，将docker中es的配置挂载在外部，当我们在linux虚拟机中修改es的配置文件时，就会同时修改docker中的es的配置</p>
-<pre><code>mkdir -p /usr/java/docker/elasticsearch/config</code></pre><p>在/usr/java/docker文件夹下创建es的data文件夹</p>
-<pre><code>mkdir -p /usr/java/docker/elasticsearch/data</code></pre><p>[http.host:0.0.0.0]允许任何远程机器访问es，并将其写入es的配置文件中</p>
-<pre><code>echo &quot;http.host: 0.0.0.0&quot; &gt;&gt; /usr/java/docker/elasticsearch/config/elasticsearch.yml</code></pre><p>查看配置文件</p>
-<pre><code>cat /usr/java/docker/elasticsearch/config/elasticsearch.yml</code></pre><p>保证权限问题</p>
-<pre><code>chmod -R 777 /usr/java/docker/elasticsearch</code></pre></li>
+<h1 id="java服务线上问题排查"><a href="#java服务线上问题排查" class="headerlink" title="java服务线上问题排查"></a>java服务线上问题排查</h1><h2 id="1、内存"><a href="#1、内存" class="headerlink" title="1、内存"></a>1、内存</h2><h3 id="1-1、-查看服务占用内存"><a href="#1-1、-查看服务占用内存" class="headerlink" title="1.1、 查看服务占用内存"></a>1.1、 查看服务占用内存</h3><ol>
+<li><p>可以通过prometheus查看，此处不做过多说明。</p>
+</li>
+<li><p>通过arthas的memory命令查看</p>
+<pre><code>$ memory</code></pre><p>显示如下：</p>
+<pre><code>Memory                           used      total      max        usage
+heap                             32M       256M       4096M      0.79%
+g1_eden_space                    11M       68M        -1         16.18%
+g1_old_gen                       17M       184M       4096M      0.43%
+g1_survivor_space                4M        4M         -1         100.00%
+nonheap                          35M       39M        -1         89.55%
+codeheap_&#39;non-nmethods&#39;          1M        2M         5M         20.53%
+metaspace                        26M       27M        -1         96.88%
+codeheap_&#39;profiled_nmethods&#39;     4M        4M         117M       3.57%
+compressed_class_space           2M        3M         1024M      0.29%
+codeheap_&#39;non-profiled_nmethods&#39; 685K      2496K      120032K    0.57%
+mapped                           0K        0K         -          0.00%
+direct                           48M       48M        -          100.00%
+</code></pre></li>
+<li><p>直接使用linux自带的命令查看</p>
+<pre><code>top -o %MEM -b -n 1 | grep java | awk &#39;{print &quot;PID: &quot;$1&quot; \t 虚拟内存: &quot;$5 / 1024&quot;M \t 物理内存(实际占用内存): &quot;$6 / 1024&quot;M \t 共享内存: &quot;$7 / 1024&quot;M \t CPU使用率: &quot;$9&quot;% \t 内存使用率: &quot;$10&quot;%&quot;}&#39;</code></pre><p>显示如下：</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# top -o %MEM -b -n 1 | grep java | awk &#39;{print &quot;PID: &quot;$1&quot; \t 虚拟内存: &quot;$5 / 1024&quot;M \t 物理内存: &quot;$6 / 1024&quot;M \t 共享内存: &quot;$7 / 1024&quot;M \t CPU使用率: &quot;$9&quot;% \t 内存使用率: &quot;$10&quot;%&quot;}&#39;
+PID: 12959       虚拟内存: 2123.05M      物理内存: 329.488M      共享内存: 7.28125M      CPU使用率: 0.0%         内存使用率: 17.9%
+PID: 10799       虚拟内存: 2110.75M      物理内存: 194.641M      共享内存: 13.418M       CPU使用率: 0.0%         内存使用率: 10.6%
+PID: 28249       虚拟内存: 2508.25M      物理内存: 194.316M      共享内存: 6.32031M      CPU使用率: 0.0%         内存使用率: 10.6%
+PID: 25613       虚拟内存: 2331.65M      物理内存: 169.684M      共享内存: 5.15625M      CPU使用率: 0.0%         内存使用率: 9.2%
+[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]#     </code></pre></li>
+</ol>
+<h3 id="1-2、服务OOM如何排查"><a href="#1-2、服务OOM如何排查" class="headerlink" title="1.2、服务OOM如何排查"></a>1.2、服务OOM如何排查</h3><h4 id="1-2-1、获取dump文件"><a href="#1-2-1、获取dump文件" class="headerlink" title="1.2.1、获取dump文件"></a>1.2.1、获取dump文件</h4><ol>
+<li><p>主动导出dump文件</p>
+<ol>
+<li><p>获取进程的PID</p>
+<pre><code>ps -ef|grep java
+jps -l</code></pre></li>
+<li><p>根据pid，下载dump文件到当前路径，导出整个JVM 中内存信息</p>
+<p>格式：jmap -dump:format=b,file=文件名 [pid]</p>
+<pre><code>jmap -dump:format=b,file=/usr/java/dump/heapdump.hprof 32756</code></pre></li>
+</ol>
+</li>
+</ol>
+<h4 id="1-2-2、OOM时导出dump文件"><a href="#1-2-2、OOM时导出dump文件" class="headerlink" title="1.2.2、OOM时导出dump文件"></a>1.2.2、OOM时导出dump文件</h4><ol>
+<li><p>我们可以添加 <strong>-XX:+HeapDumpOnOutOfMemoryError</strong> 参数开启“<strong>当堆内存空间溢出时输出堆的内存快照</strong>”功能，而 <strong>-XX:HeapDumpPath</strong> 参数则指定生成的堆转储存放位置，可以不填路径，只填文件名，说明是当前目录。</p>
+<pre><code>#指定dump文件存放位置
+-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/
+
+#在当前服务的的根目录下面存放dump文件
+-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=testDump.hprof</code></pre></li>
+</ol>
+<h4 id="1-2-3、分析dump文件"><a href="#1-2-3、分析dump文件" class="headerlink" title="1.2.3、分析dump文件"></a>1.2.3、分析dump文件</h4><ol>
+<li><p>如果是 <strong>Windows</strong> 系统我们也可以直接使用JDK自带的 <strong>jvisualvm</strong> 工具（在 <strong>JDK</strong> 的 <strong>bin</strong> 目录下：jvisualvm.exe）</p>
+<p>目录位置：%JAVA_HOME%\bin,如果不确定JAVA_HOME的位置，可以在cmd命令行中输入：echo %JAVA_HOME%  确定位置</p>
+<blockquote>
+<p>如果出现内存不足，可以将%JAVA_HOME%\lib\visualvm\etc目录里面的visualvm.conf的堆内存修改一下。</p>
+<pre><code>-Xms4096m -J-Xmx4096m
+visualvm_default_options=&quot;-J-client -J-Xms4096m -J-Xmx4096m ***</code></pre></blockquote>
+<p>或者在网页上下载最新版的visualvm：<a href="https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。" target="_blank" rel="noopener">https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。</a></p>
+<p><img src="https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center" alt="图片描述"></p>
+</li>
+<li><p>从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，而其他的对象占用内存并不大，那么罪魁祸首就是这个UserDTO对象，我们点击进去继续查看。</p>
+<p><img src="https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center" alt="图片描述"></p>
+</li>
+<li><p>分析对象</p>
+<p>从下面图片可以看到左边是这个UserDTO对象的所有实例，右上是对象的具体信息，包含对象里面的字段，右下是这个对象的被引用信息，在这个图里面也可以看到这个对象有8720756个，查看引用看到这个对象是在一个List里面，我们点击这个list继续往下看。</p>
+<p><img src="https://img-blog.csdnimg.cn/9992d046bf414e4aa18ddbdb83a59c94.png#pic_center" alt="图片描述"></p>
+</li>
+<li><p>点开这个list会发现，这个list的大小是8720756万个，这个list的泛型是UserDTO对象，那么这个list中有8720756万个UsetDTO对象，那么OOM的原因也就水落石出了。从引用中可以看到这个list对象是在HelloService这个类里面，那么接下来结合代码不难发现是哪一处的代码出现问题，然后去改就ok了。</p>
+<p><img src="https://img-blog.csdnimg.cn/7b86abe6a783434b82c233b9b9645df1.png#pic_center" alt="图片描述"></p>
+</li>
 </ol>
 <ol start="5">
-<li><p>使用docker运行ElasticSearch</p>
-<pre><code>docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
--e &quot;discovery.type=single-node&quot; \
--e ES_JAVA_OPTS=&quot;-Xms64m -Xmx128m&quot; \
--v /usr/java/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
--v /usr/java/docker/elasticsearch/data:/usr/share/elasticsearch/data \
--v /usr/java/docker/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
--d elasticsearch:7.6.0</code></pre><blockquote>
-<p>命令解释说明：</p>
-<p>docker run –name elasticsearch 创建一个es容器并起一个名字<br>-p 9200:9200 将linux的9200端口映射到docker容器的9200端口，用来给es发送http请求<br>-p 9300:9300 9300是es在分布式集群状态下节点之间的通信端口<br>-e 指定jvm内存，当前es以单节点模式运行<br>-v 挂载命令，将虚拟机中的路径和docker中的路径进行关联<br>-d 后台启动服务</p>
-</blockquote>
-<blockquote>
-<p>注意：ES_JAVA_OPTS非常重要，指定开发时es运行时的最小和最大内存占用为64M和128M，否则就    会占用全部可用内存</p>
-</blockquote>
+<li><p>查看这个对象在哪个地方被引用了，以及GC Root链</p>
+<p><img src="https://img-blog.csdnimg.cn/36703789a65c42968d41fb4661d71503.png#pic_center" alt="图片"></p>
 </li>
-<li><p>查看是否运行成功</p>
-<pre><code>docker ps | grep elasticsearch</code></pre></li>
-<li><p>查看启动日志</p>
-<pre><code>docker logs elasticsearch</code></pre></li>
-<li><p>在浏览器地址栏访问<a href="http://ip:9200/，可以看到" target="_blank" rel="noopener">http://ip:9200/，可以看到</a> es 启动成功后返回类似下面的数据</p>
-<pre><code>{
-  &quot;name&quot;: &quot;3717e262d33f&quot;,
-  &quot;cluster_name&quot;: &quot;elasticsearch&quot;,
-  &quot;cluster_uuid&quot;: &quot;njGUk4ruRDSQHT4xZTzB3A&quot;,
-  &quot;version&quot;: {
-    &quot;number&quot;: &quot;7.6.0&quot;,
-    &quot;build_flavor&quot;: &quot;default&quot;,
-    &quot;build_type&quot;: &quot;docker&quot;,
-    &quot;build_hash&quot;: &quot;7f634e9f44834fbc12724506cc1da681b0c3b1e3&quot;,
-    &quot;build_date&quot;: &quot;2020-02-06T00:09:00.449973Z&quot;,
-    &quot;build_snapshot&quot;: false,
-    &quot;lucene_version&quot;: &quot;8.4.0&quot;,
-    &quot;minimum_wire_compatibility_version&quot;: &quot;6.8.0&quot;,
-    &quot;minimum_index_compatibility_version&quot;: &quot;6.0.0-beta1&quot;
-  },
-  &quot;tagline&quot;: &quot;You Know, for Search&quot;
-}</code></pre></li>
+<li><p>查看对象当前的线程堆栈信息</p>
+<p><img src="https://img-blog.csdnimg.cn/a3f83d6b1b6e4b529be5e9edbff3b92c.png#pic_center" alt="图片"></p>
+<p><img src="https://img-blog.csdnimg.cn/dda0c81faf374dfd92523be61b6d013d.png#pic_center" alt="图片"></p>
+</li>
+</ol>
+<p>这样子具体有问题的代码位置就找到了。</p>
+<h2 id="2、CPU"><a href="#2、CPU" class="headerlink" title="2、CPU"></a>2、CPU</h2><h3 id="2-1、查看系统CPU"><a href="#2-1、查看系统CPU" class="headerlink" title="2.1、查看系统CPU"></a>2.1、查看系统CPU</h3><p>linux服务器里面输入top命令，显示如下：</p>
+<pre><code>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND   
+20571 root      20   0 2756184 296280  15236 S  80.4  7.8   0:36.48 java
+  386 root      20   0   39108   5956   5628 S   6.2  0.2   0:33.12 systemd-journal 
+11133 root      20   0  162104   2292   1616 R   6.2  0.1   0:00.14 top
+    1 root      20   0   51916   3640   2156 S   0.0  0.1   0:51.89 systemd
+    2 root      20   0       0      0      0 S   0.0  0.0   0:00.17 kthreadd
+    4 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H         </code></pre><p>可以看到PID为20571的这个进程占用了80.4%的CPU。那么接下来就是分析这个java服务的cpu为什么这么高了。</p>
+<h3 id="2-2、分析服务CPU过高"><a href="#2-2、分析服务CPU过高" class="headerlink" title="2.2、分析服务CPU过高"></a>2.2、分析服务CPU过高</h3><ol>
+<li><p>安装arthas，选择PID对应的服务。</p>
+</li>
+<li><p>通过thread -n 3 就能找到消耗cpu最高的三个线程的执行情况。这里只贴出了消耗cpu最高的的线程。</p>
+<pre><code>[arthas@3492]$ thread -n 3
+thread -n 3
+&quot;main&quot; Id=1 cpuUsage=89.35% deltaTime=187ms time=155281ms RUNNABLE
+    at java.io.FileOutputStream.writeBytes(Native Method)
+    at java.io.FileOutputStream.write(FileOutputStream.java:326)
+    at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+    at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+    at java.io.PrintStream.write(PrintStream.java:482)
+    at sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:221)
+    at sun.nio.cs.StreamEncoder.implFlushBuffer(StreamEncoder.java:291)
+    at sun.nio.cs.StreamEncoder.flushBuffer(StreamEncoder.java:104)
+    at java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:185)
+    at java.io.PrintStream.write(PrintStream.java:527)
+    at java.io.PrintStream.print(PrintStream.java:669)
+    at java.io.PrintStream.println(PrintStream.java:806)
+    at com.jf.HelloService.hello(HelloService.java:7)
+</code></pre></li>
+<li><p>从线程堆栈信息看到HelloService中hello方法导致的，代码位置是第7行。知道了代码的位置，接下来去分析就不难了。至此cpu的过高的原因也就水落石出了。 </p>
+</li>
 </ol>
 ]]></content>
       <categories>
-        <category>docker</category>
+        <category>线上问题排查</category>
       </categories>
       <tags>
-        <tag>docker</tag>
+        <tag>线上问题排查</tag>
       </tags>
   </entry>
   <entry>
@@ -1182,207 +1484,6 @@ canal/canal-server:v1.1.6</code></pre></li>
       </categories>
       <tags>
         <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>IDEA使用JRebel进行热部署</title>
-    <url>/2021/01/12/idea-shi-yong-jrebel-jin-xing-re-bu-shu/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h1 id="IDEA使用JRebel进行热部署教程"><a href="#IDEA使用JRebel进行热部署教程" class="headerlink" title="IDEA使用JRebel进行热部署教程"></a>IDEA使用JRebel进行热部署教程</h1><h2 id="1-安装JRebel插件"><a href="#1-安装JRebel插件" class="headerlink" title="1. 安装JRebel插件"></a>1. <strong>安装JRebel插件</strong></h2><pre><code>在IDEA-&gt;Settings-plugin下载Jrebel的插件，下载好了重启程序使插件生效</code></pre><p><img src="https://img-blog.csdnimg.cn/20210112115750158.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h2 id="2-激活"><a href="#2-激活" class="headerlink" title="2. 激活"></a>2. 激活</h2><ol>
-<li><p>直接进入到jrebel的配置项中，点击active now链接进入到激活界面，选择Team URL(connect to online licensing service)方式激活</p>
-<p><img src="https://img-blog.csdnimg.cn/20191127182857244.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpZXJrYW5n,size_16,color_FFFFFF,t_70" alt="img"></p>
-</li>
-<li><p>第一行输入： <a href="http://jrebel.qekang.com:80/{guid}" target="_blank" rel="noopener">http://jrebel.qekang.com:80/{guid}</a>  ， guid在<strong><a href="https://jrebel.qekang.com/" target="_blank" rel="noopener">https://jrebel.qekang.com/</a></strong> 这个网站获得<br><img src="https://img-blog.csdnimg.cn/202101121158311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-</li>
-</ol>
-<p>   第二行的email输入任意一个符合个数的email地址即可</p>
-<h2 id="3-JRebel使用"><a href="#3-JRebel使用" class="headerlink" title="3. JRebel使用"></a>3. <strong>JRebel使用</strong></h2><ol>
-<li><p>设置IDEA自动编译项目，将Build project automatiacally这个选下勾选上。</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/41635ebc0a734df2fdbb49908763ecd4.png" alt="img"></p>
-<p>   按住ctrl + shift + alt +/  这四个键,      点击registry,将compiler.automake.allow.when.app.running这个选项勾选上，如果已经勾选了，跳过此步骤即可。<br><img src="https://img-blog.csdnimg.cn/20210112115857366.png#pic_center" alt="在这里插入图片描述"></p>
-</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20210112115919912.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<ol start="2">
-<li>设置JRebel Work online 和 Redeploy time</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20210112115938743.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<ol start="3">
-<li>勾选要使用JRebel的项目，这里会在每个项目下面生成一个rebel.xml文件。可通过设置git的.gitignore将这个文件忽略掉。</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20210112115956724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<p>在git项目的根目录下，创建一个.gitignore文件，将一下内容复制进去即可。git会自动读取文件将符合规则的文件隐藏掉。</p>
-<pre><code>*.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-#*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-# ---- Maven
-target/
-dependency-reduced-pom.xml
-
-# ---- IntelliJ IDEA
-*.iws
-*.iml
-*.ipr
-.idea/
-
-# ---- Eclipse
-.classpath
-.project
-.settings/
-.metadata/
-
-# ---- Mac OS X
-.DS_Store?
-.DS_Store
-Icon?
-# Thumbnails
-._*
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-
-# ---- Windows
-# Windows image file caches
-Thumbs.db
-# Folder config file
-Desktop.ini
-
-.java-version
-#--compile
-bin/
-tmp/
-build/
-
-.gradle/
-.vscode/
-.tmp
-
-# --- JRebel
-/**/rebel.xml
-
-
-</code></pre><ol start="4">
-<li><p>启动项目</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/4bb53ef0ada2415e55f1b01ca4403e40.png" alt="img"></p>
-</li>
-<li><p>修改文件之后使文件热加载</p>
-<p>每个文件修改之后，鼠标右键点击文件，点击Compile And Reload File使文件生效</p>
-<p><img src="https://img-blog.csdnimg.cn/20210112120013832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzI2ODk2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-</li>
-</ol>
-<p>至此，JRebel热部署的内容分享完毕，希望能够对大家有所帮助。</p>
-]]></content>
-      <categories>
-        <category>热部署</category>
-      </categories>
-      <tags>
-        <tag>热部署</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>git命令整理</title>
-    <url>/2020/05/11/git-ming-ling-zheng-li/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h1 id="git命令整理"><a href="#git命令整理" class="headerlink" title="git命令整理"></a>git命令整理</h1><h2 id="拉取当前分支的远程代码"><a href="#拉取当前分支的远程代码" class="headerlink" title="拉取当前分支的远程代码"></a>拉取当前分支的远程代码</h2><p>git pull ：将当前分支远程上的更新拉取下来</p>
-<h2 id="获取本地所有分支远程代码的更新"><a href="#获取本地所有分支远程代码的更新" class="headerlink" title="获取本地所有分支远程代码的更新"></a>获取本地所有分支远程代码的更新</h2><p>git fetch：将远程上的更新拉取下来。不包括当前分支的更新。（仅仅是远程分支的更新）</p>
-<h2 id="修改本地指向远程仓库的地址"><a href="#修改本地指向远程仓库的地址" class="headerlink" title="修改本地指向远程仓库的地址"></a>修改本地指向远程仓库的地址</h2><ol>
-<li><p>查看本地远程仓库地址</p>
-<pre><code>git remote -v</code></pre></li>
-</ol>
-<ol start="2">
-<li><p>修改仓库地址</p>
-<pre><code>git remote set-url origin https://github.91chifun.workers.dev//https://github.com/JavaCodeShow/JavaCodeShow.github.io.git</code></pre></li>
-</ol>
-]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot使用jetcache本地缓存</title>
-    <url>/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h1 id="SpringBoot使用jetcache本地缓存"><a href="#SpringBoot使用jetcache本地缓存" class="headerlink" title="SpringBoot使用jetcache本地缓存"></a>SpringBoot使用jetcache本地缓存</h1><h2 id="引入mavne依赖"><a href="#引入mavne依赖" class="headerlink" title="引入mavne依赖"></a>引入mavne依赖</h2><pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.alicp.jetcache&lt;/groupId&gt;
-    &lt;artifactId&gt;jetcache-starter-redis&lt;/artifactId&gt;
-    &lt;version&gt;2.6.4&lt;/version&gt;
-&lt;/dependency&gt;</code></pre><h2 id="添加配置文件"><a href="#添加配置文件" class="headerlink" title="添加配置文件"></a>添加配置文件</h2><pre><code># cache 状态监控刷新时间
-jetcache.statIntervalMinutes=1
-jetcache.areaInCacheName=false
-# 进程内的并发访问保护默认开关
-jetcache.penetrationProtect=true
-jetcache.local.default.type=caffeine
-jetcache.local.default.keyConvertor=fastjson
-# 默认单个 method cache 支持数量100个，需要具体看服务情况调整
-jetcache.local.default.limit=100
-# 缓存失效时间，全局默认10s
-jetcache.local.default.expireAfterWriteInMillis=10000
-</code></pre><h2 id="开启缓存"><a href="#开启缓存" class="headerlink" title="开启缓存"></a>开启缓存</h2><p>在启动类上添加@EnableMethodCache注解，扫描指定包下面的@Cached注解，使缓存生效。</p>
-<p>注意：jetcache是基于AOP的，所以需要放在public方法上，并且不能是本类方法调用。</p>
-<pre><code>@SpringBootApplication
-@EnableMethodCache(basePackages = &quot;xxx.xxx&quot;)
-public class RedisSpringBootMain {
-    public static void main(String[] args) {
-        SpringApplication.run(RedisSpringBootMain.class, args);
-    }
-}</code></pre><h2 id="缓存名称删除规则"><a href="#缓存名称删除规则" class="headerlink" title="缓存名称删除规则"></a>缓存名称删除规则</h2><p>AreaName+cacheName, cacheName 如果未指定，则通过类签名+函数签名+参数签名实现</p>
-<h2 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h2><p>key支持spel表达式，可自定义key的生成规则。不指定key，则使用默认规则</p>
-<pre><code>   /**
-     * 单个key
-     */
-    @PostMapping(&quot;/jetCacheGet&quot;)
-    @Cached(cacheType = CacheType.LOCAL, expire = 6)
-    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet(@RequestBody String bizShowId) {
-        log.info(&quot;从数据库获得数据&quot;);
-        return BaseResult.success(UserDTO.getUserList());
-    }</code></pre><pre><code>     /**
-     * 对象
-     */
-    @PostMapping(&quot;/jetCacheGet2&quot;)
-    @Cached(cacheType = CacheType.LOCAL, expire = 6)
-    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet2(@RequestBody UserDTO userDTO) {
-        log.info(&quot;从数据库获得数据&quot;);
-        return BaseResult.success(UserDTO.getUserList());
-    }
-</code></pre><pre><code>    /**
-     * 集合排序
-     */
-    @PostMapping(&quot;/jetCacheGet3&quot;)
-    @Cached(cacheType = CacheType.LOCAL, key = &quot;T(com.jf.common.utils.jetcache.JetCacheUtils).sorted(#bizShowIdList)&quot;, expire = 6)
-    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet3(@RequestBody List&lt;String&gt; bizShowIdList) {
-        log.info(&quot;从数据库获得数据&quot;);
-        return BaseResult.success(UserDTO.getUserList());
-    }</code></pre><pre><code>    /**
-     * 集合对象排序
-     */
-    @PostMapping(&quot;/jetCacheGet4&quot;)
-    @Cached(cacheType = CacheType.LOCAL, key = &quot;T(com.jf.common.utils.jetcache.JetCacheUtils).sorted(#UserDTO)&quot;, expire = 6)
-    public BaseResult&lt;List&lt;UserDTO&gt;&gt; jetCacheGet4(@RequestBody List&lt;UserDTO&gt; userDTOList) {
-        log.info(&quot;从数据库获得数据&quot;);
-        return BaseResult.success(UserDTO.getUserList());
-    }</code></pre>]]></content>
-      <categories>
-        <category>高性能缓存</category>
-      </categories>
-      <tags>
-        <tag>jetcache</tag>
       </tags>
   </entry>
   <entry>
@@ -1480,6 +1581,71 @@ docker push new-repo:tagname</code></pre></li>
       </tags>
   </entry>
   <entry>
+    <title>git命令整理</title>
+    <url>/2020/05/11/git-ming-ling-zheng-li/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="git命令整理"><a href="#git命令整理" class="headerlink" title="git命令整理"></a>git命令整理</h1><h2 id="拉取当前分支的远程代码"><a href="#拉取当前分支的远程代码" class="headerlink" title="拉取当前分支的远程代码"></a>拉取当前分支的远程代码</h2><p>git pull ：将当前分支远程上的更新拉取下来</p>
+<h2 id="获取本地所有分支远程代码的更新"><a href="#获取本地所有分支远程代码的更新" class="headerlink" title="获取本地所有分支远程代码的更新"></a>获取本地所有分支远程代码的更新</h2><p>git fetch：将远程上的更新拉取下来。不包括当前分支的更新。（仅仅是远程分支的更新）</p>
+<h2 id="修改本地指向远程仓库的地址"><a href="#修改本地指向远程仓库的地址" class="headerlink" title="修改本地指向远程仓库的地址"></a>修改本地指向远程仓库的地址</h2><ol>
+<li><p>查看本地远程仓库地址</p>
+<pre><code>git remote -v</code></pre></li>
+</ol>
+<ol start="2">
+<li><p>修改仓库地址</p>
+<pre><code>git remote set-url origin https://github.91chifun.workers.dev//https://github.com/JavaCodeShow/JavaCodeShow.github.io.git</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kafka入门基本使用命令</title>
+    <url>/2020/05/07/kafka-ru-men-shi-yong-guan-jian-ming-ling/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="一-修改配置文件"><a href="#一-修改配置文件" class="headerlink" title="一 修改配置文件"></a>一 修改配置文件</h2><p>在kafka解压目录下下有一个config的文件夹，里面放置的是我们的配置文件　　</p>
+<ol>
+<li>consumer.properites 消费者配置，此处我们使用默认的即可</li>
+<li>producer.properties 生产者配置，此处我们使用默认的即可</li>
+<li>server.properties kafka服务器的配置，此配置文件用来配置kafka服务器，</li>
+<li>broker.id 申明当前kafka服务器在集群中的唯一ID，需配置为integer,并且集群中的每一个kafka服务器的id都应是唯一的，我们这里采用默认配置即可</li>
+<li>listeners 申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址。如果是在远程服务器上运行则必须配置，例如：listeners=PLAINTEXT:// 192.168.180.128:9092。并确保服务器的9092端口能够访问，如果想外部电脑上的程序也能访问此kafka，就必须指定ip地址，不然java中会报key为null的错误。zookeeper.connect 申明kafka所连接的zookeeper的地址 ，需配置为zookeeper的地址，由于本次使用的是kafka高版本中自带zookeeper，使用默认配置即可zookeeper.connect=localhost:2181</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">修改server.properties
+本机使用：
+        listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092
+        advertised.listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092 
+远程使用
+         listeners<span class="token operator">=</span>PLAINTEXT://内网ip:9092
+        advertised.listeners<span class="token operator">=</span>PLAINTEXT://公网ip:9092 </code></pre>
+<h2 id="二-运行"><a href="#二-运行" class="headerlink" title="二 运行"></a>二 运行</h2><h3 id="2-1-启动zookeeper"><a href="#2-1-启动zookeeper" class="headerlink" title="2.1 启动zookeeper"></a>2.1 启动zookeeper</h3><p>cd进入kafka解压目录，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/zookeeper-server-start.sh config/zookeeper.properties</code></pre>
+<h3 id="2-2-启动kafka"><a href="#2-2-启动kafka" class="headerlink" title="2.2 启动kafka"></a>2.2 启动kafka</h3><p>cd进入kafka解压目录，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties</code></pre>
+<p><strong>kafka后台运行</strong></p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties <span class="token operator">&amp;</span></code></pre>
+<h3 id="2-3-创建topic"><a href="#2-3-创建topic" class="headerlink" title="2.3 创建topic"></a>2.3 创建topic</h3><p>创建一个名为test的topic　</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic <span class="token function">test</span>　</code></pre>
+<h3 id="2-4-查看topic"><a href="#2-4-查看topic" class="headerlink" title="2.4 查看topic"></a>2.4 查看topic</h3><pre><code>bin/kafka-topics.sh --list --zookeeper localhost:2181</code></pre><h3 id="2-5-创建消费者"><a href="#2-5-创建消费者" class="headerlink" title="2.5 创建消费者"></a>2.5 创建消费者</h3><p>可以创建一个用于消费topic为test的消费者，加上–from-beginning表示从开始所有的消息都显示出来</p>
+<p>在kafka解压目录打开终端，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class="token function">test</span> --from-beginning</code></pre>
+<h3 id="2-6-创建一个消息生产者"><a href="#2-6-创建一个消息生产者" class="headerlink" title="2.6 创建一个消息生产者"></a>2.6 创建一个消息生产者</h3><p>在kafka解压目录打开一个新的终端，输入</p>
+<pre class=" language-bash"><code class="language-bash">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="token function">test</span></code></pre>
+<h3 id="2-7-删除topic"><a href="#2-7-删除topic" class="headerlink" title="2.7 删除topic"></a>2.7 删除topic</h3><pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic accreditNotify</code></pre>
+]]></content>
+      <categories>
+        <category>Kafka</category>
+      </categories>
+      <tags>
+        <tag>kafka</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>jmeter入门教程</title>
     <url>/2020/05/12/jmeter-ru-men-jiao-cheng/</url>
     <content><![CDATA[<meta name="referrer" content="no-referrer">
@@ -1530,230 +1696,6 @@ docker push new-repo:tagname</code></pre></li>
       </categories>
       <tags>
         <tag>jmeter</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kafka入门基本使用命令</title>
-    <url>/2020/05/07/kafka-ru-men-shi-yong-guan-jian-ming-ling/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h2 id="一-修改配置文件"><a href="#一-修改配置文件" class="headerlink" title="一 修改配置文件"></a>一 修改配置文件</h2><p>在kafka解压目录下下有一个config的文件夹，里面放置的是我们的配置文件　　</p>
-<ol>
-<li>consumer.properites 消费者配置，此处我们使用默认的即可</li>
-<li>producer.properties 生产者配置，此处我们使用默认的即可</li>
-<li>server.properties kafka服务器的配置，此配置文件用来配置kafka服务器，</li>
-<li>broker.id 申明当前kafka服务器在集群中的唯一ID，需配置为integer,并且集群中的每一个kafka服务器的id都应是唯一的，我们这里采用默认配置即可</li>
-<li>listeners 申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址。如果是在远程服务器上运行则必须配置，例如：listeners=PLAINTEXT:// 192.168.180.128:9092。并确保服务器的9092端口能够访问，如果想外部电脑上的程序也能访问此kafka，就必须指定ip地址，不然java中会报key为null的错误。zookeeper.connect 申明kafka所连接的zookeeper的地址 ，需配置为zookeeper的地址，由于本次使用的是kafka高版本中自带zookeeper，使用默认配置即可zookeeper.connect=localhost:2181</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">修改server.properties
-本机使用：
-        listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092
-        advertised.listeners<span class="token operator">=</span>PLAINTEXT://localhost:9092 
-远程使用
-         listeners<span class="token operator">=</span>PLAINTEXT://内网ip:9092
-        advertised.listeners<span class="token operator">=</span>PLAINTEXT://公网ip:9092 </code></pre>
-<h2 id="二-运行"><a href="#二-运行" class="headerlink" title="二 运行"></a>二 运行</h2><h3 id="2-1-启动zookeeper"><a href="#2-1-启动zookeeper" class="headerlink" title="2.1 启动zookeeper"></a>2.1 启动zookeeper</h3><p>cd进入kafka解压目录，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/zookeeper-server-start.sh config/zookeeper.properties</code></pre>
-<h3 id="2-2-启动kafka"><a href="#2-2-启动kafka" class="headerlink" title="2.2 启动kafka"></a>2.2 启动kafka</h3><p>cd进入kafka解压目录，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties</code></pre>
-<p><strong>kafka后台运行</strong></p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-server-start.sh config/server.properties <span class="token operator">&amp;</span></code></pre>
-<h3 id="2-3-创建topic"><a href="#2-3-创建topic" class="headerlink" title="2.3 创建topic"></a>2.3 创建topic</h3><p>创建一个名为test的topic　</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic <span class="token function">test</span>　</code></pre>
-<h3 id="2-4-查看topic"><a href="#2-4-查看topic" class="headerlink" title="2.4 查看topic"></a>2.4 查看topic</h3><pre><code>bin/kafka-topics.sh --list --zookeeper localhost:2181</code></pre><h3 id="2-5-创建消费者"><a href="#2-5-创建消费者" class="headerlink" title="2.5 创建消费者"></a>2.5 创建消费者</h3><p>可以创建一个用于消费topic为test的消费者，加上–from-beginning表示从开始所有的消息都显示出来</p>
-<p>在kafka解压目录打开终端，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class="token function">test</span> --from-beginning</code></pre>
-<h3 id="2-6-创建一个消息生产者"><a href="#2-6-创建一个消息生产者" class="headerlink" title="2.6 创建一个消息生产者"></a>2.6 创建一个消息生产者</h3><p>在kafka解压目录打开一个新的终端，输入</p>
-<pre class=" language-bash"><code class="language-bash">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="token function">test</span></code></pre>
-<h3 id="2-7-删除topic"><a href="#2-7-删除topic" class="headerlink" title="2.7 删除topic"></a>2.7 删除topic</h3><pre class=" language-bash"><code class="language-bash">bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic accreditNotify</code></pre>
-]]></content>
-      <categories>
-        <category>Kafka</category>
-      </categories>
-      <tags>
-        <tag>kafka</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java服务线上问题排查</title>
-    <url>/2022/11/15/java-fu-wu-xian-shang-wen-ti-pai-cha/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h1 id="java服务线上问题排查"><a href="#java服务线上问题排查" class="headerlink" title="java服务线上问题排查"></a>java服务线上问题排查</h1><h2 id="1、内存"><a href="#1、内存" class="headerlink" title="1、内存"></a>1、内存</h2><h3 id="1-1、-查看服务占用内存"><a href="#1-1、-查看服务占用内存" class="headerlink" title="1.1、 查看服务占用内存"></a>1.1、 查看服务占用内存</h3><ol>
-<li><p>可以通过prometheus查看，此处不做过多说明。</p>
-</li>
-<li><p>通过arthas的memory命令查看</p>
-<pre><code>$ memory</code></pre><p>显示如下：</p>
-<pre><code>Memory                           used      total      max        usage
-heap                             32M       256M       4096M      0.79%
-g1_eden_space                    11M       68M        -1         16.18%
-g1_old_gen                       17M       184M       4096M      0.43%
-g1_survivor_space                4M        4M         -1         100.00%
-nonheap                          35M       39M        -1         89.55%
-codeheap_&#39;non-nmethods&#39;          1M        2M         5M         20.53%
-metaspace                        26M       27M        -1         96.88%
-codeheap_&#39;profiled_nmethods&#39;     4M        4M         117M       3.57%
-compressed_class_space           2M        3M         1024M      0.29%
-codeheap_&#39;non-profiled_nmethods&#39; 685K      2496K      120032K    0.57%
-mapped                           0K        0K         -          0.00%
-direct                           48M       48M        -          100.00%
-</code></pre></li>
-<li><p>直接使用linux自带的命令查看</p>
-<pre><code>top -o %MEM -b -n 1 | grep java | awk &#39;{print &quot;PID: &quot;$1&quot; \t 虚拟内存: &quot;$5 / 1024&quot;M \t 物理内存(实际占用内存): &quot;$6 / 1024&quot;M \t 共享内存: &quot;$7 / 1024&quot;M \t CPU使用率: &quot;$9&quot;% \t 内存使用率: &quot;$10&quot;%&quot;}&#39;</code></pre><p>显示如下：</p>
-<pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# top -o %MEM -b -n 1 | grep java | awk &#39;{print &quot;PID: &quot;$1&quot; \t 虚拟内存: &quot;$5 / 1024&quot;M \t 物理内存: &quot;$6 / 1024&quot;M \t 共享内存: &quot;$7 / 1024&quot;M \t CPU使用率: &quot;$9&quot;% \t 内存使用率: &quot;$10&quot;%&quot;}&#39;
-PID: 12959       虚拟内存: 2123.05M      物理内存: 329.488M      共享内存: 7.28125M      CPU使用率: 0.0%         内存使用率: 17.9%
-PID: 10799       虚拟内存: 2110.75M      物理内存: 194.641M      共享内存: 13.418M       CPU使用率: 0.0%         内存使用率: 10.6%
-PID: 28249       虚拟内存: 2508.25M      物理内存: 194.316M      共享内存: 6.32031M      CPU使用率: 0.0%         内存使用率: 10.6%
-PID: 25613       虚拟内存: 2331.65M      物理内存: 169.684M      共享内存: 5.15625M      CPU使用率: 0.0%         内存使用率: 9.2%
-[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]#     </code></pre></li>
-</ol>
-<h3 id="1-2、服务OOM如何排查"><a href="#1-2、服务OOM如何排查" class="headerlink" title="1.2、服务OOM如何排查"></a>1.2、服务OOM如何排查</h3><h4 id="1-2-1、获取dump文件"><a href="#1-2-1、获取dump文件" class="headerlink" title="1.2.1、获取dump文件"></a>1.2.1、获取dump文件</h4><ol>
-<li><p>主动导出dump文件</p>
-<ol>
-<li><p>获取进程的PID</p>
-<pre><code>ps -ef|grep java
-jps -l</code></pre></li>
-<li><p>根据pid，下载dump文件到当前路径，导出整个JVM 中内存信息</p>
-<p>格式：jmap -dump:format=b,file=文件名 [pid]</p>
-<pre><code>jmap -dump:format=b,file=/usr/java/dump/heapdump.hprof 32756</code></pre></li>
-</ol>
-</li>
-</ol>
-<h4 id="1-2-2、OOM时导出dump文件"><a href="#1-2-2、OOM时导出dump文件" class="headerlink" title="1.2.2、OOM时导出dump文件"></a>1.2.2、OOM时导出dump文件</h4><ol>
-<li><p>我们可以添加 <strong>-XX:+HeapDumpOnOutOfMemoryError</strong> 参数开启“<strong>当堆内存空间溢出时输出堆的内存快照</strong>”功能，而 <strong>-XX:HeapDumpPath</strong> 参数则指定生成的堆转储存放位置，可以不填路径，只填文件名，说明是当前目录。</p>
-<pre><code>#指定dump文件存放位置
--XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/
-
-#在当前服务的的根目录下面存放dump文件
--XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=testDump.hprof</code></pre></li>
-</ol>
-<h4 id="1-2-3、分析dump文件"><a href="#1-2-3、分析dump文件" class="headerlink" title="1.2.3、分析dump文件"></a>1.2.3、分析dump文件</h4><ol>
-<li><p>如果是 <strong>Windows</strong> 系统我们也可以直接使用JDK自带的 <strong>jvisualvm</strong> 工具（在 <strong>JDK</strong> 的 <strong>bin</strong> 目录下：jvisualvm.exe）</p>
-<p>目录位置：%JAVA_HOME%\bin,如果不确定JAVA_HOME的位置，可以在cmd命令行中输入：echo %JAVA_HOME%  确定位置</p>
-<p><img src="https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center" alt="图片描述"></p>
-</li>
-<li><p>从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，而其他的对象占用内存并不大，那么罪魁祸首久事这个UserDTO对象，我们点击进去继续查看。</p>
-<p><img src="https://img-blog.csdnimg.cn/0bdc2a2f34ad461bbc6f581f4899a92b.png#pic_center" alt="图片描述"></p>
-<blockquote>
-<p>如果出现内存不足，可以将%JAVA_HOME%\lib\visualvm\etc目录里面的visualvm.conf的堆内存修改一下。</p>
-<pre><code>-Xms4096m -J-Xmx4096m
-visualvm_default_options=&quot;-J-client -J-Xms4096m -J-Xmx4096m ***</code></pre></blockquote>
-</li>
-<li><p>分析对象</p>
-<p>从下面图片可以看到左边是这个UserDTO对象的所有实例，右上是对象的具体信息，包含对象里面的字段，右下是这个对象的被引用信息，在这个图里面也可以看到这个对象有8720756个，查看引用看到这个对象是在一个List里面，我们点击这个list继续往下看。</p>
-<p><img src="https://img-blog.csdnimg.cn/9992d046bf414e4aa18ddbdb83a59c94.png#pic_center" alt="图片描述"></p>
-</li>
-<li><p>点开这个list会发现，这个list的大小是8720756万个，这个list的泛型是UserDTO对象，那么这个list中有8720756万个UsetDTO对象，那么OOM的原因也就水落石出了。从引用中可以看到这个list对象是在HelloService这个类里面，那么接下来结合代码不难发现是哪一处的代码出现问题，然后去改就ok了。</p>
-<p><img src="https://img-blog.csdnimg.cn/7b86abe6a783434b82c233b9b9645df1.png#pic_center" alt="图片描述"></p>
-</li>
-</ol>
-<h2 id="2、CPU"><a href="#2、CPU" class="headerlink" title="2、CPU"></a>2、CPU</h2><h3 id="2-1、查看系统CPU"><a href="#2-1、查看系统CPU" class="headerlink" title="2.1、查看系统CPU"></a>2.1、查看系统CPU</h3><p>linux服务器里面输入top命令，显示如下：</p>
-<pre><code>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND   
-20571 root      20   0 2756184 296280  15236 S  80.4  7.8   0:36.48 java
-  386 root      20   0   39108   5956   5628 S   6.2  0.2   0:33.12 systemd-journal 
-11133 root      20   0  162104   2292   1616 R   6.2  0.1   0:00.14 top
-    1 root      20   0   51916   3640   2156 S   0.0  0.1   0:51.89 systemd
-    2 root      20   0       0      0      0 S   0.0  0.0   0:00.17 kthreadd
-    4 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H         </code></pre><p>可以看到PID为20571的这个进程占用了80.4%的CPU。那么接下来就是分析这个java服务的cpu为什么这么高了。</p>
-<h3 id="2-2、分析服务CPU过高"><a href="#2-2、分析服务CPU过高" class="headerlink" title="2.2、分析服务CPU过高"></a>2.2、分析服务CPU过高</h3><ol>
-<li><p>安装arthas，选择PID对应的服务。</p>
-</li>
-<li><p>通过thread -n 3 就能找到消耗cpu最高的三个线程的执行情况。这里只贴出了消耗cpu最高的的线程。</p>
-<pre><code>[arthas@3492]$ thread -n 3
-thread -n 3
-&quot;main&quot; Id=1 cpuUsage=89.35% deltaTime=187ms time=155281ms RUNNABLE
-    at java.io.FileOutputStream.writeBytes(Native Method)
-    at java.io.FileOutputStream.write(FileOutputStream.java:326)
-    at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
-    at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
-    at java.io.PrintStream.write(PrintStream.java:482)
-    at sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:221)
-    at sun.nio.cs.StreamEncoder.implFlushBuffer(StreamEncoder.java:291)
-    at sun.nio.cs.StreamEncoder.flushBuffer(StreamEncoder.java:104)
-    at java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:185)
-    at java.io.PrintStream.write(PrintStream.java:527)
-    at java.io.PrintStream.print(PrintStream.java:669)
-    at java.io.PrintStream.println(PrintStream.java:806)
-    at com.jf.HelloService.hello(HelloService.java:7)
-</code></pre></li>
-<li><p>从线程堆栈信息看到HelloService中hello方法导致的，代码位置是第7行。知道了代码的位置，接下来去分析就不难了。至此cpu的过高的原因也就水落石出了。 </p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>线上问题排查</category>
-      </categories>
-      <tags>
-        <tag>线上问题排查</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>linux常用命令</title>
-    <url>/2021/03/26/linux-chang-yong-ming-ling/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="一、查看文本"><a href="#一、查看文本" class="headerlink" title="一、查看文本"></a>一、查看文本</h2><h2 id="二、搜索文本里面的内容"><a href="#二、搜索文本里面的内容" class="headerlink" title="二、搜索文本里面的内容"></a>二、搜索文本里面的内容</h2><h2 id="三、端口号"><a href="#三、端口号" class="headerlink" title="三、端口号"></a>三、端口号</h2><ol>
-<li><h3 id="查看端口号是否在使用："><a href="#查看端口号是否在使用：" class="headerlink" title="查看端口号是否在使用："></a>查看端口号是否在使用：</h3><p>lsof -i:8080</p>
-</li>
-</ol>
-<ol start="2">
-<li><h3 id="对外部开放端口号"><a href="#对外部开放端口号" class="headerlink" title="对外部开放端口号"></a>对外部开放端口号</h3><p><strong>查询指定端口是否已经开放</strong><br>firewall-cmd –query-port=3306/tcp<br>返回yes/no。此时也有可能返回firewalld is not running，此时需要打开防火墙在开放端口。</p>
-</li>
-</ol>
-<p>   <strong>添加指定需要开放的端口：</strong><br>   firewall-cmd –add-port=3306/tcp –permanent</p>
-<p>   <strong>载入添加的端口：</strong><br>   firewall-cmd –reload</p>
-<h2 id="四、防火墙"><a href="#四、防火墙" class="headerlink" title="四、防火墙"></a>四、防火墙</h2><ol>
-<li><p>查看防火墙状态 systemctl status firewalld</p>
-</li>
-<li><p>开启防火墙 systemctl start firewalld</p>
-</li>
-<li><p>关闭防火墙 systemctl stop firewalld</p>
-</li>
-</ol>
-<h2 id="五、内存"><a href="#五、内存" class="headerlink" title="五、内存"></a>五、内存</h2><p>​    free -h</p>
-<h2 id="六、磁盘"><a href="#六、磁盘" class="headerlink" title="六、磁盘"></a>六、磁盘</h2><p>​     df -h</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java应用服务器内存处理</title>
-    <url>/2022/06/10/linux-fu-wu-qi-java-nei-cun-chu-li/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h1 id="java服务器内存处理"><a href="#java服务器内存处理" class="headerlink" title="java服务器内存处理"></a>java服务器内存处理</h1><h2 id="查看服务器总内存占用"><a href="#查看服务器总内存占用" class="headerlink" title="查看服务器总内存占用"></a>查看服务器总内存占用</h2><pre><code>free -h</code></pre><p>显示如下：</p>
-<pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# free -h
-              total        used        free      shared  buff/cache   available
-Mem:           1.8G        1.4G        170M        3.7M        259M        284M
-Swap:            0B          0B          0B
-[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# 
-</code></pre><h2 id="清除操作系统缓存"><a href="#清除操作系统缓存" class="headerlink" title="清除操作系统缓存"></a>清除操作系统缓存</h2><pre><code>echo 3 &gt; /proc/sys/vm/drop_caches</code></pre><h2 id="查看java内存占用"><a href="#查看java内存占用" class="headerlink" title="查看java内存占用"></a>查看java内存占用</h2><pre><code>top -o %MEM -b -n 1 | grep java | awk &#39;{print &quot;PID: &quot;$1&quot; \t 虚拟内存: &quot;$5 / 1024&quot;M \t 物理内存(实际占用内存): &quot;$6 / 1024&quot;M \t 共享内存: &quot;$7 / 1024&quot;M \t CPU使用率: &quot;$9&quot;% \t 内存使用率: &quot;$10&quot;%&quot;}&#39;</code></pre><p>显示如下：</p>
-<pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# top -o %MEM -b -n 1 | grep java | awk &#39;{print &quot;PID: &quot;$1&quot; \t 虚拟内存: &quot;$5 / 1024&quot;M \t 物理内存: &quot;$6 / 1024&quot;M \t 共享内存: &quot;$7 / 1024&quot;M \t CPU使用率: &quot;$9&quot;% \t 内存使用率: &quot;$10&quot;%&quot;}&#39;
-PID: 12959       虚拟内存: 2123.05M      物理内存: 329.488M      共享内存: 7.28125M      CPU使用率: 0.0%         内存使用率: 17.9%
-PID: 10799       虚拟内存: 2110.75M      物理内存: 194.641M      共享内存: 13.418M       CPU使用率: 0.0%         内存使用率: 10.6%
-PID: 28249       虚拟内存: 2508.25M      物理内存: 194.316M      共享内存: 6.32031M      CPU使用率: 0.0%         内存使用率: 10.6%
-PID: 25613       虚拟内存: 2331.65M      物理内存: 169.684M      共享内存: 5.15625M      CPU使用率: 0.0%         内存使用率: 9.2%
-[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# </code></pre><h2 id="查看PID所在目录"><a href="#查看PID所在目录" class="headerlink" title="查看PID所在目录"></a>查看PID所在目录</h2><pre><code>lsof -p PID
-# 示例如下
-# cwd: 表示 current work dirctory, 即：应用程序的当前工作目录
-lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href="#指定JVM内存运行java包" class="headerlink" title="指定JVM内存运行java包"></a>指定JVM内存运行java包</h2><pre><code>nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn64m  -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/ microservicecloud-eureka-server-7001-1.0-SNAPSHOT.jar  &gt;/dev/null &amp;</code></pre><blockquote>
-<p> Xms : 堆内存初始大小</p>
-<p> Xmx : 堆内存最大值</p>
-<p> Xmn：年轻代大小</p>
-<p> MetaspaceSize: 元空间大小</p>
-<p> MaxMetaspaceSize ：最大元空间大小</p>
-</blockquote>
-<h2 id="OOM时保存dump文件"><a href="#OOM时保存dump文件" class="headerlink" title="OOM时保存dump文件"></a>OOM时保存dump文件</h2><pre><code>-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/</code></pre>]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -1996,92 +1938,6 @@ brokerIP1=公网ip</code></pre><p>rocketmq控制台也是如此。需要指定na
       </tags>
   </entry>
   <entry>
-    <title>prometheus告警规则配置</title>
-    <url>/2020/07/01/prometheus-gao-jing-gui-ze-pei-zhi/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h2 id="1-创建告警规则配置文件"><a href="#1-创建告警规则配置文件" class="headerlink" title="1. 创建告警规则配置文件"></a>1. 创建告警规则配置文件</h2><p>创建告警规则配置文件first_rules.yml，建议放在与prometheus.yml同级目录</p>
-<h2 id="2-修改prometheus配置文件"><a href="#2-修改prometheus配置文件" class="headerlink" title="2. 修改prometheus配置文件"></a>2. 修改prometheus配置文件</h2><p>修改配置文件prometheus.yml，将告警规则配置文件添加到prometheus.yml。注意路径。</p>
-<pre><code>global:
-  scrape_interval:     15s   # 这个是每次数据手机的频率
-  evaluation_interval: 15s   # 评估告警规则的频率。
-
-# Alertmanager configuration
-alerting:
-  alertmanagers:
-  - static_configs:
-    - targets:
-       - &#39;localhost:9093&#39;
-
-rule_files:
-    - &quot;first_rules.yml&quot;
-  # - &quot;second_rules.yml&quot;
-
-scrape_configs:               # 通过这里的配置控制prometheus监控的资源
-  - job_name: prometheus      # prometheus自身默认的
-    static_configs:
-      - targets: [&#39;localhost:9090&#39;]  # 默认暴露的是9090端口服务</code></pre><h2 id="3-配置告警规则文件"><a href="#3-配置告警规则文件" class="headerlink" title="3. 配置告警规则文件"></a>3. 配置告警规则文件</h2><blockquote>
-<p>在告警规则文件中，我们可以将一组相关的规则设置定义在一个group下。在每一个group中我们可以定义多个告警规则(rule)。一条告警规则主要由以下几部分组成：<br><strong>alert</strong>：告警规则的名称。<br><strong>expr</strong>：基于PromQL表达式告警触发条件，用于计算是否有时间序列满足该条件。<br><strong>for</strong>：评估等待时间，可选参数。用于表示只有当触发条件持续一段时间后才发送告警。在等待期间新产生告警的状态为pending。<br><strong>labels</strong>：自定义标签，允许用户指定要附加到告警上的一组附加标签。<br><strong>annotations</strong>：用于指定一组附加信息，比如用于描述告警详细信息的文字等，annotations的内容在告警产生时会一同作为参数发送到Alertmanager。summary描述告警的概要信息，description用于描述告警的详细信息。同时Alertmanager的UI也会根据这两个标签值，显示告警信息。</p>
-</blockquote>
-<p>这里配置中的acs-ms为应用名字。也就是job的名字</p>
-<h3 id="监控应用是否宕机，"><a href="#监控应用是否宕机，" class="headerlink" title="监控应用是否宕机，"></a>监控应用是否宕机，</h3><pre><code>alert: serverDown
-expr: up{job=&quot;acs-ms&quot;}  ==  0
-for: 1m
-labels:
-  severity: critical
-annotations:
-  description: 实例：{{ $labels.instance }} 宕机了
-  summary: Instance {{ $labels.instance }} down</code></pre><h3 id="监控接口发生异常"><a href="#监控接口发生异常" class="headerlink" title="监控接口发生异常"></a>监控接口发生异常</h3><pre><code>alert: interface_request_exception
-expr: increase(http_server_requests_seconds_count{exception!=&quot;None&quot;,exception!=&quot;ServiceException&quot;,job=&quot;acs-ms&quot;}[1m])
-  &gt; 0
-for: 1s
-labels:
-  severity: page
-annotations:
-  description: &#39;实例：{{ $labels.instance }}的{{$labels.uri}}的接口发生了{{ $labels.exception
-    }}异常 &#39;
-  summary: 监控一定时间内接口请求异常的数量</code></pre><blockquote>
-<p><strong>exception!=”ServiceException”</strong> 是将一些手动抛出的自定义异常给排除掉。</p>
-</blockquote>
-<h3 id="监控接口请求时长"><a href="#监控接口请求时长" class="headerlink" title="监控接口请求时长"></a>监控接口请求时长</h3><pre><code>alert: interface_request_duration
-expr: increase(http_server_requests_seconds_sum{exception=&quot;None&quot;,job=&quot;acs-ms&quot;,uri!~&quot;.*Excel.*&quot;}[1m])
-  / increase(http_server_requests_seconds_count{exception=&quot;None&quot;,job=&quot;acs-ms&quot;,uri!~&quot;.*Excel.*&quot;}[1m])
-  &gt; 5
-for: 5s
-labels:
-  severity: page
-annotations:
-  description: &#39;实例：{{ $labels.instance }} 的{{$labels.uri}}接口请求时长超过了设置的阈值：5s，当前值{{
-    $value }}s &#39;
-  summary: 监控一定时间内的接口请求时长</code></pre><blockquote>
-<p><strong>uri!~”.<em>Excel.</em>“</strong> 是将一些接口给排除掉。这个是将包含Excel的接口排除掉。</p>
-</blockquote>
-<h3 id="监测系统CPU使用的百分比"><a href="#监测系统CPU使用的百分比" class="headerlink" title="监测系统CPU使用的百分比"></a>监测系统CPU使用的百分比</h3><pre><code>alert: CPUTooHeight
-expr: process_cpu_usage{job=&quot;acs-ms&quot;} &gt; 0.3
-for: 15s
-labels:
-  severity: page
-annotations:
-  description: &#39;实例：{{ $labels.instance }} 的cpu超过了设置的阈值：30%，当前值{{ $value }} &#39;
-  summary: 监测系统CPU使用的百分比</code></pre><h3 id="监控tomcat活动线程占总线程的比例"><a href="#监控tomcat活动线程占总线程的比例" class="headerlink" title="监控tomcat活动线程占总线程的比例"></a>监控tomcat活动线程占总线程的比例</h3><pre><code>alert: tomcat_thread_height
-expr: tomcat_threads_busy_threads{job=&quot;acs-ms&quot;}
-  / tomcat_threads_config_max_threads{job=&quot;acs-ms&quot;} &gt; 0.5
-for: 15s
-labels:
-  severity: page
-annotations:
-  description: &#39;实例：{{ $labels.instance }} 的tomcat活动线程占总线程的比例超过了设置的阈值：50%，当前值{{ $value
-    }} &#39;
-  summary: 监控tomcat活动线程占总线程的比例</code></pre><h2 id="4-启动Prometheus使配置生效"><a href="#4-启动Prometheus使配置生效" class="headerlink" title="4. 启动Prometheus使配置生效"></a>4. 启动Prometheus使配置生效</h2><pre><code>./prometheus --config.file=prometheus.yml</code></pre><h2 id="5-查看告警规则配置"><a href="#5-查看告警规则配置" class="headerlink" title="5. 查看告警规则配置"></a>5. 查看告警规则配置</h2><p> 访问：<strong><a href="http://ip:port:9090/rules">http://ip:port:9090/rules</a></strong></p>
-]]></content>
-      <categories>
-        <category>prometheus</category>
-      </categories>
-      <tags>
-        <tag>prometheus</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>linux安装jenkins部署SpringBoot应用</title>
     <url>/2021/03/30/linux-an-zhuang-jenkins/</url>
     <content><![CDATA[<meta name="referrer" content="no-referrer">
@@ -2272,107 +2128,6 @@ echo &quot;shell脚本执行完毕&quot;
       </categories>
       <tags>
         <tag>jenkins</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring注解介绍</title>
-    <url>/2020/07/01/spring-zhu-jie/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<ol>
-<li>@Controller    组合注解（组合了@Component注解），应用在MVC层（控制层）,DispatcherServlet会自动扫描注解了此注解的类，然后将web请求映射到注解了@RequestMapping的方法上。</li>
-<li>@Service    组合注解（组合了@Component注解），应用在service层（业务逻辑层）</li>
-<li>@Reponsitory    组合注解（组合了@Component注解），应用在dao层（数据访问层）</li>
-<li>@Component    表示一个带注释的类是一个“组件”，成为Spring管理的Bean。当使用基于注解的配置和类路径扫描时，这些类被视为自动检测的候选对象。同时@Component还是一个元注解。</li>
-<li>@Autowired    Spring提供的工具（由Spring的依赖注入工具（BeanPostProcessor、BeanFactoryPostProcessor）自动注入。）</li>
-<li>@Resource    JSR-250提供的注解</li>
-<li>@Inject    JSR-330提供的注解</li>
-<li>@Configuration    声明当前类是一个配置类（相当于一个Spring配置的xml文件）</li>
-<li>@ComponentScan    自动扫描指定包下所有使用</li>
-<li>@Service,@Component,@Controller,@Repository的类并注册</li>
-<li>@Bean    注解在方法上，声明当前方法的返回值为一个Bean。返回的Bean对应的类中可以定义init()方法和destroy()方法，然后@Bean(initMethod=“init”,destroyMethod=“destroy”)定义，在构造之后执行init，在销毁之前执行destroy。</li>
-<li>@Aspect    声明一个切面（就是说这是一个额外功能）</li>
-<li>@After    后置建言（advice），在原方法前执行。</li>
-<li>@Before    前置建言（advice），在原方法后执行。</li>
-<li>@Around    环绕建言（advice），在原方法执行前执行，在原方法执行后再执行（@Around可以实现其他两种advice）</li>
-<li>@PointCut    声明切点，即定义拦截规则，确定有哪些方法会被切入</li>
-<li>@Transactional    声明事务（一般默认配置即可满足要求，当然也可以自定义）</li>
-<li>@Cacheable    声明数据缓存</li>
-<li>@EnableAspectJAutoProxy    开启Spring对AspectJ的支持</li>
-<li>@Value    值得注入。经常与Sping EL表达式语言一起使用，注入普通字符，系统属性，表达式运算结果，其他Bean的属性，文件内容，网址请求内容，配</li>
-<li>文件属性值等等</li>
-<li>@PropertySource    指定文件地址。提供了一种方便的、声明性的机制，用于向Spring的环境添加PropertySource。与@configuration类一起使用。</li>
-<li>@PostConstruct    标注在方法上，该方法在构造函数执行完成之后执行。</li>
-<li>@PreDestroy    标注在方法上，该方法在对象销毁之前执行。@Profile    表示当一个或多个指定的文件是活动的时，一个组件是有资格注册的。使用@Profile注解类或者方法，达到在不同情况下选择实例化不同的Bean。</li>
-<li>@Profile(“dev”)表示为dev时实例化。</li>
-<li>@EnableAsync    开启异步任务支持。注解在配置类上。</li>
-<li>@Async    注解在方法上标示这是一个异步方法，在类上标示这个类所有的方法都是异步方法。</li>
-<li>@EnableScheduling    注解在配置类上，开启对计划任务的支持。</li>
-<li>@Scheduled    注解在方法上，声明该方法是计划任务。支持多种类型的计划任务：cron,fixDelay,fixRate</li>
-<li>@Conditional    根据满足某一特定条件创建特定的Bean</li>
-<li>@Enable*    通过简单的@Enable来开启一项功能的支持。所有@Enable注解都有一个@Import注解，@Import是用来导入配置类的，这也就意味着这些自动开启的实现其实是导入了一些自动配置的Bean(1.直接导入配置类2.依据条件选择配置类3.动态注册配置类)</li>
-<li>@RunWith    这个是Junit的注解，springboot集成了junit。一般在测试类里使用:@RunWith(SpringJUnit4ClassRunner.class) — SpringJUnit4ClassRunner在JUnit环境下提供Sprng TestContext Framework的功能</li>
-<li>@ContextConfiguration    用来加载配置ApplicationContext，其中classes属性用来加载配置类:@ContextConfiguration(classes = {TestConfig.class(自定义的一个配置类)})</li>
-<li>@ActiveProfiles    用来声明活动的profile–@ActiveProfiles(“prod”(这个prod定义在配置类中))</li>
-<li>@EnableWebMvc    用在配置类上，开启SpringMvc的Mvc的一些默认配置：如ViewResolver，MessageConverter等。同时在自己定制SpringMvc的相关配置时需要做到两点：1.配置类继承WebMvcConfigurerAdapter类2.就是必须使用这个@EnableWebMvc注解。</li>
-<li>@RequestMapping    用来映射web请求（访问路径和参数），处理类和方法的。可以注解在类和方法上，注解在方法上的@RequestMapping路径会继承注解在类上的路径。同时支持Serlvet的request和response作为参数，也支持对request和response的媒体类型进行配置。其中有value(路径)，produces(定义返回的媒体类型和字符集)，method(指定请求方式)等属性。</li>
-<li>@GetMapping    GET方式的@RequestMapping</li>
-<li>@PostMapping    POST方式的@RequestMapping</li>
-<li>@ResponseBody    将返回值放在response体内。返回的是数据而不是页面</li>
-<li>@RequestBody    允许request的参数在request体中，而不是在直接链接在地址的后面。此注解放置在参数前。</li>
-<li>@PathVariable    放置在参数前，用来接受路径参数。</li>
-<li>@RestController    组合注解，组合了@Controller和@ResponseBody,当我们只开发一个和页面交互数据的控制层的时候可以使用此注解。</li>
-<li>@ControllerAdvice    用在类上，声明一个控制器建言，它也组合了@Component注解，会自动注册为Spring的Bean。</li>
-<li>@ExceptionHandler    用在方法上定义全局处理，通过他的value属性可以过滤拦截的条件：@ExceptionHandler(value=Exception.class)–表示拦截所有Exception。</li>
-<li>@ModelAttribute    将键值对添加到全局，所有注解了@RequestMapping的方法可获得次键值对（就是在请求到达之前，往model里addAttribute一对name-value而已）。</li>
-<li>@InitBinder    通过@InitBinder注解定制WebDataBinder（用在方法上，方法有一个WebDataBinder作为参数，用WebDataBinder在方法内定制数据绑定，例如可以忽略request传过来的参数Id等）。</li>
-<li>@WebAppConfiguration    一般用在测试上，注解在类上，用来声明加载的ApplicationContext是一个WebApplicationContext。他的属性指定的是Web资源的位置，默认为src/main/webapp,我们可以修改为：@WebAppConfiguration(“src/main/resources”)。</li>
-<li>@EnableAutoConfiguration    此注释自动载入应用程序所需的所有Bean——这依赖于Spring Boot在类路径中的查找。该注解组合了@Import注解，@Import注解导入了EnableAutoCofigurationImportSelector类，它使用SpringFactoriesLoader.loaderFactoryNames方法来扫描具有META-INF/spring.factories文件的jar包。而spring.factories里声明了有哪些自动配置。</li>
-<li>@SpingBootApplication    SpringBoot的核心注解，主要目的是开启自动配置。它也是一个组合注解，主要组合了@Configurer，@EnableAutoConfiguration（核心）和@ComponentScan。可以通过@SpringBootApplication(exclude={想要关闭的自动配置的类名.class})来关闭特定的自动配置。</li>
-<li>@ImportResource    虽然Spring提倡零配置，但是还是提供了对xml文件的支持，这个注解就是用来加载xml配置的。例：@ImportResource({“classpath</li>
-<li>@ConfigurationProperties    将properties属性与一个Bean及其属性相关联，从而实现类型安全的配置。例：@ConfigurationProperties(prefix=“authot”，locations={“classpath</li>
-<li>@ConditionalOnBean    条件注解。当容器里有指定Bean的条件下。</li>
-<li>@ConditionalOnClass    条件注解。当类路径下有指定的类的条件下。</li>
-<li>@ConditionalOnExpression    条件注解。基于SpEL表达式作为判断条件。</li>
-<li>@ConditionalOnJava    条件注解。基于JVM版本作为判断条件。</li>
-<li>@ConditionalOnJndi    条件注解。在JNDI存在的条件下查找指定的位置。</li>
-<li>@ConditionalOnMissingBean    条件注解。当容器里没有指定Bean的情况下。</li>
-<li>@ConditionalOnMissingClass    条件注解。当类路径下没有指定的类的情况下。</li>
-<li>@ConditionalOnNotWebApplication    条件注解。当前项目不是web项目的条件下。</li>
-<li>@ConditionalOnResource    条件注解。类路径是否有指定的值。</li>
-<li>@ConditionalOnSingleCandidate    条件注解。当指定Bean在容器中只有一个，后者虽然有多个但是指定首选的Bean。</li>
-<li>@ConditionalOnWebApplication    条件注解。当前项目是web项目的情况下。</li>
-<li>@EnableConfigurationProperties    注解在类上，声明开启属性注入，使用@Autowired注入。例：@EnableConfigurationProperties(HttpEncodingProperties.class)。</li>
-<li>@AutoConfigureAfter    在指定的自动配置类之后再配置。例：@AutoConfigureAfter(WebMvcAutoConfiguration.class)</li>
-</ol>
-]]></content>
-      <categories>
-        <category>SpringBoot</category>
-      </categories>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用hexo写博客</title>
-    <url>/2022/06/11/shi-yong-hexo-xie-bo-ke/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h1 id="使用hexo写博客"><a href="#使用hexo写博客" class="headerlink" title="使用hexo写博客"></a>使用hexo写博客</h1><h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>node的版本号一定要正确，不然可能会出现版本不适配等一系列问题。这里node使用12.18.3版本</p>
-<p>node下载：<a href="https://nodejs.org/download/release/v12.18.3/" target="_blank" rel="noopener">https://nodejs.org/download/release/v12.18.3/</a></p>
-<p>下载文件为：node-v12.18.3-x64.msi </p>
-<pre><code>git version
-node -v
-npm -v</code></pre><h2 id="npm缓存清除"><a href="#npm缓存清除" class="headerlink" title="npm缓存清除"></a>npm缓存清除</h2><pre><code>npm cache clean --force</code></pre><h2 id="npm镜像"><a href="#npm镜像" class="headerlink" title="npm镜像"></a>npm镜像</h2><p>国内npm比较慢，安装cnpm淘宝镜像</p>
-<pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="重新生成node-modules"><a href="#重新生成node-modules" class="headerlink" title="重新生成node_modules"></a>重新生成node_modules</h2><pre><code>rm -rf node_modules &amp;&amp; npm install --force</code></pre><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install -g hexo-cli</code></pre><h2 id="部署插件"><a href="#部署插件" class="headerlink" title="部署插件"></a>部署插件</h2><pre><code>npm install hexo-deployer-git --save</code></pre><h2 id="使用以及部署"><a href="#使用以及部署" class="headerlink" title="使用以及部署"></a>使用以及部署</h2><pre><code>hexo clean #清理各种缓存和旧文件
-hexo g     #生成静态文件
-hexo s     #开启服务器预览
-hexo d     #部署到git服务器上</code></pre>]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2782,6 +2537,307 @@ hexo d     #部署到git服务器上</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
+    <title>linux常用命令</title>
+    <url>/2021/03/26/linux-chang-yong-ming-ling/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h3 id><a href="#" class="headerlink" title></a></h3><h2 id="一、查看文本"><a href="#一、查看文本" class="headerlink" title="一、查看文本"></a>一、查看文本</h2><h2 id="二、搜索文本里面的内容"><a href="#二、搜索文本里面的内容" class="headerlink" title="二、搜索文本里面的内容"></a>二、搜索文本里面的内容</h2><h2 id="三、端口号"><a href="#三、端口号" class="headerlink" title="三、端口号"></a>三、端口号</h2><ol>
+<li><h3 id="查看端口号是否在使用："><a href="#查看端口号是否在使用：" class="headerlink" title="查看端口号是否在使用："></a>查看端口号是否在使用：</h3><p>lsof -i:8080</p>
+</li>
+</ol>
+<ol start="2">
+<li><h3 id="对外部开放端口号"><a href="#对外部开放端口号" class="headerlink" title="对外部开放端口号"></a>对外部开放端口号</h3><p><strong>查询指定端口是否已经开放</strong><br>firewall-cmd –query-port=3306/tcp<br>返回yes/no。此时也有可能返回firewalld is not running，此时需要打开防火墙在开放端口。</p>
+</li>
+</ol>
+<p>   <strong>添加指定需要开放的端口：</strong><br>   firewall-cmd –add-port=3306/tcp –permanent</p>
+<p>   <strong>载入添加的端口：</strong><br>   firewall-cmd –reload</p>
+<h2 id="四、防火墙"><a href="#四、防火墙" class="headerlink" title="四、防火墙"></a>四、防火墙</h2><ol>
+<li><p>查看防火墙状态 systemctl status firewalld</p>
+</li>
+<li><p>开启防火墙 systemctl start firewalld</p>
+</li>
+<li><p>关闭防火墙 systemctl stop firewalld</p>
+</li>
+</ol>
+<h2 id="五、内存"><a href="#五、内存" class="headerlink" title="五、内存"></a>五、内存</h2><p>​    free -h</p>
+<h2 id="六、磁盘"><a href="#六、磁盘" class="headerlink" title="六、磁盘"></a>六、磁盘</h2><p>​     df -h</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java应用服务器内存处理</title>
+    <url>/2022/06/10/linux-fu-wu-qi-java-nei-cun-chu-li/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="java服务器内存处理"><a href="#java服务器内存处理" class="headerlink" title="java服务器内存处理"></a>java服务器内存处理</h1><h2 id="查看服务器总内存占用"><a href="#查看服务器总内存占用" class="headerlink" title="查看服务器总内存占用"></a>查看服务器总内存占用</h2><pre><code>free -h</code></pre><p>显示如下：</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# free -h
+              total        used        free      shared  buff/cache   available
+Mem:           1.8G        1.4G        170M        3.7M        259M        284M
+Swap:            0B          0B          0B
+[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# 
+</code></pre><h2 id="清除操作系统缓存"><a href="#清除操作系统缓存" class="headerlink" title="清除操作系统缓存"></a>清除操作系统缓存</h2><pre><code>echo 3 &gt; /proc/sys/vm/drop_caches</code></pre><h2 id="查看java内存占用"><a href="#查看java内存占用" class="headerlink" title="查看java内存占用"></a>查看java内存占用</h2><pre><code>top -o %MEM -b -n 1 | grep java | awk &#39;{print &quot;PID: &quot;$1&quot; \t 虚拟内存: &quot;$5 / 1024&quot;M \t 物理内存(实际占用内存): &quot;$6 / 1024&quot;M \t 共享内存: &quot;$7 / 1024&quot;M \t CPU使用率: &quot;$9&quot;% \t 内存使用率: &quot;$10&quot;%&quot;}&#39;</code></pre><p>显示如下：</p>
+<pre><code>[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# top -o %MEM -b -n 1 | grep java | awk &#39;{print &quot;PID: &quot;$1&quot; \t 虚拟内存: &quot;$5 / 1024&quot;M \t 物理内存: &quot;$6 / 1024&quot;M \t 共享内存: &quot;$7 / 1024&quot;M \t CPU使用率: &quot;$9&quot;% \t 内存使用率: &quot;$10&quot;%&quot;}&#39;
+PID: 12959       虚拟内存: 2123.05M      物理内存: 329.488M      共享内存: 7.28125M      CPU使用率: 0.0%         内存使用率: 17.9%
+PID: 10799       虚拟内存: 2110.75M      物理内存: 194.641M      共享内存: 13.418M       CPU使用率: 0.0%         内存使用率: 10.6%
+PID: 28249       虚拟内存: 2508.25M      物理内存: 194.316M      共享内存: 6.32031M      CPU使用率: 0.0%         内存使用率: 10.6%
+PID: 25613       虚拟内存: 2331.65M      物理内存: 169.684M      共享内存: 5.15625M      CPU使用率: 0.0%         内存使用率: 9.2%
+[root@iZuf6j6c7vo33inl2830e3Z spring-application-jar]# </code></pre><h2 id="查看PID所在目录"><a href="#查看PID所在目录" class="headerlink" title="查看PID所在目录"></a>查看PID所在目录</h2><pre><code>lsof -p PID
+# 示例如下
+# cwd: 表示 current work dirctory, 即：应用程序的当前工作目录
+lsof -p PID | grep cwd</code></pre><h2 id="指定JVM内存运行java包"><a href="#指定JVM内存运行java包" class="headerlink" title="指定JVM内存运行java包"></a>指定JVM内存运行java包</h2><pre><code>nohup java -jar -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn64m  -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/ microservicecloud-eureka-server-7001-1.0-SNAPSHOT.jar  &gt;/dev/null &amp;</code></pre><blockquote>
+<p> Xms : 堆内存初始大小</p>
+<p> Xmx : 堆内存最大值</p>
+<p> Xmn：年轻代大小</p>
+<p> MetaspaceSize: 元空间大小</p>
+<p> MaxMetaspaceSize ：最大元空间大小</p>
+</blockquote>
+<h2 id="OOM时保存dump文件"><a href="#OOM时保存dump文件" class="headerlink" title="OOM时保存dump文件"></a>OOM时保存dump文件</h2><pre><code>-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/java/dump/</code></pre>]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring注解介绍</title>
+    <url>/2020/07/01/spring-zhu-jie/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<ol>
+<li>@Controller    组合注解（组合了@Component注解），应用在MVC层（控制层）,DispatcherServlet会自动扫描注解了此注解的类，然后将web请求映射到注解了@RequestMapping的方法上。</li>
+<li>@Service    组合注解（组合了@Component注解），应用在service层（业务逻辑层）</li>
+<li>@Reponsitory    组合注解（组合了@Component注解），应用在dao层（数据访问层）</li>
+<li>@Component    表示一个带注释的类是一个“组件”，成为Spring管理的Bean。当使用基于注解的配置和类路径扫描时，这些类被视为自动检测的候选对象。同时@Component还是一个元注解。</li>
+<li>@Autowired    Spring提供的工具（由Spring的依赖注入工具（BeanPostProcessor、BeanFactoryPostProcessor）自动注入。）</li>
+<li>@Resource    JSR-250提供的注解</li>
+<li>@Inject    JSR-330提供的注解</li>
+<li>@Configuration    声明当前类是一个配置类（相当于一个Spring配置的xml文件）</li>
+<li>@ComponentScan    自动扫描指定包下所有使用</li>
+<li>@Service,@Component,@Controller,@Repository的类并注册</li>
+<li>@Bean    注解在方法上，声明当前方法的返回值为一个Bean。返回的Bean对应的类中可以定义init()方法和destroy()方法，然后@Bean(initMethod=“init”,destroyMethod=“destroy”)定义，在构造之后执行init，在销毁之前执行destroy。</li>
+<li>@Aspect    声明一个切面（就是说这是一个额外功能）</li>
+<li>@After    后置建言（advice），在原方法前执行。</li>
+<li>@Before    前置建言（advice），在原方法后执行。</li>
+<li>@Around    环绕建言（advice），在原方法执行前执行，在原方法执行后再执行（@Around可以实现其他两种advice）</li>
+<li>@PointCut    声明切点，即定义拦截规则，确定有哪些方法会被切入</li>
+<li>@Transactional    声明事务（一般默认配置即可满足要求，当然也可以自定义）</li>
+<li>@Cacheable    声明数据缓存</li>
+<li>@EnableAspectJAutoProxy    开启Spring对AspectJ的支持</li>
+<li>@Value    值得注入。经常与Sping EL表达式语言一起使用，注入普通字符，系统属性，表达式运算结果，其他Bean的属性，文件内容，网址请求内容，配</li>
+<li>文件属性值等等</li>
+<li>@PropertySource    指定文件地址。提供了一种方便的、声明性的机制，用于向Spring的环境添加PropertySource。与@configuration类一起使用。</li>
+<li>@PostConstruct    标注在方法上，该方法在构造函数执行完成之后执行。</li>
+<li>@PreDestroy    标注在方法上，该方法在对象销毁之前执行。@Profile    表示当一个或多个指定的文件是活动的时，一个组件是有资格注册的。使用@Profile注解类或者方法，达到在不同情况下选择实例化不同的Bean。</li>
+<li>@Profile(“dev”)表示为dev时实例化。</li>
+<li>@EnableAsync    开启异步任务支持。注解在配置类上。</li>
+<li>@Async    注解在方法上标示这是一个异步方法，在类上标示这个类所有的方法都是异步方法。</li>
+<li>@EnableScheduling    注解在配置类上，开启对计划任务的支持。</li>
+<li>@Scheduled    注解在方法上，声明该方法是计划任务。支持多种类型的计划任务：cron,fixDelay,fixRate</li>
+<li>@Conditional    根据满足某一特定条件创建特定的Bean</li>
+<li>@Enable*    通过简单的@Enable来开启一项功能的支持。所有@Enable注解都有一个@Import注解，@Import是用来导入配置类的，这也就意味着这些自动开启的实现其实是导入了一些自动配置的Bean(1.直接导入配置类2.依据条件选择配置类3.动态注册配置类)</li>
+<li>@RunWith    这个是Junit的注解，springboot集成了junit。一般在测试类里使用:@RunWith(SpringJUnit4ClassRunner.class) — SpringJUnit4ClassRunner在JUnit环境下提供Sprng TestContext Framework的功能</li>
+<li>@ContextConfiguration    用来加载配置ApplicationContext，其中classes属性用来加载配置类:@ContextConfiguration(classes = {TestConfig.class(自定义的一个配置类)})</li>
+<li>@ActiveProfiles    用来声明活动的profile–@ActiveProfiles(“prod”(这个prod定义在配置类中))</li>
+<li>@EnableWebMvc    用在配置类上，开启SpringMvc的Mvc的一些默认配置：如ViewResolver，MessageConverter等。同时在自己定制SpringMvc的相关配置时需要做到两点：1.配置类继承WebMvcConfigurerAdapter类2.就是必须使用这个@EnableWebMvc注解。</li>
+<li>@RequestMapping    用来映射web请求（访问路径和参数），处理类和方法的。可以注解在类和方法上，注解在方法上的@RequestMapping路径会继承注解在类上的路径。同时支持Serlvet的request和response作为参数，也支持对request和response的媒体类型进行配置。其中有value(路径)，produces(定义返回的媒体类型和字符集)，method(指定请求方式)等属性。</li>
+<li>@GetMapping    GET方式的@RequestMapping</li>
+<li>@PostMapping    POST方式的@RequestMapping</li>
+<li>@ResponseBody    将返回值放在response体内。返回的是数据而不是页面</li>
+<li>@RequestBody    允许request的参数在request体中，而不是在直接链接在地址的后面。此注解放置在参数前。</li>
+<li>@PathVariable    放置在参数前，用来接受路径参数。</li>
+<li>@RestController    组合注解，组合了@Controller和@ResponseBody,当我们只开发一个和页面交互数据的控制层的时候可以使用此注解。</li>
+<li>@ControllerAdvice    用在类上，声明一个控制器建言，它也组合了@Component注解，会自动注册为Spring的Bean。</li>
+<li>@ExceptionHandler    用在方法上定义全局处理，通过他的value属性可以过滤拦截的条件：@ExceptionHandler(value=Exception.class)–表示拦截所有Exception。</li>
+<li>@ModelAttribute    将键值对添加到全局，所有注解了@RequestMapping的方法可获得次键值对（就是在请求到达之前，往model里addAttribute一对name-value而已）。</li>
+<li>@InitBinder    通过@InitBinder注解定制WebDataBinder（用在方法上，方法有一个WebDataBinder作为参数，用WebDataBinder在方法内定制数据绑定，例如可以忽略request传过来的参数Id等）。</li>
+<li>@WebAppConfiguration    一般用在测试上，注解在类上，用来声明加载的ApplicationContext是一个WebApplicationContext。他的属性指定的是Web资源的位置，默认为src/main/webapp,我们可以修改为：@WebAppConfiguration(“src/main/resources”)。</li>
+<li>@EnableAutoConfiguration    此注释自动载入应用程序所需的所有Bean——这依赖于Spring Boot在类路径中的查找。该注解组合了@Import注解，@Import注解导入了EnableAutoCofigurationImportSelector类，它使用SpringFactoriesLoader.loaderFactoryNames方法来扫描具有META-INF/spring.factories文件的jar包。而spring.factories里声明了有哪些自动配置。</li>
+<li>@SpingBootApplication    SpringBoot的核心注解，主要目的是开启自动配置。它也是一个组合注解，主要组合了@Configurer，@EnableAutoConfiguration（核心）和@ComponentScan。可以通过@SpringBootApplication(exclude={想要关闭的自动配置的类名.class})来关闭特定的自动配置。</li>
+<li>@ImportResource    虽然Spring提倡零配置，但是还是提供了对xml文件的支持，这个注解就是用来加载xml配置的。例：@ImportResource({“classpath</li>
+<li>@ConfigurationProperties    将properties属性与一个Bean及其属性相关联，从而实现类型安全的配置。例：@ConfigurationProperties(prefix=“authot”，locations={“classpath</li>
+<li>@ConditionalOnBean    条件注解。当容器里有指定Bean的条件下。</li>
+<li>@ConditionalOnClass    条件注解。当类路径下有指定的类的条件下。</li>
+<li>@ConditionalOnExpression    条件注解。基于SpEL表达式作为判断条件。</li>
+<li>@ConditionalOnJava    条件注解。基于JVM版本作为判断条件。</li>
+<li>@ConditionalOnJndi    条件注解。在JNDI存在的条件下查找指定的位置。</li>
+<li>@ConditionalOnMissingBean    条件注解。当容器里没有指定Bean的情况下。</li>
+<li>@ConditionalOnMissingClass    条件注解。当类路径下没有指定的类的情况下。</li>
+<li>@ConditionalOnNotWebApplication    条件注解。当前项目不是web项目的条件下。</li>
+<li>@ConditionalOnResource    条件注解。类路径是否有指定的值。</li>
+<li>@ConditionalOnSingleCandidate    条件注解。当指定Bean在容器中只有一个，后者虽然有多个但是指定首选的Bean。</li>
+<li>@ConditionalOnWebApplication    条件注解。当前项目是web项目的情况下。</li>
+<li>@EnableConfigurationProperties    注解在类上，声明开启属性注入，使用@Autowired注入。例：@EnableConfigurationProperties(HttpEncodingProperties.class)。</li>
+<li>@AutoConfigureAfter    在指定的自动配置类之后再配置。例：@AutoConfigureAfter(WebMvcAutoConfiguration.class)</li>
+</ol>
+]]></content>
+      <categories>
+        <category>SpringBoot</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>prometheus告警规则配置</title>
+    <url>/2020/07/01/prometheus-gao-jing-gui-ze-pei-zhi/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="1-创建告警规则配置文件"><a href="#1-创建告警规则配置文件" class="headerlink" title="1. 创建告警规则配置文件"></a>1. 创建告警规则配置文件</h2><p>创建告警规则配置文件first_rules.yml，建议放在与prometheus.yml同级目录</p>
+<h2 id="2-修改prometheus配置文件"><a href="#2-修改prometheus配置文件" class="headerlink" title="2. 修改prometheus配置文件"></a>2. 修改prometheus配置文件</h2><p>修改配置文件prometheus.yml，将告警规则配置文件添加到prometheus.yml。注意路径。</p>
+<pre><code>global:
+  scrape_interval:     15s   # 这个是每次数据手机的频率
+  evaluation_interval: 15s   # 评估告警规则的频率。
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+       - &#39;localhost:9093&#39;
+
+rule_files:
+    - &quot;first_rules.yml&quot;
+  # - &quot;second_rules.yml&quot;
+
+scrape_configs:               # 通过这里的配置控制prometheus监控的资源
+  - job_name: prometheus      # prometheus自身默认的
+    static_configs:
+      - targets: [&#39;localhost:9090&#39;]  # 默认暴露的是9090端口服务</code></pre><h2 id="3-配置告警规则文件"><a href="#3-配置告警规则文件" class="headerlink" title="3. 配置告警规则文件"></a>3. 配置告警规则文件</h2><blockquote>
+<p>在告警规则文件中，我们可以将一组相关的规则设置定义在一个group下。在每一个group中我们可以定义多个告警规则(rule)。一条告警规则主要由以下几部分组成：<br><strong>alert</strong>：告警规则的名称。<br><strong>expr</strong>：基于PromQL表达式告警触发条件，用于计算是否有时间序列满足该条件。<br><strong>for</strong>：评估等待时间，可选参数。用于表示只有当触发条件持续一段时间后才发送告警。在等待期间新产生告警的状态为pending。<br><strong>labels</strong>：自定义标签，允许用户指定要附加到告警上的一组附加标签。<br><strong>annotations</strong>：用于指定一组附加信息，比如用于描述告警详细信息的文字等，annotations的内容在告警产生时会一同作为参数发送到Alertmanager。summary描述告警的概要信息，description用于描述告警的详细信息。同时Alertmanager的UI也会根据这两个标签值，显示告警信息。</p>
+</blockquote>
+<p>这里配置中的acs-ms为应用名字。也就是job的名字</p>
+<h3 id="监控应用是否宕机，"><a href="#监控应用是否宕机，" class="headerlink" title="监控应用是否宕机，"></a>监控应用是否宕机，</h3><pre><code>alert: serverDown
+expr: up{job=&quot;acs-ms&quot;}  ==  0
+for: 1m
+labels:
+  severity: critical
+annotations:
+  description: 实例：{{ $labels.instance }} 宕机了
+  summary: Instance {{ $labels.instance }} down</code></pre><h3 id="监控接口发生异常"><a href="#监控接口发生异常" class="headerlink" title="监控接口发生异常"></a>监控接口发生异常</h3><pre><code>alert: interface_request_exception
+expr: increase(http_server_requests_seconds_count{exception!=&quot;None&quot;,exception!=&quot;ServiceException&quot;,job=&quot;acs-ms&quot;}[1m])
+  &gt; 0
+for: 1s
+labels:
+  severity: page
+annotations:
+  description: &#39;实例：{{ $labels.instance }}的{{$labels.uri}}的接口发生了{{ $labels.exception
+    }}异常 &#39;
+  summary: 监控一定时间内接口请求异常的数量</code></pre><blockquote>
+<p><strong>exception!=”ServiceException”</strong> 是将一些手动抛出的自定义异常给排除掉。</p>
+</blockquote>
+<h3 id="监控接口请求时长"><a href="#监控接口请求时长" class="headerlink" title="监控接口请求时长"></a>监控接口请求时长</h3><pre><code>alert: interface_request_duration
+expr: increase(http_server_requests_seconds_sum{exception=&quot;None&quot;,job=&quot;acs-ms&quot;,uri!~&quot;.*Excel.*&quot;}[1m])
+  / increase(http_server_requests_seconds_count{exception=&quot;None&quot;,job=&quot;acs-ms&quot;,uri!~&quot;.*Excel.*&quot;}[1m])
+  &gt; 5
+for: 5s
+labels:
+  severity: page
+annotations:
+  description: &#39;实例：{{ $labels.instance }} 的{{$labels.uri}}接口请求时长超过了设置的阈值：5s，当前值{{
+    $value }}s &#39;
+  summary: 监控一定时间内的接口请求时长</code></pre><blockquote>
+<p><strong>uri!~”.<em>Excel.</em>“</strong> 是将一些接口给排除掉。这个是将包含Excel的接口排除掉。</p>
+</blockquote>
+<h3 id="监测系统CPU使用的百分比"><a href="#监测系统CPU使用的百分比" class="headerlink" title="监测系统CPU使用的百分比"></a>监测系统CPU使用的百分比</h3><pre><code>alert: CPUTooHeight
+expr: process_cpu_usage{job=&quot;acs-ms&quot;} &gt; 0.3
+for: 15s
+labels:
+  severity: page
+annotations:
+  description: &#39;实例：{{ $labels.instance }} 的cpu超过了设置的阈值：30%，当前值{{ $value }} &#39;
+  summary: 监测系统CPU使用的百分比</code></pre><h3 id="监控tomcat活动线程占总线程的比例"><a href="#监控tomcat活动线程占总线程的比例" class="headerlink" title="监控tomcat活动线程占总线程的比例"></a>监控tomcat活动线程占总线程的比例</h3><pre><code>alert: tomcat_thread_height
+expr: tomcat_threads_busy_threads{job=&quot;acs-ms&quot;}
+  / tomcat_threads_config_max_threads{job=&quot;acs-ms&quot;} &gt; 0.5
+for: 15s
+labels:
+  severity: page
+annotations:
+  description: &#39;实例：{{ $labels.instance }} 的tomcat活动线程占总线程的比例超过了设置的阈值：50%，当前值{{ $value
+    }} &#39;
+  summary: 监控tomcat活动线程占总线程的比例</code></pre><h2 id="4-启动Prometheus使配置生效"><a href="#4-启动Prometheus使配置生效" class="headerlink" title="4. 启动Prometheus使配置生效"></a>4. 启动Prometheus使配置生效</h2><pre><code>./prometheus --config.file=prometheus.yml</code></pre><h2 id="5-查看告警规则配置"><a href="#5-查看告警规则配置" class="headerlink" title="5. 查看告警规则配置"></a>5. 查看告警规则配置</h2><p> 访问：<strong><a href="http://ip:port:9090/rules">http://ip:port:9090/rules</a></strong></p>
+]]></content>
+      <categories>
+        <category>prometheus</category>
+      </categories>
+      <tags>
+        <tag>prometheus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</title>
+    <url>/2021/04/02/shi-yong-rocketmq-spring-boot-starter-fa-song-xiao-fei-xiao-xi-de-jian-dan-shi-li/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"><a href="#使用rocketmq-spring-boot-starter发送，消费消息的简单示例" class="headerlink" title="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"></a>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</h1><h2 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1. 引入依赖"></a>1. 引入依赖</h2><pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> rokcetmq starter  <span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>rocketmq<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>rocketmq<span class="token operator">-</span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">2.2</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></code></pre>
+<h2 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h2><pre class=" language-java"><code class="language-java"># application<span class="token punctuation">.</span>properties
+rocketmq<span class="token punctuation">.</span>name<span class="token operator">-</span>server<span class="token operator">=</span><span class="token number">139.224</span><span class="token punctuation">.</span><span class="token number">103.236</span><span class="token operator">:</span><span class="token number">9876</span>
+rocketmq<span class="token punctuation">.</span>producer<span class="token punctuation">.</span>group<span class="token operator">=</span>spring<span class="token operator">-</span>application<span class="token operator">-</span>name</code></pre>
+<h2 id="3-生产者发送消息"><a href="#3-生产者发送消息" class="headerlink" title="3. 生产者发送消息"></a>3. 生产者发送消息</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 引入rocketMQTemplate</span>
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> RocketMQTemplate rocketMQTemplate<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 通过rocketMQTemplate发送消息。</span>
+<span class="token comment" spellcheck="true">// destination: formats: `topicName:tags`</span>
+<span class="token comment" spellcheck="true">// payload: 消息内容</span>
+rocketMQTemplate<span class="token punctuation">.</span><span class="token function">syncSend</span><span class="token punctuation">(</span><span class="token string">"CSS:ORDER_CANCEL"</span><span class="token punctuation">,</span> <span class="token string">"orderId-111"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="4-消费者接受消息"><a href="#4-消费者接受消息" class="headerlink" title="4. 消费者接受消息"></a>4. 消费者接受消息</h2><p>消费的的依赖和配置文件同生产者一样。组名修改即可。</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
+<span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@RocketMQMessageListener</span><span class="token punctuation">(</span>topic <span class="token operator">=</span> <span class="token string">"CSS"</span><span class="token punctuation">,</span> selectorExpression <span class="token operator">=</span> <span class="token string">"ORDER_CANCEL"</span><span class="token punctuation">,</span> consumerGroup <span class="token operator">=</span> <span class="token string">"spring-application-name"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestConsumer</span> <span class="token keyword">implements</span> <span class="token class-name">RocketMQListener</span><span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onMessage</span><span class="token punctuation">(</span>String message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Receive message："</span> <span class="token operator">+</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 业务逻辑处理。。。</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>本文对Spring项目里面对RocketMQ发送消息和消费消息，进行了简单的示例说明。方便大家入门使用！</p>
+<p>实际项目中。有能力的公司一般都会对RocketMQ进行二次封装，将RocketMQ的用法化繁为简。</p>
+<p>后面会陆续介绍RocketMQ的高级用法。</p>
+]]></content>
+      <categories>
+        <category>RocketMQ</category>
+      </categories>
+      <tags>
+        <tag>RocketMQ</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用hexo写博客</title>
+    <url>/2022/06/11/shi-yong-hexo-xie-bo-ke/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="使用hexo写博客"><a href="#使用hexo写博客" class="headerlink" title="使用hexo写博客"></a>使用hexo写博客</h1><h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>node的版本号一定要正确，不然可能会出现版本不适配等一系列问题。这里node使用12.18.3版本</p>
+<p>node下载：<a href="https://nodejs.org/download/release/v12.18.3/" target="_blank" rel="noopener">https://nodejs.org/download/release/v12.18.3/</a></p>
+<p>下载文件为：node-v12.18.3-x64.msi </p>
+<pre><code>git version
+node -v
+npm -v</code></pre><h2 id="npm缓存清除"><a href="#npm缓存清除" class="headerlink" title="npm缓存清除"></a>npm缓存清除</h2><pre><code>npm cache clean --force</code></pre><h2 id="npm镜像"><a href="#npm镜像" class="headerlink" title="npm镜像"></a>npm镜像</h2><p>国内npm比较慢，安装cnpm淘宝镜像</p>
+<pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="重新生成node-modules"><a href="#重新生成node-modules" class="headerlink" title="重新生成node_modules"></a>重新生成node_modules</h2><pre><code>rm -rf node_modules &amp;&amp; npm install --force</code></pre><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install -g hexo-cli</code></pre><h2 id="部署插件"><a href="#部署插件" class="headerlink" title="部署插件"></a>部署插件</h2><pre><code>npm install hexo-deployer-git --save</code></pre><h2 id="使用以及部署"><a href="#使用以及部署" class="headerlink" title="使用以及部署"></a>使用以及部署</h2><pre><code>hexo clean #清理各种缓存和旧文件
+hexo g     #生成静态文件
+hexo s     #开启服务器预览
+hexo d     #部署到git服务器上</code></pre>]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用prometheus监控SpringBoot项目</title>
     <url>/2020/07/01/cai-yong-prometheus-jian-kong-springboot-xiang-mu/</url>
     <content><![CDATA[<meta name="referrer" content="no-referrer">
@@ -2837,51 +2893,6 @@ scrape_configs:               # 通过这里的配置控制prometheus监控的�
       </categories>
       <tags>
         <tag>prometheus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</title>
-    <url>/2021/04/02/shi-yong-rocketmq-spring-boot-starter-fa-song-xiao-fei-xiao-xi-de-jian-dan-shi-li/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h1 id="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"><a href="#使用rocketmq-spring-boot-starter发送，消费消息的简单示例" class="headerlink" title="使用rocketmq-spring-boot-starter发送，消费消息的简单示例"></a>使用rocketmq-spring-boot-starter发送，消费消息的简单示例</h1><h2 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1. 引入依赖"></a>1. 引入依赖</h2><pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> rokcetmq starter  <span class="token operator">--</span><span class="token operator">></span>
-<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>rocketmq<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>rocketmq<span class="token operator">-</span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">2.2</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></code></pre>
-<h2 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h2><pre class=" language-java"><code class="language-java"># application<span class="token punctuation">.</span>properties
-rocketmq<span class="token punctuation">.</span>name<span class="token operator">-</span>server<span class="token operator">=</span><span class="token number">139.224</span><span class="token punctuation">.</span><span class="token number">103.236</span><span class="token operator">:</span><span class="token number">9876</span>
-rocketmq<span class="token punctuation">.</span>producer<span class="token punctuation">.</span>group<span class="token operator">=</span>spring<span class="token operator">-</span>application<span class="token operator">-</span>name</code></pre>
-<h2 id="3-生产者发送消息"><a href="#3-生产者发送消息" class="headerlink" title="3. 生产者发送消息"></a>3. 生产者发送消息</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 引入rocketMQTemplate</span>
-<span class="token annotation punctuation">@Autowired</span>
-<span class="token keyword">private</span> RocketMQTemplate rocketMQTemplate<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">// 通过rocketMQTemplate发送消息。</span>
-<span class="token comment" spellcheck="true">// destination: formats: `topicName:tags`</span>
-<span class="token comment" spellcheck="true">// payload: 消息内容</span>
-rocketMQTemplate<span class="token punctuation">.</span><span class="token function">syncSend</span><span class="token punctuation">(</span><span class="token string">"CSS:ORDER_CANCEL"</span><span class="token punctuation">,</span> <span class="token string">"orderId-111"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h2 id="4-消费者接受消息"><a href="#4-消费者接受消息" class="headerlink" title="4. 消费者接受消息"></a>4. 消费者接受消息</h2><p>消费的的依赖和配置文件同生产者一样。组名修改即可。</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
-<span class="token annotation punctuation">@Component</span>
-<span class="token annotation punctuation">@RocketMQMessageListener</span><span class="token punctuation">(</span>topic <span class="token operator">=</span> <span class="token string">"CSS"</span><span class="token punctuation">,</span> selectorExpression <span class="token operator">=</span> <span class="token string">"ORDER_CANCEL"</span><span class="token punctuation">,</span> consumerGroup <span class="token operator">=</span> <span class="token string">"spring-application-name"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestConsumer</span> <span class="token keyword">implements</span> <span class="token class-name">RocketMQListener</span><span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onMessage</span><span class="token punctuation">(</span>String message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Receive message："</span> <span class="token operator">+</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 业务逻辑处理。。。</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>本文对Spring项目里面对RocketMQ发送消息和消费消息，进行了简单的示例说明。方便大家入门使用！</p>
-<p>实际项目中。有能力的公司一般都会对RocketMQ进行二次封装，将RocketMQ的用法化繁为简。</p>
-<p>后面会陆续介绍RocketMQ的高级用法。</p>
-]]></content>
-      <categories>
-        <category>RocketMQ</category>
-      </categories>
-      <tags>
-        <tag>RocketMQ</tag>
       </tags>
   </entry>
   <entry>
