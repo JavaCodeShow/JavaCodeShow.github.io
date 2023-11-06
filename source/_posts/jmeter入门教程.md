@@ -65,3 +65,13 @@ tags:
 10. 查看请求结果
 
 ![图片描述](https://img-blog.csdnimg.cn/694cb95c84e646d8b0888b27202fc59a.png#pic_center)
+
+11. 响应结果断言：响应结果包含某个值才是正确的，不然就是错误的。
+
+    ​		![在这里插入图片描述](https://img-blog.csdnimg.cn/2908b2034b744f8fae64abb83385dcca.png#pic_center)
+
+    ![在这里插入图片描述](https://img-blog.csdnimg.cn/7b195c98783b43888d58450e7c1a8b94.png#pic_center)
+
+    
+
+​		重新发起请求，查看聚合报告。
