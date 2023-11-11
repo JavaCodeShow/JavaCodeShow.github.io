@@ -59,6 +59,7 @@ tags:
    --restart=always \
    --privileged=true \
    -v /etc/localtime:/etc/localtime \
+   -m 512m \
    -d \
    mysql:8.0.28
    ```

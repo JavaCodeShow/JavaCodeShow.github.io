@@ -69,12 +69,14 @@ tags:
 5. 使用docker运行ElasticSearch
 
    ```
-   docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+   docker run --name es -p 9200:9200 -p 9300:9300 \
    -e "discovery.type=single-node" \
-   -e ES_JAVA_OPTS="-Xms64m -Xmx128m" \
+   -e ES_JAVA_OPTS="-Xms128m -Xmx128m" \
    -v /usr/java/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
    -v /usr/java/docker/elasticsearch/data:/usr/share/elasticsearch/data \
    -v /usr/java/docker/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+   --network host \
+   -m 512m \
    -d elasticsearch:7.6.0
    ```
 
@@ -85,20 +87,23 @@ tags:
    > -p 9300:9300 9300是es在分布式集群状态下节点之间的通信端口 
    > -e 指定jvm内存，当前es以单节点模式运行
    > -v 挂载命令，将虚拟机中的路径和docker中的路径进行关联
+   >
+   > --network host  改为与宿主机共享一个网络，因为默认每个docker容器都有一个自己的网络，各容器之间是不互通的
+   >
    > -d 后台启动服务
 
-   >注意：ES_JAVA_OPTS非常重要，指定开发时es运行时的最小和最大内存占用为64M和128M，否则就	会占用全部可用内存
+   >注意：ES_JAVA_OPTS非常重要，指定开发时es运行时的最小和最大内存占用为128M，否则就	会占用全部可用内存
 
 6. 查看是否运行成功
 
    ```
-   docker ps | grep elasticsearch
+   docker ps | grep es
    ```
 
 7. 查看启动日志
 
    ```
-   docker logs elasticsearch
+   docker logs es
    ```
 
 8. 在浏览器地址栏访问http://ip:9200/，可以看到 es 启动成功后返回类似下面的数据

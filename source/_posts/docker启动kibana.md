@@ -93,6 +93,7 @@ tags:
    docker run -d --name kibana \
    -p 5601:5601 \
    -v /usr/java/docker/kibana/config:/usr/share/kibana/config \
+   -m 512m \
    -d kibana:7.6.0
    ```
 

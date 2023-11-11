@@ -285,7 +285,7 @@ brokerId=0
 #nameServer地址，分号分割
 namesrvAddr=公网IP:9876
 # 你的公网IP
-brokerIP1=公网IP.249
+brokerIP1=公网IP
 #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
 defaultTopicQueueNums=4
 #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭

@@ -76,6 +76,7 @@ tags:
    docker run -p 6379:6379 --name redis \
    -v /usr/java/docker/redis/redis.conf:/etc/redis/redis.conf \
    -v /usr/java/docker/redis/data:/data \
+   -m 512m \
    -d redis:5.0 redis-server /etc/redis/redis.conf
    ```
    
