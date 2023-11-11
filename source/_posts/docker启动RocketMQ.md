@@ -78,7 +78,7 @@ tags:
 
 2. 修改broker.conf
 
-   ```properties
+   ```
    
    brokerClusterName = DefaultCluster
    brokerName = broker-a
@@ -87,7 +87,6 @@ tags:
    fileReservedTime = 48
    brokerRole = ASYNC_MASTER
    flushDiskType = ASYNC_FLUSH
-   
    
    namesrvAddr=172.28.88.249:9876
    brokerIP1=172.28.88.249
@@ -98,7 +97,7 @@ tags:
    #是否允许 Broker 自动创建订阅组，建议线下开启，线上关闭
    autoCreateSubscriptionGroup=true
    ```
-
+   
 3. 删除容器
 
    ```
