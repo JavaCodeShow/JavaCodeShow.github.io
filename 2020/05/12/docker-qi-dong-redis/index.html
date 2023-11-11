@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    563
+                    565
                 </div>
                 
 
@@ -490,6 +490,7 @@
 <pre><code>docker run -p 6379:6379 --name redis \
 -v /usr/java/docker/redis/redis.conf:/etc/redis/redis.conf \
 -v /usr/java/docker/redis/data:/data \
+-m 512m \
 -d redis:5.0 redis-server /etc/redis/redis.conf</code></pre><p>命令解释说明：</p>
 <blockquote>
 <p>-p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。</p>
