@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    471
+                    467
                 </div>
                 
 
@@ -497,46 +497,53 @@ sh mqbroker -n localhost:9876
 docker cp mqbroker:/opt/rocketmq-4.4.0/conf/broker.conf /usr/java/docker/rocketmq/broker/broker.conf
 </code></pre></li>
 <li><p>修改broker.conf</p>
-<pre class=" language-properties"><code class="language-properties">
-<span class="token attr-name">brokerClusterName</span> <span class="token punctuation">=</span> <span class="token attr-value">DefaultCluster</span>
-<span class="token attr-name">brokerName</span> <span class="token punctuation">=</span> <span class="token attr-value">broker-a</span>
-<span class="token attr-name">brokerId</span> <span class="token punctuation">=</span> <span class="token attr-value">0</span>
-<span class="token attr-name">deleteWhen</span> <span class="token punctuation">=</span> <span class="token attr-value">04</span>
-<span class="token attr-name">fileReservedTime</span> <span class="token punctuation">=</span> <span class="token attr-value">48</span>
-<span class="token attr-name">brokerRole</span> <span class="token punctuation">=</span> <span class="token attr-value">ASYNC_MASTER</span>
-<span class="token attr-name">flushDiskType</span> <span class="token punctuation">=</span> <span class="token attr-value">ASYNC_FLUSH</span>
+<pre><code>
+brokerClusterName = DefaultCluster
+brokerName = broker-a
+brokerId = 0
+deleteWhen = 04
+fileReservedTime = 48
+brokerRole = ASYNC_MASTER
+flushDiskType = ASYNC_FLUSH
 
-</code></pre>
-</li>
+namesrvAddr=172.28.88.249:9876
+brokerIP1=172.28.88.249
+#在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
+defaultTopicQueueNums=4
+#是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
+autoCreateTopicEnable=true
+#是否允许 Broker 自动创建订阅组，建议线下开启，线上关闭
+autoCreateSubscriptionGroup=true</code></pre></li>
+<li><p>删除容器</p>
+<pre><code>docker rm -f mqbroker</code></pre></li>
+<li><p>启动Broker</p>
+<pre><code>docker run -d -p 10911:10911 -p 10909:10909 --name mqbroker \
+-v /usr/java/docker/rocketmq/broker/logs:/root/logs \
+-v /usr/java/docker/rocketmq/broker/store:/root/store \
+-v /usr/java/docker/rocketmq/broker/broker.conf:/opt/rocketmq-4.4.0/conf/broker.conf \
+-e &quot;JAVA_OPT_EXT=-Xms256M -Xmx256M -Xmn128m&quot; \
+-m 512m \
+--network host \
+rocketmqinc/rocketmq:latest sh mqbroker -c /opt/rocketmq-4.4.0/conf/broker.conf</code></pre></li>
+<li><p>查看是否启动成功</p>
+<pre><code>docker ps -a | grep mqbroker</code></pre></li>
+<li><p>查看日志</p>
+<pre><code>tail -500f /usr/java/docker/rocketmq/broker/logs/rocketmqlogs/broker.log</code></pre></li>
 </ol>
-<p>   namesrvAddr=172.28.88.249:9876<br>   brokerIP1=172.28.88.249<br>   #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数<br>   defaultTopicQueueNums=4<br>   #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭<br>   autoCreateTopicEnable=true<br>   #是否允许 Broker 自动创建订阅组，建议线下开启，线上关闭<br>   autoCreateSubscriptionGroup=true</p>
-<pre><code>
-3. 删除容器
-</code></pre><p>   docker rm -f mqbroker</p>
-<pre><code>
-4. 启动Broker
-</code></pre><p>   docker run -d -p 10911:10911 -p 10909:10909 –name mqbroker <br>   -v /usr/java/docker/rocketmq/broker/logs:/root/logs <br>   -v /usr/java/docker/rocketmq/broker/store:/root/store <br>   -v /usr/java/docker/rocketmq/broker/broker.conf:/opt/rocketmq-4.4.0/conf/broker.conf <br>   -e “JAVA_OPT_EXT=-Xms256M -Xmx256M -Xmn128m” <br>   -m 512m <br>   –network host <br>   rocketmqinc/rocketmq:latest sh mqbroker -c /opt/rocketmq-4.4.0/conf/broker.conf</p>
-<pre><code>
-5. 查看是否启动成功
-</code></pre><p>   docker ps -a | grep mqbroker</p>
-<pre><code>
-6. 查看日志
-</code></pre><p>   tail -500f /usr/java/docker/rocketmq/broker/logs/rocketmqlogs/broker.log</p>
-<pre><code>
-## 3. 安装控制台
+<h2 id="3-安装控制台"><a href="#3-安装控制台" class="headerlink" title="3. 安装控制台"></a>3. 安装控制台</h2><ol>
+<li><p>下载镜像</p>
+<pre><code>docker pull apacherocketmq/rocketmq-dashboard:latest</code></pre></li>
+<li><p>启动控制台</p>
+<pre><code>docker run -p 8087:8080 --name mqconsole -d \
+-e &quot;JAVA_OPTS=-Drocketmq.namesrv.addr=172.28.88.249:9876&quot; \
+-m 512m \
+-t apacherocketmq/rocketmq-dashboard</code></pre></li>
+<li><p>查看是否启动成功</p>
+<pre><code>docker ps -a | grep mqconsole</code></pre></li>
+<li><p>查看日志</p>
+<pre><code>docker logs mqconsole</code></pre></li>
+</ol>
 
-1. 下载镜像
-</code></pre><p>   docker pull apacherocketmq/rocketmq-dashboard:latest</p>
-<pre><code>
-2. 启动控制台
-</code></pre><p>   docker run -p 8087:8080 –name mqconsole -d <br>   -e “JAVA_OPTS=-Drocketmq.namesrv.addr=172.28.88.249:9876” <br>   -m 512m <br>   -t apacherocketmq/rocketmq-dashboard</p>
-<pre><code>
-3. 查看是否启动成功
-</code></pre><p>   docker ps -a | grep mqconsole</p>
-<pre><code>
-4. 查看日志
-</code></pre><p>   docker logs mqconsole</p>
-<pre><code></code></pre>
             </div>
             <hr/>
 
