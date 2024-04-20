@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    471
+                    466
                 </div>
                 
 
@@ -487,15 +487,12 @@ sh mqnamesrv</code></pre></li>
 <pre><code>tail -500f /usr/java/docker/rocketmq/namesrv/logs/rocketmqlogs/namesrv.log</code></pre></li>
 </ol>
 <h2 id="2-启动Broker"><a href="#2-启动Broker" class="headerlink" title="2. 启动Broker"></a>2. 启动Broker</h2><ol>
-<li><p>复制broker.conf文件</p>
-<pre><code># 先创建一个临时的broker容器
-docker run -d -p 10911:10911 -p 10909:10909 --name mqbroker \
+<li><p>先创建一个临时的broker容器</p>
+<pre><code>docker run -d -p 10911:10911 -p 10909:10909 --name mqbroker \
 rocketmqinc/rocketmq:latest \
-sh mqbroker -n localhost:9876
-
-# 复制broker.conf
-docker cp mqbroker:/opt/rocketmq-4.4.0/conf/broker.conf /usr/java/docker/rocketmq/broker/broker.conf
-</code></pre></li>
+sh mqbroker -n localhost:9876</code></pre></li>
+<li><p>复制broker.conf文件</p>
+<pre><code>docker cp mqbroker:/opt/rocketmq-4.4.0/conf/broker.conf /usr/java/docker/rocketmq/broker/broker.conf</code></pre></li>
 <li><p>修改broker.conf</p>
 <pre><code>
 brokerClusterName = DefaultCluster
@@ -507,7 +504,7 @@ brokerRole = ASYNC_MASTER
 flushDiskType = ASYNC_FLUSH
 # 公网ip
 namesrvAddr=172.31.128.22:9876
-brokerIP1=172.31.128.22.249
+brokerIP1=172.31.128.22
 #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
 defaultTopicQueueNums=4
 #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
