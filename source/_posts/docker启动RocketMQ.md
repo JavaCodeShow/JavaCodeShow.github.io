@@ -63,20 +63,21 @@ tags:
 
 ## 2. 启动Broker
 
-1. 复制broker.conf文件
+1. 先创建一个临时的broker容器
 
    ```
-   # 先创建一个临时的broker容器
    docker run -d -p 10911:10911 -p 10909:10909 --name mqbroker \
    rocketmqinc/rocketmq:latest \
    sh mqbroker -n localhost:9876
-   
-   # 复制broker.conf
-   docker cp mqbroker:/opt/rocketmq-4.4.0/conf/broker.conf /usr/java/docker/rocketmq/broker/broker.conf
-   
    ```
 
-2. 修改broker.conf
+2. 复制broker.conf文件
+
+   ```
+   docker cp mqbroker:/opt/rocketmq-4.4.0/conf/broker.conf /usr/java/docker/rocketmq/broker/broker.conf
+   ```
+
+3. 修改broker.conf
 
    ```
    
@@ -89,7 +90,7 @@ tags:
    flushDiskType = ASYNC_FLUSH
    # 公网ip
    namesrvAddr=172.31.128.22:9876
-   brokerIP1=172.31.128.22.249
+   brokerIP1=172.31.128.22
    #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
    defaultTopicQueueNums=4
    #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
@@ -97,14 +98,14 @@ tags:
    #是否允许 Broker 自动创建订阅组，建议线下开启，线上关闭
    autoCreateSubscriptionGroup=true
    ```
-   
-3. 删除容器
+
+4. 删除容器
 
    ```
    docker rm -f mqbroker
    ```
 
-4. 启动Broker
+5. 启动Broker
 
    ```
    docker run -d -p 10911:10911 -p 10909:10909 --name mqbroker \
@@ -117,13 +118,13 @@ tags:
    rocketmqinc/rocketmq:latest sh mqbroker -c /opt/rocketmq-4.4.0/conf/broker.conf
    ```
 
-5. 查看是否启动成功
+6. 查看是否启动成功
 
    ```
    docker ps -a | grep mqbroker
    ```
 
-6. 查看日志
+7. 查看日志
 
    ```
    tail -500f /usr/java/docker/rocketmq/broker/logs/rocketmqlogs/broker.log
