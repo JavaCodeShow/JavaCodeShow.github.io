@@ -3538,4 +3538,42 @@ scrape_configs:               # 通过这里的配置控制prometheus监控的�
         <tag>prometheus</tag>
       </tags>
   </entry>
+  <entry>
+    <title>docker启动nginx</title>
+    <url>/2024/05/12/docker-qi-dong-nginx/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h1 id="docker启动nginx"><a href="#docker启动nginx" class="headerlink" title="docker启动nginx"></a>docker启动nginx</h1><ol>
+<li><p>从docker hub拉取镜像</p>
+<pre><code>docker pull nginx:1.25</code></pre></li>
+<li><p>查看nginx镜像</p>
+<pre><code>docker images | grep nginx</code></pre></li>
+<li><p>创建挂载目录</p>
+<pre><code>mkdir -p /usr/java/docker/nginx/html &amp;&amp; mkdir -p /usr/java/docker/nginx/conf</code></pre></li>
+<li><p>临时启动nginx</p>
+<pre><code>docker run --name nginx -p 80:80 -d nginx:1.25</code></pre></li>
+<li><p>复制配置文件</p>
+<pre><code>docker cp nginx:/usr/share/nginx/html /usr/java/docker/nginx
+
+docker cp nginx:/etc/nginx/conf.d/default.conf /usr/java/docker/nginx/conf
+
+docker cp nginx:/etc/nginx/nginx.conf /usr/java/docker/nginx/conf</code></pre></li>
+<li><p>删除nginx</p>
+<pre><code>docker rm -f nginx</code></pre></li>
+<li><p>挂载文件启动nginx</p>
+<pre><code>docker run --name nginx -p 80:80 -p 443:443 \
+-v /usr/java/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf \
+-v /usr/java/docker/nginx/html:/usr/share/nginx/html \
+-d nginx:1.25</code></pre></li>
+<li><p>查看是否运行成功</p>
+<pre><code>docker ps | grep nginx</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
 </search>
