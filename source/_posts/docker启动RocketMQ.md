@@ -87,9 +87,9 @@ tags:
    fileReservedTime = 48
    brokerRole = ASYNC_MASTER
    flushDiskType = ASYNC_FLUSH
-   
-   namesrvAddr=172.28.88.249:9876
-   brokerIP1=172.28.88.249
+   # 公网ip
+   namesrvAddr=172.31.128.22:9876
+   brokerIP1=172.31.128.22.249
    #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
    defaultTopicQueueNums=4
    #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
@@ -141,7 +141,7 @@ tags:
 
    ```
    docker run -p 8087:8080 --name mqconsole -d \
-   -e "JAVA_OPTS=-Drocketmq.namesrv.addr=172.28.88.249:9876" \
+   -e "JAVA_OPTS=-Drocketmq.namesrv.addr=172.31.128.22:9876" \
    -m 512m \
    -t apacherocketmq/rocketmq-dashboard
    ```
