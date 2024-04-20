@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    467
+                    471
                 </div>
                 
 
@@ -505,9 +505,9 @@ deleteWhen = 04
 fileReservedTime = 48
 brokerRole = ASYNC_MASTER
 flushDiskType = ASYNC_FLUSH
-
-namesrvAddr=172.28.88.249:9876
-brokerIP1=172.28.88.249
+# 公网ip
+namesrvAddr=172.31.128.22:9876
+brokerIP1=172.31.128.22.249
 #在发送消息时，自动创建服务器不存在的topic，默认创建的队列数
 defaultTopicQueueNums=4
 #是否允许 Broker 自动创建Topic，建议线下开启，线上关闭
@@ -535,7 +535,7 @@ rocketmqinc/rocketmq:latest sh mqbroker -c /opt/rocketmq-4.4.0/conf/broker.conf<
 <pre><code>docker pull apacherocketmq/rocketmq-dashboard:latest</code></pre></li>
 <li><p>启动控制台</p>
 <pre><code>docker run -p 8087:8080 --name mqconsole -d \
--e &quot;JAVA_OPTS=-Drocketmq.namesrv.addr=172.28.88.249:9876&quot; \
+-e &quot;JAVA_OPTS=-Drocketmq.namesrv.addr=172.31.128.22:9876&quot; \
 -m 512m \
 -t apacherocketmq/rocketmq-dashboard</code></pre></li>
 <li><p>查看是否启动成功</p>

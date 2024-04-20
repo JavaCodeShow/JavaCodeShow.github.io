@@ -440,14 +440,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 
@@ -499,8 +499,12 @@ PID: 25613       虚拟内存: 2331.65M      物理内存: 169.684M      共享�
 <pre><code>ps -ef|grep java
 jps -l</code></pre></li>
 <li><p>根据pid，下载dump文件到当前路径，导出整个JVM 中内存信息</p>
-<p>格式：jmap -dump:format=b,file=文件名 [pid]</p>
-<pre><code>jmap -dump:format=b,file=/usr/java/dump/heapdump.hprof 32756</code></pre></li>
+<p>格式：</p>
+<p>jmap -dump:format=b,file=文件名 [pid]</p>
+<p>jmap -dump:live,format=b,file=文件名 [pid]            只dump存活的对象，存活的对象是GC之后没有被回收的对象</p>
+<pre><code>jmap -dump:format=b,file=/usr/java/dump/heapdump.hprof 32756
+
+jmap -dump:live,format=b,file=/usr/java/dump/heapdump.hprof 32756</code></pre></li>
 </ol>
 </li>
 </ol>
@@ -519,7 +523,7 @@ jps -l</code></pre></li>
 <p>如果出现内存不足，可以将%JAVA_HOME%\lib\visualvm\etc目录里面的visualvm.conf的堆内存修改一下。</p>
 <pre><code>-Xms4096m -J-Xmx4096m
 visualvm_default_options=&quot;-J-client -J-Xms4096m -J-Xmx4096m ***</code></pre></blockquote>
-<p>或者在网页上下载最新版的visualvm：<a href="https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。" target="_blank" rel="noopener">https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。</a></p>
+<p>或者在网页上下载最新版的visualvm：<a href="https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。**visualvm建议安装创建插件：Visual" target="_blank" rel="noopener">https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。**visualvm建议安装创建插件：Visual</a> GC以及Startup Profiler**</p>
 <p><img src="https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center" alt="图片描述"></p>
 </li>
 <li><p>从下面图片里面可以UserDTO这个对象占用了78.1%的内存，实例数是8720756个，而其他的对象占用内存并不大，那么罪魁祸首就是这个UserDTO对象，我们点击进去继续查看。</p>

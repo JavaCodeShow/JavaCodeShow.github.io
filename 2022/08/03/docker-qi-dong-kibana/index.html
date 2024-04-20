@@ -440,7 +440,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    384
+                    401
                 </div>
                 
 
@@ -476,13 +476,16 @@
 <li><p>配置文件</p>
 <p>在/usr/java/docker文件夹下创建kibana的config文件夹，将docker中kibana的配置挂载在外部，当我们在linux虚拟机中修改kibana的配置文件时，就会同时修改docker中的kibana的配置</p>
 <pre><code>mkdir -p /usr/java/docker/kibana/config</code></pre><p>复制配置文件</p>
-<pre><code>docker cp kibana:/usr/share/kibana/config /usr/java/docker/kibana/</code></pre><p>修改配置文件</p>
-<pre><code># 默认端口
+<pre><code>docker cp kibana:/usr/share/kibana/config /usr/java/docker/kibana/</code></pre><p>移除容器</p>
+<pre><code>docker rm -f kibana</code></pre><p>修改配置文件</p>
+<pre><code>vim /usr/java/docker/kibana/config/kibana.yml</code></pre><pre><code># 服务名字
+server.name: kibana
+# 默认端口
 server.port: 5601
 # 远程访问
 server.host: &quot;0.0.0.0&quot;        
-# ES 服务器的地址
-elasticsearch.hosts: [&quot;http://公网ip:9200&quot;]
+# ES 服务器的地址(公网ip)
+elasticsearch.hosts: [&quot;http://172.31.128.22:9200&quot;]
 # 索引名
 kibana.index: &quot;.kibana&quot;
 # 支持中文
@@ -491,8 +494,6 @@ i18n.locale: &quot;zh-CN&quot;
 xpack.monitoring.ui.container.elasticsearch.enabled: true</code></pre><p>查看配置文件</p>
 <pre><code>cat /usr/java/docker/kibana/config/kibana.yml</code></pre><p>保证权限问题</p>
 <pre><code>chmod -R 777 /usr/java/docker</code></pre></li>
-<li><p>删除临时容器</p>
-<pre><code>docker rm -f kibana</code></pre></li>
 <li><p>使用docker运行kibana</p>
 <pre><code>docker run -d --name kibana \
 -p 5601:5601 \

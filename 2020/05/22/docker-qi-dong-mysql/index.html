@@ -516,8 +516,8 @@ mysql:8.0.28</code></pre><p>命令解释说明：</p>
 <li><p>进去之后不用切换目录。直接输入下面的命令登录MySQL</p>
 <pre><code>mysql -uroot -p123456</code></pre></li>
 <li><p>然后运行以下SQL</p>
-<pre><code>alter user &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; password expire never;
-alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;123456&#39;;
+<pre><code>alter user &#39;root&#39;@&#39;%&#39; identified by &#39;mimazhaowoyao&#39; password expire never;
+alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;mimazhaowoyao&#39;;
 flush privileges;</code></pre></li>
 <li><p>重新启动docker里面的mysql容器</p>
 <pre><code>docker restart mysql</code></pre></li>
