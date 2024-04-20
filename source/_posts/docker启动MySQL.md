@@ -107,8 +107,8 @@ tags:
    3. 然后运行以下SQL
 
       ```
-      alter user 'root'@'%' identified by '123456' password expire never;
-      alter user 'root'@'%' identified with mysql_native_password by '123456';
+      alter user 'root'@'%' identified by 'mimazhaowoyao' password expire never;
+      alter user 'root'@'%' identified with mysql_native_password by 'mimazhaowoyao';
       flush privileges;
       ```
 

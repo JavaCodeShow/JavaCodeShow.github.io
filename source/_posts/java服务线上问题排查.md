@@ -76,10 +76,16 @@ tags:
 
    2. 根据pid，下载dump文件到当前路径，导出整个JVM 中内存信息
 
-      格式：jmap -dump:format=b,file=文件名 [pid]
+      格式：
 
+      jmap -dump:format=b,file=文件名 [pid]
+      
+      jmap -dump:live,format=b,file=文件名 [pid]            只dump存活的对象，存活的对象是GC之后没有被回收的对象
+      
       ```
       jmap -dump:format=b,file=/usr/java/dump/heapdump.hprof 32756
+      
+      jmap -dump:live,format=b,file=/usr/java/dump/heapdump.hprof 32756
       ```
 
 #### 1.2.2、OOM时导出dump文件
@@ -107,7 +113,7 @@ tags:
    > visualvm_default_options="-J-client -J-Xms4096m -J-Xmx4096m ***
    > ```
 
-   或者在网页上下载最新版的visualvm：https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。
+   或者在网页上下载最新版的visualvm：https://visualvm.github.io/，如果使用时内存不足也是去刚下载的visualvm的etc目录下修改visualvm.conf文件。**visualvm建议安装创建插件：Visual GC以及Startup Profiler**
 
    ![图片描述](https://img-blog.csdnimg.cn/53a7e17be93749cfa780ed8b1614ebab.png#pic_center)
 

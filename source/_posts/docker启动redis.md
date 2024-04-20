@@ -70,6 +70,12 @@ tags:
       appendonly yes
       ```
 
+   5. requirepass：设置密码
+
+      ```
+      requirepass mimazhaowoyao
+      ```
+
 6. 使用docker运行redis
 
    ```
@@ -79,9 +85,9 @@ tags:
    -m 512m \
    -d redis:5.0 redis-server /etc/redis/redis.conf
    ```
-   
+
    命令解释说明：
-   
+
    >-p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。
    >
    >--name redis指定该容器名称，查看和进行操作都比较方便。
@@ -94,7 +100,7 @@ tags:
    >
    >redis-server /etc/redis/redis.conf  以配置文件启动redis，加载容器内的conf文件，最终找到的是挂载的目录/usr/local/docker/redis/redis.conf
    >
-   
+
 7. 查看是否运行成功
 
    ```
@@ -104,9 +110,9 @@ tags:
 8. 问题记录：
 
    解决WARNING overcommit_memory is set to 0 Background save may fail under low memory condition：https://blog.csdn.net/ET1131429439/article/details/126660323
-   
+
    redis客户端链接失败：https://blog.csdn.net/m0_67394006/article/details/126495657
-   
+
    解决redis启动时的三个警告：https://blog.csdn.net/a13568hki/article/details/107038136
 
 
