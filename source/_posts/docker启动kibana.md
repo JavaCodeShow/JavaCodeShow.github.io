@@ -52,15 +52,27 @@ tags:
    docker cp kibana:/usr/share/kibana/config /usr/java/docker/kibana/
    ```
 
+   移除容器
+
+   ```
+   docker rm -f kibana
+   ```
+
    修改配置文件
 
    ```
+   vim /usr/java/docker/kibana/config/kibana.yml
+   ```
+
+   ```
+   # 服务名字
+   server.name: kibana
    # 默认端口
    server.port: 5601
    # 远程访问
    server.host: "0.0.0.0"		
-   # ES 服务器的地址
-   elasticsearch.hosts: ["http://公网ip:9200"]
+   # ES 服务器的地址(公网ip)
+   elasticsearch.hosts: ["http://172.31.128.22:9200"]
    # 索引名
    kibana.index: ".kibana"
    # 支持中文
@@ -81,13 +93,7 @@ tags:
    chmod -R 777 /usr/java/docker
    ```
 
-6. 删除临时容器
-
-   ```
-   docker rm -f kibana
-   ```
-
-7. 使用docker运行kibana
+6. 使用docker运行kibana
 
    ```
    docker run -d --name kibana \
