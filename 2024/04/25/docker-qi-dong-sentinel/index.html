@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="docker启动MySQL, 后端,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,高并发,微服务,分布式">
+    <meta name="keywords" content="docker启动sentinel, 后端,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,高并发,微服务,分布式">
     <meta name="description" content="追求技术，不断提升。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>docker启动MySQL | 一入编程深似海</title>
+    <title>docker启动sentinel | 一入编程深似海</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -276,12 +276,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">docker启动MySQL</h1>
+                    <h1 class="description center-align post-title">docker启动sentinel</h1>
                 </div>
             </div>
         </div>
@@ -431,7 +431,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-05-22
+                    2024-04-25
                 </div>
                 
 
@@ -440,14 +440,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    439
+                    91
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
 
@@ -464,68 +464,21 @@
             <div id="articleContent">
                 <meta name="referrer" content="no-referrer">
 
-<h1 id="docker启动MySQL"><a href="#docker启动MySQL" class="headerlink" title="docker启动MySQL"></a>docker启动MySQL</h1><ol>
-<li><p>查询mysql镜像</p>
-<pre><code>docker search mysql</code></pre></li>
-<li><p>从docker hub拉取镜像</p>
-<pre><code>docker pull mysql:8.0.28</code></pre></li>
-<li><p>查看mysql镜像</p>
-<pre><code>docker images  | grep mysql</code></pre></li>
-<li><p>复制文件</p>
-<pre><code>#创建目录
-mkdir -p /usr/java/docker/mysql/conf &amp;&amp; mkdir -p /usr/java/docker/mysql/data &amp;&amp; mkdir -p /usr/java/docker/mysql/logs
-
-#启动容器，为了复制文件
-docker run -p 3306:3306 --name mysql -d -e MYSQL_ROOT_PASSWORD=“123456” mysql:8.0.28
-
-#复制文件
-docker cp mysql:/etc/mysql/my.cnf /usr/java/docker/mysql/conf
-
-#删除容器
-docker rm -f mysql</code></pre></li>
-<li><p>使用docker运行mysql</p>
-<pre><code>docker run -p 3306:3306 --name mysql \
--v /usr/java/docker/mysql/logs:/var/log/mysql \
--v /usr/java/docker/mysql/data:/var/lib/mysql \
--v /usr/java/docker/mysql/conf:/etc/mysql/conf.d \
--e MYSQL_ROOT_PASSWORD=123456 \
---restart=always \
---privileged=true \
--v /etc/localtime:/etc/localtime \
--m 512m \
--d \
-mysql:8.0.28</code></pre><p>命令解释说明：</p>
-<p>-p 8848:8848 端口映射：前表示主机部分，：后表示容器部分。</p>
-<p>–name mysql  指定该容器名称，查看和进行操作都比较方便。</p>
-<p>-e MYSQL_ROOT_PASSWORD=123456：docker的MySQL默认的root密码是随机的，这是改一下默认的root用户密码</p>
-<p>-v /etc/localtime:/etc/localtime：共享主机的 localtime</p>
-<p>-d mysql:8.0.28   在后台运行mysql镜像产生的容器</p>
-</li>
-</ol>
-<ol start="6">
+<h1 id="docker启动sentinel"><a href="#docker启动sentinel" class="headerlink" title="docker启动sentinel"></a>docker启动sentinel</h1><ol>
+<li><p>查询sentinel镜像</p>
+<pre><code>docker search bladex/sentinel-dashboard</code></pre></li>
+<li><p>从docker hub拉取最新镜像</p>
+<pre><code>docker pull bladex/sentinel-dashboard</code></pre></li>
+<li><p>查看sentinel镜像</p>
+<pre><code>docker images | grep sentinel</code></pre></li>
+<li><p>启动sentinel</p>
+<pre><code>docker run -d --name sentinel -p 8858:8858 bladex/sentinel-dashboard</code></pre></li>
 <li><p>查看是否运行成功</p>
-<pre><code>docker ps | grep mysql</code></pre></li>
-</ol>
-<ol start="7">
-<li><p>通过navicat连接mysql出现2059的问题</p>
-<p><strong>原因</strong>：8.0之后mysql更改了密码的加密规则，只要在命令窗口把加密方法改回去即可。</p>
-<p><strong>解决办法</strong>：</p>
-<ol>
-<li><p>进入到docker容器里面的mysql</p>
-<pre><code>docker exec -it mysql bash</code></pre></li>
-<li><p>进去之后不用切换目录。直接输入下面的命令登录MySQL</p>
-<pre><code>mysql -uroot -p123456</code></pre></li>
-<li><p>然后运行以下SQL</p>
-<pre><code>alter user &#39;root&#39;@&#39;%&#39; identified by &#39;mimazhaowoyao&#39; password expire never;
-alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;mimazhaowoyao&#39;;
-flush privileges;</code></pre></li>
-<li><p>重新启动docker里面的mysql容器</p>
-<pre><code>docker restart mysql</code></pre></li>
-</ol>
+<pre><code>docker ps | grep sentinel</code></pre></li>
+<li><p>查看启动日志</p>
+<pre><code>docker logs sentinel</code></pre></li>
+<li><p>在浏览器地址栏访问 <a href="http://ip:8858" target="_blank" rel="noopener">http://ip:8858</a> ，进入到sentinel的控制台</p>
 </li>
-</ol>
-<ol start="8">
-<li>通过navicat客户端重新连接即可</li>
 </ol>
 
             </div>
@@ -710,31 +663,31 @@ flush privileges;</code></pre></li>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/07/01/spring-zhu-jie/">
+                <a href="/2024/05/12/docker-qi-dong-nginx/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Spring注解介绍">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="docker启动nginx">
                         
-                        <span class="card-title">Spring注解介绍</span>
+                        <span class="card-title">docker启动nginx</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            对Spring里面常用的注解进行总结。
+                            通过docker启动nginx。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-05-12
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/SpringBoot/" class="post-category">
-                                    SpringBoot
+                            <a href="/categories/docker/" class="post-category">
+                                    docker
                                 </a>
                             
                             
@@ -744,8 +697,8 @@ flush privileges;</code></pre></li>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/SpringBoot/">
-                        <span class="chip bg-color">SpringBoot</span>
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
                     </a>
                     
                 </div>
@@ -759,31 +712,31 @@ flush privileges;</code></pre></li>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/05/12/springboot-shi-yong-jetcache-ben-di-huan-cun/">
+                <a href="/2023/11/11/docker-qi-dong-rocketmq/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="SpringBoot使用jetcache本地缓存">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="docker启动RocketMQ">
                         
-                        <span class="card-title">SpringBoot使用jetcache本地缓存</span>
+                        <span class="card-title">docker启动RocketMQ</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            通过docker启动redis。
+                            通过docker启动RocketMQ。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E7%BC%93%E5%AD%98/" class="post-category">
-                                    高性能缓存
+                            <a href="/categories/docker/" class="post-category">
+                                    docker
                                 </a>
                             
                             
@@ -793,8 +746,8 @@ flush privileges;</code></pre></li>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/jetcache/">
-                        <span class="chip bg-color">jetcache</span>
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
                     </a>
                     
                 </div>
